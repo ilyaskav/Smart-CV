@@ -1,0 +1,12 @@
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\Repository.dll.config
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\Repository.dll
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\Repository.pdb
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\Entities.dll
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\EntityFramework.dll
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\Entities.pdb
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\EntityFramework.xml
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\obj\Debug\Repository.dll
+D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\obj\Debug\Repository.pdb
