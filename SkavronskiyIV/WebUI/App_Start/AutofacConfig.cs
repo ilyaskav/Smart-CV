@@ -11,7 +11,8 @@ using System.Configuration;
 using Autofac.Integration.Owin;
 using System.Reflection;
 using Repository.Classes;
-using Repository;
+//using Repository;
+using Repository.Interfaces;
 
 namespace WebUI
 {
@@ -23,16 +24,34 @@ namespace WebUI
         {
             var builder = new ContainerBuilder();
 
+            #region регистрация контроллеров
             // для webApi
             //builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             // для MVC
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            
+            #endregion
+
+            #region регистрация сервисов
+
+            // TODO
+
+            #endregion
 
             #region регистрация репозиториев
 
             builder.RegisterType<ResumeRepository>().As<IResumeRepository>();
-            // и так для всех репозиториев
+            builder.RegisterType<CertificateRepository>().As<ICertificateRepository>();
+            builder.RegisterType<ContactRepository>().As<IContactRepository>();
+            builder.RegisterType<ContactTitleRepository>().As<IContactTitleRepository>();
+            builder.RegisterType<DutyRepository>().As<IDutyRepository>();
+            builder.RegisterType<InstitutionRepository>().As<IInstitutionRepository>();
+            builder.RegisterType<LanguageRepository>().As<ILanguageRepository>();
+            builder.RegisterType<PersonalQualityRepository>().As<IPersonalQualityRepository>();
+            builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
+            builder.RegisterType<SkillRepository>().As<ISkillRepository>();
+            builder.RegisterType<WorkPlaceRepository>().As<IWorkPlaceRepository>();
 
             #endregion
 

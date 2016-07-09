@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Classes
+namespace Services.Interfaces
 {
-    public class Class1
+    public interface IResumeService
     {
 
     }

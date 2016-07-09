@@ -39,12 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Class1.cs" />
+    <Compile Include="Classes\ContactService.cs" />
+    <Compile Include="Classes\InstitutionService.cs" />
+    <Compile Include="Classes\ProjectService.cs" />
+    <Compile Include="Classes\ResumeService.cs" />
+    <Compile Include="Classes\WorkPlaceService.cs" />
+    <Compile Include="Interfaces\IContactService.cs" />
+    <Compile Include="Interfaces\IInstitutionService.cs" />
+    <Compile Include="Interfaces\IProjectService.cs" />
+    <Compile Include="Interfaces\IResumeService.cs" />
+    <Compile Include="Interfaces\IWorkPlaceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

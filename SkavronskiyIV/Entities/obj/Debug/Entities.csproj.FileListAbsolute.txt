@@ -45,3 +45,14 @@ D:\Users\05-03\Downloads\SkavronskiyIV_upd2\SkavronskiyIV\Entities\obj\Debug\Ent
 D:\Users\05-03\Downloads\SkavronskiyIV_upd2\SkavronskiyIV\Entities\obj\Debug\Entities.csproj.GenerateResource.Cache
 D:\Users\05-03\Downloads\SkavronskiyIV_upd2\SkavronskiyIV\Entities\obj\Debug\Entities.dll
 D:\Users\05-03\Downloads\SkavronskiyIV_upd2\SkavronskiyIV\Entities\obj\Debug\Entities.pdb
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\Entities.dll.config
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\Entities.dll
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\Entities.pdb
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\EntityFramework.dll
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\EntityFramework.xml
+D:\Git\CVService\SkavronskiyIV\Entities\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\CVService\SkavronskiyIV\Entities\obj\Debug\Entities.Migrations.ContactsAndLanguages.resources
+D:\Git\CVService\SkavronskiyIV\Entities\obj\Debug\Entities.csproj.GenerateResource.Cache
+D:\Git\CVService\SkavronskiyIV\Entities\obj\Debug\Entities.dll
+D:\Git\CVService\SkavronskiyIV\Entities\obj\Debug\Entities.pdb

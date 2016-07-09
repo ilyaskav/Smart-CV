@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Interfaces
+namespace Services.Classes
 {
-    public interface IWorkPlaceRepository
+    class WorkPlaceService
     {
-
     }
 }

@@ -1,0 +1,4 @@
+D:\Git\CVService\SkavronskiyIV\Services\bin\Debug\Services.dll
+D:\Git\CVService\SkavronskiyIV\Services\bin\Debug\Services.pdb
+D:\Git\CVService\SkavronskiyIV\Services\obj\Debug\Services.dll
+D:\Git\CVService\SkavronskiyIV\Services\obj\Debug\Services.pdb

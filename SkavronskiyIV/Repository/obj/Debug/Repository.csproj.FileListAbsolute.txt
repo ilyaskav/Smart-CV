@@ -10,3 +10,15 @@ D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\Skavronsk
 D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\bin\Debug\EntityFramework.SqlServer.xml
 D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\obj\Debug\Repository.dll
 D:\Google drive\Google Диск\Шаг\Диплом\SkavronskiyIV_upd1\SkavronskiyIV\Repository\obj\Debug\Repository.pdb
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\Repository.dll.config
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\Repository.dll
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\Repository.pdb
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\Entities.dll
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\EntityFramework.dll
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\Entities.pdb
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\EntityFramework.xml
+D:\Git\CVService\SkavronskiyIV\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\CVService\SkavronskiyIV\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+D:\Git\CVService\SkavronskiyIV\Repository\obj\Debug\Repository.dll
+D:\Git\CVService\SkavronskiyIV\Repository\obj\Debug\Repository.pdb

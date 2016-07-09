@@ -9,7 +9,7 @@ using Entities;
 
 namespace Repository.Classes
 {
-    class ContactTitleRepository : BaseRepository<ContactTitle>, IContactTitleRepository
+    public class ContactTitleRepository : BaseRepository<ContactTitle>, IContactTitleRepository
     {
         public ContactTitleRepository(ApplicationDbContext context) : base(context)
         {

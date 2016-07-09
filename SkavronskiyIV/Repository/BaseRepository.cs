@@ -82,7 +82,9 @@ namespace Repository
 
         public void RemoveAll()
         {
-            throw new NotImplementedException();
+            // нужно проверить
+            _context.Set<TEntity>().RemoveRange(_entities);
+            _context.SaveChanges();
         }
 
         public bool Update(TEntity entity)
