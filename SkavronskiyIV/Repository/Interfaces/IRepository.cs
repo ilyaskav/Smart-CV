@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-    public interface IRepository <TEntity> where TEntity: class, IEntity
+    public interface IRepository<TEntity> : IDisposable where TEntity : class, IEntity
     {
         int Add(TEntity entity);
 

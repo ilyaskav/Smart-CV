@@ -1,4 +1,5 @@
-﻿using Repository;
+﻿using Entities.Classes;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-    public interface IResumeRepository
+    public interface IResumeRepository : IRepository<Resume>
     {
         //void Add(
         //    string fullName,

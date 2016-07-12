@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace Repository
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
+    public abstract class BaseRepository<TEntity> : IDisposable, IRepository<TEntity> where TEntity : class, IEntity
     {
         private ApplicationDbContext _context = null;
         private IDbSet<TEntity> _entities = null;
@@ -96,6 +96,11 @@ namespace Repository
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
             return true;
+        }
+
+        public virtual void Dispose()
+        {
+            _context.Dispose();
         }
     }
 

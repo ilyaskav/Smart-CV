@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IResumeService
+    public interface IResumeService : IDisposable
     {
-
+        void CreateResume();
     }
 }

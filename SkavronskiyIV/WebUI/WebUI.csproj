@@ -302,8 +302,12 @@
       <Name>Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{6D688FCE-EB0E-481A-90C6-889FB9D39206}</Project>
+      <Project>{6d688fce-eb0e-481a-90c6-889fb9d39206}</Project>
       <Name>Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{e6c7e1ab-afda-4da1-8e8e-5240e7f434df}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

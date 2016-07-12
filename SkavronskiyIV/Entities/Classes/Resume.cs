@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,15 +23,6 @@ namespace Entities.Classes
         [Required]
         public DateTime DateOfBirth { get; set; }
 
-        //[Required]
-        //public String TelNumber { get; set; }
-
-        //[Required]
-        //public String Email { get; set; }
-
-        //// ссылка на LinkedIn или свой сайт
-        //public String Url { get; set; }
-
         [Required]
         public String CurrentLocation { get; set; }
 
@@ -42,8 +35,13 @@ namespace Entities.Classes
         [Required]
         public DateTime CreatedAt { get; set; }
 
+        public string UserId { get; set; }
+
 
         #region navigation
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Institution> Education { get; set; }
 

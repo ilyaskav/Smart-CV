@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{6D688FCE-EB0E-481A-90C6-889FB9D39206}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{DD0C50EF-BAA4-4370-8234-F79F5822E9F9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6C7E1AB-AFDA-4DA1-8E8E-5240E7F434DF} = {E6C7E1AB-AFDA-4DA1-8E8E-5240E7F434DF}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{E6C7E1AB-AFDA-4DA1-8E8E-5240E7F434DF}"
 EndProject
