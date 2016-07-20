@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    interface IContactService
+    public interface IContactService : IDisposable
     {
+        void Create();
+        void Update();
+        void Delete();
     }
 }

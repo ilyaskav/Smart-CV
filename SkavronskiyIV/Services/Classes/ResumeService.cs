@@ -1,4 +1,5 @@
-﻿using Repository.Interfaces;
+﻿using Entities.Classes;
+using Repository.Interfaces;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,21 @@ namespace Services.Classes
             _langRepository = langRepository;
         }
 
-        public void CreateResume()
+        public void CreateResume(Resume model)
         {
-            throw new NotImplementedException();
+            _resumeRepository.Add(new Resume()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                CurrentLocation = model.CurrentLocation,
+                Photo = model.Photo,
+                Goal = model.Goal,
+                CreatedAt = DateTime.Now,
+                UserId=model.UserId
+            });
+
+
         }
 
         public void Dispose()
