@@ -9,5 +9,9 @@ namespace Services.Interfaces
     public interface IResumeService : IDisposable
     {
         void CreateResume();
+
+        void UpdateResume();
+
+        void DeleteResume();
     }
 }

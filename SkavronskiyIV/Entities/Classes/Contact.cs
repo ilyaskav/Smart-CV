@@ -13,7 +13,7 @@ namespace Entities.Classes
         [Key]
         public int Id { get; set; }
 
-        public int ContactId { get; set; }
+        public int ContactTitleId { get; set; }
 
         [Required]
         public String Data { get; set; }
@@ -26,7 +26,7 @@ namespace Entities.Classes
         [ForeignKey("ResumeId")]
         public Resume Resume { get; set; }
 
-        [ForeignKey("ContactId")]
+        [ForeignKey("ContactTitleId")]
         public ContactTitle ContactTitle { get; set; }
 
         #endregion

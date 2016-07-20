@@ -49,6 +49,8 @@
     <Compile Include="Interfaces\IProjectService.cs" />
     <Compile Include="Interfaces\IResumeService.cs" />
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
+    <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ContactTitleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
