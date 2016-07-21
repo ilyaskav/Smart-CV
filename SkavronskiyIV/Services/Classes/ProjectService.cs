@@ -9,5 +9,10 @@ namespace Services.Classes
 {
     public class ProjectService : IProjectService
     {
+        public void Dispose()
+        {
+
+        }
+
     }
 }

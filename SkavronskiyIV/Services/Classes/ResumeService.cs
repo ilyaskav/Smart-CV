@@ -1,6 +1,7 @@
 ﻿using Entities.Classes;
 using Repository.Interfaces;
 using Services.Interfaces;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Services.Classes
             _langRepository = langRepository;
         }
 
-        public void CreateResume(Resume model)
+        public void CreateResume(ResumeModel model)
         {
             _resumeRepository.Add(new Resume()
             {
@@ -40,6 +41,17 @@ namespace Services.Classes
 
 
         }
+
+        public void UpdateResume(ResumeModel model)
+        {
+
+        }
+
+        public void DeleteResume(int id)
+        {
+
+        }
+
 
         public void Dispose()
         {

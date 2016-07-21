@@ -38,24 +38,42 @@ namespace Services.Classes
             _contactRepository.Add(new Contact() { ContactTitleId = contTitleId, Data = model.Data });
         }
 
-        public void DeleteContact(int id)
+        public void RemoveContact(int id)
         {
-            throw new NotImplementedException();
+            if (_contactRepository.Has(id)) _contactRepository.Remove(id);
         }
 
-        public void DeleteContact(ContactModel model)
+        public void RemoveContact(ContactModel model)
         {
-            throw new NotImplementedException();
+            if (_contactRepository.Has(model.Id)) _contactRepository.Remove(model.Id);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _contactTitleRepository.Dispose();
+            _contactRepository.Dispose();
         }
 
         public void UpdateContact(ContactModel model)
         {
-            throw new NotImplementedException();
+            if (_contactRepository.Has(model.Id))
+            {
+                var entity = _contactRepository.Get(model.Id);
+                entity.Data = model.Data;
+                if (!entity.ContactTitle.Equals(model.ContactTitle))
+                {
+                    int contTitleId;
+                    if (_contactTitleRepository.Has(e => e.Title.Equals(model.ContactTitle)))
+                    {
+                        var title = _contactTitleRepository.Get(e => e.Title.Equals(model.ContactTitle)).FirstOrDefault();
+                        contTitleId = title.Id;
+                    }
+                    else contTitleId = _contactTitleRepository.Add(new ContactTitle() { Title = model.ContactTitle.Title });
+
+                    entity.ContactTitleId = contTitleId;
+                }
+                _contactRepository.Update(entity);
+            }
         }
     }
 }

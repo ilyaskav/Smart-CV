@@ -1,5 +1,4 @@
 ﻿using Entities.Classes;
-using Entities.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
         public DbSet<Resume> Resumes { get; set; }
 
@@ -28,10 +27,19 @@ namespace Entities
 
         public DbSet<PersonalQuality> PersonalQualities { get; set; }
 
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
         public DbSet<ContactTitle> ContactTitles { get; set; }
 
-        
 
+
+        public ApplicationDbContext()
+            : base("DefaultConnection")
+	    {
+
+	    }
 
         public static ApplicationDbContext Create()
         {

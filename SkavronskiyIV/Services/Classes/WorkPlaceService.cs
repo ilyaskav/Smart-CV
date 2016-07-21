@@ -9,5 +9,10 @@ namespace Services.Classes
 {
     public class WorkPlaceService : IWorkPlaceService
     {
+        public void Dispose()
+        {
+
+        }
+
     }
 }

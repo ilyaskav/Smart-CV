@@ -9,5 +9,9 @@ namespace Services.Classes
 {
     public class InstitutionService : IInstitutionService
     {
+        public void Dispose()
+        {
+
+        }
     }
 }

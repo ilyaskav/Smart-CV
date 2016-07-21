@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ContactTitleModel.cs" />
+    <Compile Include="Models\ResumeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

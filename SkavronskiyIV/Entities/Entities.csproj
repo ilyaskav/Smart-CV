@@ -56,6 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ApplicationRole.cs" />
+    <Compile Include="Classes\ApplicationUser.cs" />
+    <Compile Include="Classes\ApplicationUserClaim.cs" />
+    <Compile Include="Classes\ApplicationUserLogin.cs" />
+    <Compile Include="Classes\ApplicationUserRole.cs" />
     <Compile Include="Classes\Certificate.cs" />
     <Compile Include="Classes\Contact.cs" />
     <Compile Include="Classes\ContactTitle.cs" />
@@ -72,7 +77,6 @@
       <DependentUpon>201607042121446_ContactsAndLanguages.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Skill.cs" />
     <Compile Include="Classes\WorkPlace.cs" />

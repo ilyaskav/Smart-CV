@@ -14,8 +14,8 @@ namespace Services.Interfaces
 
         void UpdateContact(ContactModel model);
 
-        void DeleteContact(ContactModel model);
+        void RemoveContact(ContactModel model);
 
-        void DeleteContact(int id);
+        void RemoveContact(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Services.Interfaces
 {
     public interface IResumeService : IDisposable
     {
-        void CreateResume();
+        void CreateResume(ResumeModel model);
 
-        void UpdateResume();
+        void UpdateResume(ResumeModel model);
 
-        void DeleteResume();
+        void DeleteResume(int id);
     }
 }

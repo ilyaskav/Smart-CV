@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,16 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Entities.Classes
 {
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<int>, IEntity
     {
-        public string FirstName { get; set; }
+        public virtual ICollection<Resume> Resumes { get; set; }
 
-        public string LastName { get; set; }
+        public ApplicationUser()
+        {
+            Resumes = new List<Resume>();
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
         {
