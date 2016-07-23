@@ -47,6 +47,7 @@ namespace Entities.Classes
         public WorkPlace()
         {
             Duties = new List<Duty>();
+            Projects = new List<Project>();
         }
     }
 }

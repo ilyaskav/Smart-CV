@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,5 +29,15 @@ namespace Entities.Classes
         public String TechStack { get; set; }
 
         public String About { get; set; }
+
+        public int WorkPlaceId { get; set; }
+
+
+        #region navigation
+
+        [ForeignKey("WorkPlaceId")]
+        public WorkPlace WorkPlace { get; set; }
+
+        #endregion
     }
 }
