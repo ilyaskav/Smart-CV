@@ -44,6 +44,7 @@
     <Compile Include="Classes\ProjectService.cs" />
     <Compile Include="Classes\ResumeService.cs" />
     <Compile Include="Classes\WorkPlaceService.cs" />
+    <Compile Include="Converters\ModelExtensions.cs" />
     <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IInstitutionService.cs" />
     <Compile Include="Interfaces\IProjectService.cs" />

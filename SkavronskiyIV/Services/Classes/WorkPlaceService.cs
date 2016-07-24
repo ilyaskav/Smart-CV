@@ -1,5 +1,6 @@
 ﻿using Entities.Classes;
 using Repository.Interfaces;
+using Services.Converters;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,6 @@ namespace Services.Classes
         }
 
 
-
         public void Dispose()
         {
             _workPlaceRepository.Dispose();
@@ -39,40 +39,18 @@ namespace Services.Classes
         public void CreateWorkplace(Models.WorkPlaceModel model)
         {
             // создаем новую работу
-            int workPlaceId = _workPlaceRepository.Add(new WorkPlace() 
-            {
-                City=model.City,
-                Name=model.Name,
-                Description=model.Description,
-                Position=model.Position,
-                From=model.From,
-                To=model.To,
-                ResumeId=model.ResumeId
-            });
+            int workPlaceId = _workPlaceRepository.Add(model.ToEntity());
 
             // добавляем в нее обязанности
             foreach (var duty in model.Duties)
             {
-                _dutyRepository.Add(new Duty()
-                    {
-                        Name = duty.Name,
-                        WorkPlaceId = workPlaceId
-                    });
+                _dutyRepository.Add(duty.ToEntity(workPlaceId));
             }
 
             // добавляем в нее проекты
             foreach (var project in model.Projects)
             {
-                _projectRepository.Add(new Project()
-                    {
-                        Title = project.Title,
-                        Duration = project.Duration,
-                        Description = project.Description,
-                        Role = project.Role,
-                        TechStack = project.TechStack,
-                        About = project.About,
-                        WorkPlaceId = project.WorkPlaceId
-                    });
+                _projectRepository.Add(project.ToEntity(workPlaceId));
             }
         }
 
@@ -81,14 +59,19 @@ namespace Services.Classes
             if (model.Id==null) return;
             if (_workPlaceRepository.Has(model.Id.Value))
             {
-                var entity = _workPlaceRepository.Get(model.Id.Value);
-                entity.City = model.City;
-                entity.Description = model.Description;
-                entity.Name = model.Name;
-                entity.Position=model.Position;
-                entity.From=model.From;
-                entity.To = model.To;
+                //var entity = _workPlaceRepository.Get(model.Id.Value);
+                //entity.City = model.City;
+                //entity.Description = model.Description;
+                //entity.Name = model.Name;
+                //entity.Position=model.Position;
+                //entity.From=model.From;
+                //entity.To = model.To;
                 //Доделать!!!!!
+                WorkPlace entity = model.ToEntity();
+                foreach (var duty in model.Duties)
+                {
+
+                }
 
                 _workPlaceRepository.Update(entity);
             }
