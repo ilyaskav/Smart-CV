@@ -28,21 +28,30 @@ namespace Services.Models
         public string UserId { get; set; }
 
 
+        //public ICollection<InstitutionModel> Education { get; set; }
 
-        //public virtual ICollection<Institution> Education { get; set; }
+        //public ICollection<WorkPlaceModel>  WorkExp { get; set; }
 
-        //public virtual ICollection<WorkPlace> WorkExp { get; set; }
+        //public ICollection<SkillModel> Skills { get; set; }
 
-        //public virtual ICollection<Skill> Skills { get; set; }
+        //public ICollection<LanguageModel> Languages { get; set; }
 
-        //public virtual ICollection<Language> Languages { get; set; }
+        //public ICollection<PersonalQualityModel> PersonalQualities { get; set; }
 
-        //public virtual ICollection<PersonalQuality> PersonalQualities { get; set; }
+        //public ICollection<CertificateModel> Ceftificates { get; set; }
 
-        //public virtual ICollection<Certificate> CertificatesAndTrainings { get; set; }
+        //public ICollection<ContactModel> Contacts { get; set; }
 
-        //public virtual ICollection<ContactModel> Contacts { get; set; }
-
+        //public ResumeModel()
+        //{
+        //    Education = new List<InstitutionModel>();
+        //    WorkExp = new List<WorkPlaceModel>();
+        //    Skills = new List<SkillModel>();
+        //    Languages = new List<LanguageModel>();
+        //    PersonalQualities = new List<PersonalQualityModel>();
+        //    Ceftificates = new List<CertificateModel>();
+        //    Contacts = new List<ContactModel>();
+        //}
 
     }
 }

@@ -14,5 +14,7 @@ namespace Services.Interfaces
         void UpdateResume(ResumeModel model);
 
         void DeleteResume(int id);
+
+        void CreateMSWordDocument(int id);
     }
 }

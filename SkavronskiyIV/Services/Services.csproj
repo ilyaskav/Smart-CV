@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,22 +42,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CertificateService.cs" />
     <Compile Include="Classes\ContactService.cs" />
     <Compile Include="Classes\InstitutionService.cs" />
-    <Compile Include="Classes\ProjectService.cs" />
+    <Compile Include="Classes\LanguageService.cs" />
+    <Compile Include="Classes\PersonalQualityService.cs" />
     <Compile Include="Classes\ResumeService.cs" />
+    <Compile Include="Classes\SkillService.cs" />
     <Compile Include="Classes\WorkPlaceService.cs" />
+    <Compile Include="Converters\ExtensionMethods.cs" />
     <Compile Include="Converters\ModelExtensions.cs" />
+    <Compile Include="Interfaces\ICertificateService.cs" />
     <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IInstitutionService.cs" />
-    <Compile Include="Interfaces\IProjectService.cs" />
+    <Compile Include="Interfaces\ILanguageService.cs" />
+    <Compile Include="Interfaces\IPersonalQualityService.cs" />
     <Compile Include="Interfaces\IResumeService.cs" />
+    <Compile Include="Interfaces\ISkillService.cs" />
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
+    <Compile Include="Models\CertificateModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ContactTitleModel.cs" />
     <Compile Include="Models\DutyModel.cs" />
+    <Compile Include="Models\InstitutionModel.cs" />
+    <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\PersonalQualityModel.cs" />
+    <Compile Include="Models\PesonalQualityModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\ResumeModel.cs" />
+    <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\WorkPlaceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

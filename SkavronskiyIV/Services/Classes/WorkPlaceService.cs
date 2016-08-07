@@ -39,19 +39,23 @@ namespace Services.Classes
         public void CreateWorkplace(Models.WorkPlaceModel model)
         {
             // создаем новую работу
-            int workPlaceId = _workPlaceRepository.Add(model.ToEntity());
+            _workPlaceRepository.Add(model.ToEntity());
 
-            // добавляем в нее обязанности
-            foreach (var duty in model.Duties)
-            {
-                _dutyRepository.Add(duty.ToEntity(workPlaceId));
-            }
+            //var entity = _workPlaceRepository.Get(workPlaceId);
 
-            // добавляем в нее проекты
-            foreach (var project in model.Projects)
-            {
-                _projectRepository.Add(project.ToEntity(workPlaceId));
-            }
+            //// добавляем в нее обязанности
+            //foreach (var duty in model.Duties)
+            //{
+            //    entity.Duties.Add(duty.ToEntity());
+            //    //_dutyRepository.Add(duty.ToEntity());
+            //}
+
+            //// добавляем в нее проекты
+            //foreach (var project in model.Projects)
+            //{
+            //    entity.Projects.Add(project.ToEntity());
+            //    //_projectRepository.Add(project.ToEntity());
+            //}
         }
 
         public void UpdateWorkplace(Models.WorkPlaceModel model)
@@ -59,19 +63,7 @@ namespace Services.Classes
             if (model.Id==null) return;
             if (_workPlaceRepository.Has(model.Id.Value))
             {
-                //var entity = _workPlaceRepository.Get(model.Id.Value);
-                //entity.City = model.City;
-                //entity.Description = model.Description;
-                //entity.Name = model.Name;
-                //entity.Position=model.Position;
-                //entity.From=model.From;
-                //entity.To = model.To;
-                //Доделать!!!!!
                 WorkPlace entity = model.ToEntity();
-                foreach (var duty in model.Duties)
-                {
-
-                }
 
                 _workPlaceRepository.Update(entity);
             }

@@ -45,7 +45,7 @@ namespace Services.Classes
 
         public void RemoveContact(ContactModel model)
         {
-            if (_contactRepository.Has(model.Id)) _contactRepository.Remove(model.Id);
+            if (_contactRepository.Has(model.Id.Value)) _contactRepository.Remove(model.Id.Value);
         }
 
         public void Dispose()
@@ -56,9 +56,9 @@ namespace Services.Classes
 
         public void UpdateContact(ContactModel model)
         {
-            if (_contactRepository.Has(model.Id))
+            if (_contactRepository.Has(model.Id.Value))
             {
-                var entity = _contactRepository.Get(model.Id);
+                var entity = _contactRepository.Get(model.Id.Value);
                 entity.Data = model.Data;
                 if (!entity.ContactTitle.Equals(model.ContactTitle))
                 {

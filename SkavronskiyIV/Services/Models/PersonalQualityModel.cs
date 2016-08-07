@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Services.Models
 {
-    public class ContactModel
+    public class PersonalQualityModel
     {
         public int? Id { get; set; }
 
-        public ContactTitleModel ContactTitle { get; set; }
+        public String Name { get; set; }
 
-        public String Data { get; set; }
+        public int ResumeId { get; set; }
+
     }
 }

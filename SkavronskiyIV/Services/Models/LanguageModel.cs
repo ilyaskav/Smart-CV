@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Services.Models
 {
-    public class ContactModel
+    public class LanguageModel
     {
         public int? Id { get; set; }
 
-        public ContactTitleModel ContactTitle { get; set; }
+        public String Name { get; set; }
 
-        public String Data { get; set; }
+        public String Level { get; set; }
+
     }
 }
