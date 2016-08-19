@@ -3,5 +3,61 @@
     ViewBag.Title = "Общие данные";
 }
 
-<h2>Общие данные</h2>
+<div class="row">
+    <div class="h2 text-center section">Общие данные</div>
+</div>
+<div class="row">
+    <form class="form-horizontal" method="POST">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Имя*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="firstName">
+            </div>
+        </div>
 
+        <div class="form-group">
+            <label class="col-md-2 control-label">Фамилия*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="lastName"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Дата рождения*</label>
+            <div class="col-md-10">
+                <input id="datePicker" data-provide="datepicker" class="form-control" name="dateOfBirth" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Город*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="currentLocation" data-toggle="tooltip" data-placement="bottom" title="Место вашего настроящего проживания"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Цель*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="goal" data-toggle="tooltip" data-placement="bottom" title="Напр. Получение должности Junior .NET Developer"/>
+            </div>
+        </div>
+        <div class="form-group">
+                <label class="col-md-2 control-label">Фото</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="photo">
+                </div>
+            </div>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+                <button class="btn btn-primary">Далее</button>
+            </div>
+            
+        </div>      
+    </form>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/datePicker")
+    @Scripts.Render("~/Scripts/addingData.js")
+}

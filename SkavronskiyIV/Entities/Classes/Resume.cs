@@ -34,7 +34,7 @@ namespace Entities.Classes
         [Required]
         public DateTime CreatedAt { get; set; }
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
 
         #region navigation

@@ -20,5 +20,20 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
+
+
+/* CUSTOM */
+p.text-info, p.text-danger{
+    cursor:pointer;
+}
+.delete-line{
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.section {
+	margin: 15px 0;
+}
+.font-bold {
+font-weight: bold;}

@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Education";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="h2 text-center section">Образование</div>
+</div>
+<form class="form-horizontal" method="POST">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Уч. заведение*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Город</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="city" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Кафедра</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="department" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Специальность*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="speciality" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Степень*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="degree" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Период*</label>
+            <div class="col-md-10">
+                <div class="input-daterange input-group" id="datePicker">
+                    <input type="text" class="input-sm form-control" name="start" />
+                    <span class="input-group-addon">по</span>
+                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addInstitution" aria-label="Добавить учебное заведение" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить учебное заведение
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <a href="~/Resume/Contacts" class="btn btn-default" >Назад</a>
+                <button class="btn btn-primary">Далее</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/datePicker")
+    @Scripts.Render("~/Scripts/addingData.js")
+}
+
+

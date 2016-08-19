@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Skills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="h2 text-center section">Навыки</div>
+</div>
+<form class="form-horizontal" method="POST">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Навыки*</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="skill" />
+            </div>
+            <div class="skill">
+                <div class="col-md-9 col-md-offset-2">
+                    <input type="text" class="form-control" name="skill" />
+                </div>
+                <div class="col-md-1 delete-line">
+                    <p class="text-danger remove-skill">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addDuty" aria-label="Добавить навык" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить навык
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="h2 text-center section">Владение языками</div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2">
+                <input type="text" placeholder="Язык" class="form-control" name="language" />
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Уровень владения" class=" form-control" name="level" />
+            </div>
+            <div class="language">
+                <div class="col-md-2">
+                    <input type="text" placeholder="Язык" class="form-control" name="language" />
+                </div>
+                <div class="col-md-9">
+                    <input type="text" placeholder="Уровень владения" class="form-control" name="level" />
+                </div>
+                <div class="col-md-1 delete-line">
+                    <p class="text-danger remove-language">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addLanguage" aria-label="Добавить язык" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить язык
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <a href="~/Resume/WorkExperience" class="btn btn-default">Назад</a>
+                <button class="btn btn-primary">Далее</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/addingData.js")
+}
+
+
+

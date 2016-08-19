@@ -25,7 +25,7 @@ namespace Services.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
 
         //public ICollection<InstitutionModel> Education { get; set; }

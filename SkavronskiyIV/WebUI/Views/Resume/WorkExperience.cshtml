@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Work Experience";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="h2 text-center section">Опыт работы</div>
+</div>
+<form class="form-horizontal" method="POST">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Место работы*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Город</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="city" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Описание</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="description" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Должность*</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="position" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Обязанности*</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="duty" />
+            </div>
+            <div class="duty">
+                <div class="col-md-9 col-md-offset-2">
+                    <input type="text" class="form-control" name="duty" />
+                </div>
+                <div class="col-md-1 delete-line">
+                    <p class="text-danger remove-duty">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addDuty" aria-label="Добавить обязанность" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить обязанность
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Период*</label>
+            <div class="col-md-10">
+                <div class="input-daterange input-group" id="datePicker">
+                    <input type="text" class="input-sm form-control" name="start" />
+                    <span class="input-group-addon">по</span>
+                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addWorkPlace" aria-label="Добавить место работы" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить место работы
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <a href="~/Resume/Education" class="btn btn-default">Назад</a>
+                <button class="btn btn-primary">Далее</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/datePicker")
+    @Scripts.Render("~/Scripts/addingData.js")
+}
+
+

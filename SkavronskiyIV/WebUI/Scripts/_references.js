@@ -5,3 +5,7 @@
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="respond.js" />
+/// <reference path="ai.0.15.0-build58334.js" />
+/// <reference path="addingdata.js" />
+/// <reference path="bootstrap-datepicker.js" />
+/// <reference path="locales/bootstrap-datepicker.ru.min.js" />

@@ -25,7 +25,12 @@ namespace WebUI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-datepicker3.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
+                      "~/Scripts/bootstrap-datepicker.js",
+                      "~/Scripts/locales/bootstrap-datepicker.ru.min.js"));
         }
     }
 }
