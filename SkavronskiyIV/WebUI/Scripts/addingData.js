@@ -203,7 +203,41 @@ $(function () {
         $(this).closest('div.personalQuality').remove();
     });
 
-    // выбор одиночной даты
+    // добавление полей для сертификата
+    $('#addCertificate').on('click', function () {
+        var html = [
+'        <hr />',
+'        <div class="certificate">',
+'            <div class="form-group">',
+'                <label class="col-md-2 control-label">Название*</label>',
+'                <div class="col-md-10">',
+'                    <input type="text" class="form-control" name="name">',
+'                </div>',
+'            </div>',
+'            <div class="form-group">',
+'                <label class="col-md-2 control-label">Город</label>',
+'                <div class="col-md-10">',
+'                    <input type="text" class="form-control" name="city" />',
+'                </div>',
+'            </div>',
+'            <div class="form-group">',
+'                <label class="col-md-2 control-label">Дата окончания*</label>',
+'                <div class="col-md-10">',
+'                    <input id="datePicker-month" data-provide="datepicker" class="form-control" name="date" />',
+'                </div>',
+'            </div>',
+'        </div>'
+        ].join('');
+
+        $(this).parent().before(html);
+    });
+
+    // удаление полей для сертификата 
+    $(document).on('click', 'p.remove-certificate', function () {
+        $(this).closest('div.certificate').remove();
+    });
+
+    // выбор даты с днями
     $('#datePicker').datepicker({
         format: "dd.mm.yyyy",
         startView: 2,
@@ -211,5 +245,16 @@ $(function () {
         language: "ru",
         autoclose: true
     });
+
+    // выбор даты только месяцы и годы
+    $('#datePicker-month').datepicker({
+        format: "dd.mm.yyyy",
+        startView: 2,
+        minViewMode: 1,
+        maxViewMode: 3,
+        language: "ru",
+        autoclose: true
+    });
+
 });
 

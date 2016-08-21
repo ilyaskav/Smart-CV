@@ -39,5 +39,10 @@ namespace WebUI.Controllers
         {
             return View();
         }
+
+        public ActionResult Certificates()
+        {
+            return View();
+        }
     }
 }

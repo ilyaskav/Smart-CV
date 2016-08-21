@@ -298,6 +298,7 @@
     <Content Include="Views\Resume\WorkExperience.cshtml" />
     <Content Include="Views\Resume\Skills.cshtml" />
     <Content Include="Views\Resume\PersonalQualities.cshtml" />
+    <Content Include="Views\Resume\Certificates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
