@@ -23,6 +23,7 @@ namespace Services.Converters
 
         static string GetMonthName(int _month)
         {
+            // переделать на return'ы
             var month = "";
             switch (_month)
             {

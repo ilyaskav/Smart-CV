@@ -1,10 +1,31 @@
-﻿// http://htmltojavascript.com/
+﻿//  http://htmltojavascript.com/
+// https://www.sitepoint.com/16-jquery-selectboxdrop-down-plugins/
 
 $(function () {
     //добавление дополнительного поля для контакта
     $('#addContact').on('click', function () {
-        $(this).parent().before('<div class="form-group"> <div class="col-md-2"> <input type="text" class="form-control font-bold text-right" /></div>' +
-            '<div class="col-md-10"> <input type="text" class="form-control" /></div></div>');
+        var html = [
+'     <div class="contact">',
+'        <div class="form-group">',
+'            <div class="col-md-2">',
+'                <input type="text" class="form-control font-bold text-right" name="name" />',
+'            </div>',
+'            <div class="col-md-9">',
+'                <input type="text" class="form-control" name="data" />',
+'            </div>',
+'            <div class="col-md-1 delete-line">',
+'                <p class="text-danger remove-contact">',
+'                      <span class="glyphicon glyphicon-remove"></span> Удалить',
+'                </p>',
+'        </div>',
+'     </div>'
+        ].join('');
+        $(this).parent().before(html);
+    });
+
+    // удаление поля для контакта
+    $(document).on('click', 'p.remove-contact', function () {
+        $(this).closest('div.contact').remove();
     });
 
     //добавление полей для нового учебного заведения
@@ -255,6 +276,9 @@ $(function () {
         language: "ru",
         autoclose: true
     });
+
+    // включеиня подсказок
+    $('[data-toggle="tooltip"]').tooltip();
 
 });
 
