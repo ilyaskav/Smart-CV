@@ -16,14 +16,14 @@ namespace Services.Converters
         {
             return new Resume()
             {
-                Id = model.Id.Value,
+                //Id = model.Id.Value,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 CurrentLocation = model.CurrentLocation,
                 Photo = model.Photo,
                 Goal = model.Goal,
-                CreatedAt = DateTime.Now,
+                CreatedAt = model.CreatedAt,
                 UserId = model.UserId
             };
         }

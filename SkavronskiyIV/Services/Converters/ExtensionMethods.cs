@@ -23,73 +23,58 @@ namespace Services.Converters
 
         static string GetMonthName(int _month)
         {
-            // переделать на return'ы
-            var month = "";
             switch (_month)
             {
                 case 1:
                     {
-                        month = "Январь";
-                        break;
+                        return "Январь";
                     }
                 case 2:
                     {
-                        month = "Февраль";
-                        break;
+                        return "Февраль";
                     }
                 case 3:
                     {
-                        month = "Март";
-                        break;
+                        return "Март";
                     }
                 case 4:
                     {
-                        month = "Февраль";
-                        break;
+                        return "Февраль";
                     }
                 case 5:
                     {
-                        month = "Апрель";
-                        break;
+                        return "Апрель";
                     }
                 case 6:
                     {
-                        month = "Июнь";
-                        break;
+                        return "Июнь";
                     }
                 case 7:
                     {
-                        month = "Июль";
-                        break;
+                        return "Июль";
                     }
                 case 8:
                     {
-                        month = "Август";
-                        break;
+                        return "Август";
                     }
                 case 9:
                     {
-                        month = "Сентябрь";
-                        break;
+                        return "Сентябрь";
                     }
                 case 10:
                     {
-                        month = "Октябрь";
-                        break;
+                        return "Октябрь";
                     }
                 case 11:
                     {
-                        month = "Ноябрь";
-                        break;
+                        return "Ноябрь";
                     }
                 case 12:
                     {
-                        month = "Декабрь";
-                        break;
+                        return "Декабрь";
                     }
-                default: break;
             }
-            return month;
+            return null;
         }
     }
 }

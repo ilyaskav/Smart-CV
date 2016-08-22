@@ -23,6 +23,27 @@
             </div>
         </div>
 
+        @*<div class="contact">
+            <div class="form-group">
+                <div class="col-md-2">
+                    <select class="form-control dropdown-contact">
+                        <option value="0">E-Mail</option>
+                        <option value="1">Телефон</option>
+                        <option value="2">LinkedIn</option>
+                        <option value="3">GitHub</option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="data" class="form-control">
+                </div>
+                <div class="col-md-1 delete-line">
+                    <p class="text-danger remove-contact">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </p>
+                </div>
+            </div>
+        </div>*@
+
         <div class="col-md-10 col-md-offset-2">
             <p id="addContact" aria-label="Добавить контакт" class="text-info">
                 <span class="glyphicon glyphicon-plus"></span> Добавить контакт
@@ -40,6 +61,6 @@
 </div>
 
 @section Scripts{
-    @Scripts.Render("~/bundles/dropdown-input")
+    @*@Scripts.Render("~/bundles/dropdown-input")*@
     @Scripts.Render("~/Scripts/addingData.js")
 }

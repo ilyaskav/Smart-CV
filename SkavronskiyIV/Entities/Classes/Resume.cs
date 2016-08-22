@@ -19,10 +19,10 @@ namespace Entities.Classes
         [Required]
         public String LastName { get; set; }
 
-        [Required]
+        //[Required]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
+        //[Required]
         public String CurrentLocation { get; set; }
 
         // path to img

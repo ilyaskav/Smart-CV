@@ -258,6 +258,17 @@ $(function () {
         $(this).closest('div.certificate').remove();
     });
 
+    // включение поля с выпадающим списком
+    //$('.dropdown-contact').ddslick({
+    //    onSelected: function (selectedData) {
+    //        //callback function: do something with selectedData;
+    //    }
+    //});
+
+    //var selectedData = function (data) {
+    //    $('.dropdown-contact').val(data);
+    //}
+
     // выбор даты с днями
     $('#datePicker').datepicker({
         format: "dd.mm.yyyy",
