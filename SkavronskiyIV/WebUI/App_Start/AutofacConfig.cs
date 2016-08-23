@@ -13,6 +13,8 @@ using System.Reflection;
 using Repository.Classes;
 //using Repository;
 using Repository.Interfaces;
+using Services.Classes;
+using Services.Interfaces;
 
 namespace WebUI
 {
@@ -30,12 +32,13 @@ namespace WebUI
 
             // для MVC
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            
+
             #endregion
 
             #region регистрация сервисов
 
             // TODO
+            builder.RegisterType<ResumeService>().As<IResumeService>();
 
             #endregion
 

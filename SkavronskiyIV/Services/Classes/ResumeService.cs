@@ -28,6 +28,10 @@ namespace Services.Classes
             _langRepository = langRepository;
         }
 
+        public ResumeModel GetResume(int id)
+        {
+            return _resumeRepository.Get(id).ToModel();
+        }
         public void CreateResume(ResumeModel model)
         {
             _resumeRepository.Add(model.ToEntity());
@@ -206,5 +210,7 @@ namespace Services.Classes
             doc.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
 
         }
+
+        
     }
 }

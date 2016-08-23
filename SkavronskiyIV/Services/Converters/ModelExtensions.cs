@@ -14,9 +14,14 @@ namespace Services.Converters
 
         public static Resume ToEntity(this ResumeModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return new Resume()
             {
-                //Id = model.Id.Value,
+                Id = model.Id.HasValue ? model.Id.Value : 0,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -25,6 +30,22 @@ namespace Services.Converters
                 Goal = model.Goal,
                 CreatedAt = model.CreatedAt,
                 UserId = model.UserId
+            };
+        }
+
+        public static ResumeModel ToModel(this Resume entity)
+        {
+            return new ResumeModel()
+            {
+                Id = entity.Id,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                DateOfBirth = entity.DateOfBirth,
+                CurrentLocation = entity.CurrentLocation,
+                Photo = entity.Photo,
+                Goal = entity.Goal,
+                CreatedAt = entity.CreatedAt,
+                UserId = entity.UserId
             };
         }
 

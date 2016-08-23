@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Services.Interfaces;
 
 namespace WebUI.Controllers
 {
@@ -15,15 +16,13 @@ namespace WebUI.Controllers
     {
         #region Declarations
 
-        private readonly IResumeRepository _resumeRepository = null;
-        private readonly ILanguageRepository _langRepository = null;
-        private readonly ResumeService _resumeService = null;
+        private readonly IResumeService _resumeService = null;
 
         #endregion
 
-        public ResumeController()
+        public ResumeController(IResumeService resumeService)
         {
-            _resumeService = new ResumeService(_resumeRepository, _langRepository);
+            _resumeService = resumeService;
         }
 
         // GET: Resume
@@ -33,19 +32,39 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult PersonalData()
+        //[ValidateAntiForgeryToken]
+        public ActionResult PersonalData(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return View();
+            }
+
+            var viewModel =_resumeService.GetResume(id.Value);
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PersonalData(ResumeModel model)
         {
-            if (!ModelState.IsValid) return View(model);
-
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             model.UserId = User.Identity.GetUserId<int>();
-            _resumeService.CreateResume(model);
+
+            if (model.Id == null)
+            {
+                _resumeService.CreateResume(model);
+                //return Redirect("~/successful-create");
+            }
+            else
+            {
+                _resumeService.UpdateResume(model);
+                //return Redirect("~/successful-update");
+            }
+
             return View(model);
         }
 

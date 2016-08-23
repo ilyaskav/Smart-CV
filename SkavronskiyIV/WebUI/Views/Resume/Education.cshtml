@@ -1,4 +1,4 @@
-﻿
+﻿@model Services.Models.InstitutionModel
 @{
     ViewBag.Title = "Education";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,40 +7,55 @@
 <div class="row">
     <div class="h2 text-center section">Образование</div>
 </div>
-<form class="form-horizontal" method="POST">
+@using (Html.BeginForm())
+{ 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class="text-danger"})
+
+<div class="form-horizontal">
     <div class="row">
         <div class="form-group">
             <label class="col-md-2 control-label">Уч. заведение*</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="name">
+                @*<input type="text" class="form-control" name="name">*@
+                @Html.EditorFor(model=>model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model=>model.Name, "", new { @class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Город</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="city" />
+                @*<input type="text" class="form-control" name="city" />*@
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Кафедра</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="department" />
+                @*<input type="text" class="form-control" name="department" />*@
+                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Специальность*</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="speciality" />
+                @*<input type="text" class="form-control" name="speciality" />*@
+                @Html.EditorFor(model => model.Specialty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Specialty, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Степень*</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="degree" />
+                @*<input type="text" class="form-control" name="degree" />*@
+                @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -72,10 +87,11 @@
 
         </div>
     </div>
-</form>
-
+</div>
+}
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datePicker")
     @Scripts.Render("~/Scripts/addingData.js")
 }
