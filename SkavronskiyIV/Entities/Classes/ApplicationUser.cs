@@ -12,11 +12,11 @@ namespace Entities.Classes
 {
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<int>, IEntity
     {
-        public virtual ICollection<Resume> Resumes { get; set; }
+        public virtual ICollection<ResumeManager> Resumes { get; set; }
 
         public ApplicationUser()
         {
-            Resumes = new List<Resume>();
+            Resumes = new List<ResumeManager>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)

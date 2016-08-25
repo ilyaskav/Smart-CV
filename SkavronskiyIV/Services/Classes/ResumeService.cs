@@ -19,19 +19,30 @@ namespace Services.Classes
 
         private readonly IResumeRepository _resumeRepository = null;
         private readonly ILanguageRepository _langRepository = null;
+        private readonly IResumeManagerRepository _resumeManagerRepository = null;
 
         #endregion
 
-        public ResumeService(IResumeRepository resumeRepository, ILanguageRepository langRepository)
+        public ResumeService(IResumeRepository resumeRepository, ILanguageRepository langRepository, IResumeManagerRepository manRepo)
         {
             _resumeRepository = resumeRepository;
             _langRepository = langRepository;
+            _resumeManagerRepository = manRepo;
         }
 
         public ResumeModel GetResume(int id)
         {
             return _resumeRepository.Get(id).ToModel();
         }
+
+        public ResumeModel GetResumeByManagerId(int managerId)
+        {
+            var resumeManager = _resumeManagerRepository.Get(managerId);
+            if (resumeManager.Resume == null) return null;
+
+            return resumeManager.Resume.ToModel();
+        }
+
         public void CreateResume(ResumeModel model)
         {
             _resumeRepository.Add(model.ToEntity());
@@ -210,6 +221,9 @@ namespace Services.Classes
             doc.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
 
         }
+
+
+
 
         
     }

@@ -39,6 +39,8 @@ namespace WebUI
 
             // TODO
             builder.RegisterType<ResumeService>().As<IResumeService>();
+            builder.RegisterType<ResumeManagerService>().As<IResumeManagerService>();
+            builder.RegisterType<ProfessionService>().As<IProfessionService>();
 
             #endregion
 
@@ -55,6 +57,8 @@ namespace WebUI
             builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
             builder.RegisterType<SkillRepository>().As<ISkillRepository>();
             builder.RegisterType<WorkPlaceRepository>().As<IWorkPlaceRepository>();
+            builder.RegisterType<ResumeManagerRepository>().As<IResumeManagerRepository>();
+            builder.RegisterType<ProfessionRepository>().As<IProfessionRepository>();
 
             #endregion
 

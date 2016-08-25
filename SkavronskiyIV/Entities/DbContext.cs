@@ -33,13 +33,30 @@ namespace Entities
 
         public DbSet<ContactTitle> ContactTitles { get; set; }
 
+        public DbSet<ResumeManager> ResumeManager { get; set; }
+
+        public DbSet<Profession> Professions { get; set; }
 
 
         public ApplicationDbContext()
             : base("DefaultConnection")
 	    {
-
+            
 	    }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Configure domain classes using modelBuilder here
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ResumeManager>()
+                .HasKey<int>(en => en.Id);
+
+            modelBuilder.Entity<ResumeManager>()
+                .HasRequired(prop => prop.Resume)
+                .WithRequiredPrincipal(en => en.ResumeManager);
+        }
 
         public static ApplicationDbContext Create()
         {

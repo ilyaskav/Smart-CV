@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq.Mapping;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Classes
 {
     // данные резюме
-    [Table("Resumes")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("Resumes")]
     public class Resume : IEntity
     {
         [Key]
+        [System.Data.Linq.Mapping.Column(IsDbGenerated = true)]
         public int Id { get; set; }
 
         [Required]
@@ -31,16 +33,17 @@ namespace Entities.Classes
         [Required]
         public String Goal { get; set; }
 
-        [Required]
-        public DateTime CreatedAt { get; set; }
+        //[Required]
+        //public DateTime CreatedAt { get; set; }
 
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
 
+        public int ResumeManagerId { get; set; }
 
         #region navigation
 
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
+        //[ForeignKey("UserId")]
+        //public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Institution> Education { get; set; }
 
@@ -56,6 +59,8 @@ namespace Entities.Classes
 
         public virtual ICollection<Contact> Contacts { get; set; }
 
+        //[ForeignKey("ResumeManagerId")]
+        public ResumeManager ResumeManager { get; set; }
         #endregion
 
 

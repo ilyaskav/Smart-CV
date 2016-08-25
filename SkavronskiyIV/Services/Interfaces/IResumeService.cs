@@ -14,6 +14,7 @@ namespace Services.Interfaces
         void UpdateResume(ResumeModel model);
 
         ResumeModel GetResume(int id);
+        ResumeModel GetResumeByManagerId(int id);
 
         void DeleteResume(int id);
 

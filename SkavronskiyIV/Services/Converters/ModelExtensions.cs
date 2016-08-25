@@ -28,8 +28,9 @@ namespace Services.Converters
                 CurrentLocation = model.CurrentLocation,
                 Photo = model.Photo,
                 Goal = model.Goal,
-                CreatedAt = model.CreatedAt,
-                UserId = model.UserId
+                ResumeManagerId=model.ManagerId.Value
+                //CreatedAt = model.CreatedAt,
+                //UserId = model.UserId
             };
         }
 
@@ -44,11 +45,56 @@ namespace Services.Converters
                 CurrentLocation = entity.CurrentLocation,
                 Photo = entity.Photo,
                 Goal = entity.Goal,
-                CreatedAt = entity.CreatedAt,
+                //CreatedAt = entity.CreatedAt,
+                //UserId = entity.UserId
+            };
+        }
+
+        public static ResumeManager ToEntity(this ResumeManagerModel model)
+        {
+            if (model == null)
+            {
+                throw new NullReferenceException("ResumeManagerModel is null");
+            }
+            return new ResumeManager()
+            {
+                Id= model.Id.HasValue ? model.Id.Value : 0,
+                CreatedAt=model.CreatedAt,
+                //ResumeId = model.ResumeId,
+                ProfessionId= model.ProfessionId,
+                UserId= model.UserId.HasValue ? model.UserId.Value : 0
+            };
+        }
+
+        public static ResumeManagerModel ToModel(this ResumeManager entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("ResumeManager is null");
+            }
+
+            return new ResumeManagerModel(){
+                Id= entity.Id,
+                //ResumeId = entity.ResumeId.HasValue ? entity.ResumeId.Value : 0,
+                ProfessionId = entity.ProfessionId,
                 UserId = entity.UserId
             };
         }
 
+        public static ProfessionModel ToModel(this Profession entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("Profession is null");
+            }
+
+            return new ProfessionModel()
+            {
+                Id=entity.Id,
+                Name=entity.Name,
+                Rule=entity.Rules
+            };
+        }
         public static WorkPlace ToEntity(this WorkPlaceModel model)
         {
             // создаем новую работу

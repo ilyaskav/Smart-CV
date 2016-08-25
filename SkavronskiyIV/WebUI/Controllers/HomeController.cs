@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,20 @@ namespace WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        #region declarations
+
+        private readonly IProfessionService _professionService = null;
+        #endregion
+
+        public HomeController(IProfessionService profService)
+        {
+            _professionService = profService;
+        }
+
         public ActionResult Index()
         {
+             
+            ViewBag.ProfessionId = new SelectList(_professionService.GetAll(), "Id", "Name");
             return View();
         }
 

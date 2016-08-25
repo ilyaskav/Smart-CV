@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +65,8 @@
     <Compile Include="Classes\Certificate.cs" />
     <Compile Include="Classes\Contact.cs" />
     <Compile Include="Classes\ContactTitle.cs" />
+    <Compile Include="Classes\Profession.cs" />
+    <Compile Include="Classes\ResumeManager.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Classes\PersonalQuality.cs" />
     <Compile Include="Classes\Language.cs" />
@@ -72,9 +75,9 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Classes\Duty.cs" />
     <Compile Include="Classes\Institution.cs" />
-    <Compile Include="Migrations\201607042121446_ContactsAndLanguages.cs" />
-    <Compile Include="Migrations\201607042121446_ContactsAndLanguages.Designer.cs">
-      <DependentUpon>201607042121446_ContactsAndLanguages.cs</DependentUpon>
+    <Compile Include="Migrations\201608252037335_initial.cs" />
+    <Compile Include="Migrations\201608252037335_initial.Designer.cs">
+      <DependentUpon>201608252037335_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,8 +89,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607042121446_ContactsAndLanguages.resx">
-      <DependentUpon>201607042121446_ContactsAndLanguages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608252037335_initial.resx">
+      <DependentUpon>201608252037335_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

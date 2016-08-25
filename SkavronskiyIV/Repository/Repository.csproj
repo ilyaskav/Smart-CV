@@ -64,7 +64,9 @@
     <Compile Include="Classes\InstitutionRepository.cs" />
     <Compile Include="Classes\LanguageRepository.cs" />
     <Compile Include="Classes\PersonalQualityRepository.cs" />
+    <Compile Include="Classes\ProfessionRepository.cs" />
     <Compile Include="Classes\ProjectRepository.cs" />
+    <Compile Include="Classes\ResumeManagerRepository.cs" />
     <Compile Include="Classes\ResumeRepository.cs" />
     <Compile Include="Classes\SkillRepository.cs" />
     <Compile Include="Classes\WorkPlaceRepository.cs" />
@@ -75,8 +77,10 @@
     <Compile Include="Interfaces\IInstitutionRepository.cs" />
     <Compile Include="Interfaces\ILanguageRepository.cs" />
     <Compile Include="Interfaces\IPersonalQualityRepository.cs" />
+    <Compile Include="Interfaces\IProfessionRepository.cs" />
     <Compile Include="Interfaces\IProjectRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IResumeManagerRepository.cs" />
     <Compile Include="Interfaces\IResumeRepository.cs" />
     <Compile Include="Interfaces\ISkillRepository.cs" />
     <Compile Include="Interfaces\IWorkPlaceRepository.cs" />

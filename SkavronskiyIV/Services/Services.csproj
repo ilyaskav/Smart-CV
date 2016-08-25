@@ -48,6 +48,8 @@
     <Compile Include="Classes\InstitutionService.cs" />
     <Compile Include="Classes\LanguageService.cs" />
     <Compile Include="Classes\PersonalQualityService.cs" />
+    <Compile Include="Classes\ProfessionService.cs" />
+    <Compile Include="Classes\ResumeManagerService.cs" />
     <Compile Include="Classes\ResumeService.cs" />
     <Compile Include="Classes\SkillService.cs" />
     <Compile Include="Classes\WorkPlaceService.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Interfaces\IInstitutionService.cs" />
     <Compile Include="Interfaces\ILanguageService.cs" />
     <Compile Include="Interfaces\IPersonalQualityService.cs" />
+    <Compile Include="Interfaces\IProfessionService.cs" />
+    <Compile Include="Interfaces\IResumeManagerService.cs" />
     <Compile Include="Interfaces\IResumeService.cs" />
     <Compile Include="Interfaces\ISkillService.cs" />
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
@@ -69,7 +73,9 @@
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\PersonalQualityModel.cs" />
     <Compile Include="Models\PesonalQualityModel.cs" />
+    <Compile Include="Models\ProfessionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\ResumeManagerModel.cs" />
     <Compile Include="Models\ResumeModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\WorkPlaceModel.cs" />

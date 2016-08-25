@@ -26,7 +26,7 @@ namespace Services.Models
         //[Required]
         //[DataType(DataType.DateTime)]
         //[DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [DisplayName("Дата рождения")]
+        //[DisplayName("Дата рождения")]
         // System.Globalization.Culture
         public DateTime DateOfBirth { get; set; }
 
@@ -41,38 +41,8 @@ namespace Services.Models
         [DisplayName("Цель")]
         public String Goal { get; set; }
 
-        [Required]
-        public DateTime CreatedAt { get; set; }
-
         //[Required]
-        public int UserId { get; set; }
-
-
-        //public ICollection<InstitutionModel> Education { get; set; }
-
-        //public ICollection<WorkPlaceModel>  WorkExp { get; set; }
-
-        //public ICollection<SkillModel> Skills { get; set; }
-
-        //public ICollection<LanguageModel> Languages { get; set; }
-
-        //public ICollection<PersonalQualityModel> PersonalQualities { get; set; }
-
-        //public ICollection<CertificateModel> Ceftificates { get; set; }
-
-        //public ICollection<ContactModel> Contacts { get; set; }
-
-        public ResumeModel()
-        {
-            CreatedAt = DateTime.Now;
-        //    Education = new List<InstitutionModel>();
-        //    WorkExp = new List<WorkPlaceModel>();
-        //    Skills = new List<SkillModel>();
-        //    Languages = new List<LanguageModel>();
-        //    PersonalQualities = new List<PersonalQualityModel>();
-        //    Ceftificates = new List<CertificateModel>();
-        //    Contacts = new List<ContactModel>();
-        }
+        public int? ManagerId { get; set; }
 
     }
 }
