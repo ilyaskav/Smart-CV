@@ -1,5 +1,6 @@
 namespace Entities.Migrations
 {
+    using Entities.Classes;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +27,17 @@ namespace Entities.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.ContactTitles.AddOrUpdate(
+                t=>t.Title,
+                new ContactTitle { Title = "EMail", },
+                new ContactTitle { Title = "Phone" });
+
+            context.Professions.AddOrUpdate(
+                p=>p.Name,
+                new Profession { Name = "IT", Rules = "1" },
+                new Profession { Name = "Спорт", Rules = "2" },
+                new Profession { Name = "Менеджмент", Rules = "3" });
         }
     }
 }

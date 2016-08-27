@@ -41,6 +41,7 @@ namespace WebUI
             builder.RegisterType<ResumeService>().As<IResumeService>();
             builder.RegisterType<ResumeManagerService>().As<IResumeManagerService>();
             builder.RegisterType<ProfessionService>().As<IProfessionService>();
+            builder.RegisterType<ContactService>().As<IContactService>();
 
             #endregion
 

@@ -25,19 +25,17 @@ namespace Entities.Migrations
                 "dbo.Resumes",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         FirstName = c.String(nullable: false),
                         LastName = c.String(nullable: false),
                         DateOfBirth = c.DateTime(nullable: false),
                         CurrentLocation = c.String(),
                         Photo = c.String(),
                         Goal = c.String(nullable: false),
-                        ResumeManagerId = c.Int(nullable: false),
-                        Profession_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Professions", t => t.Profession_Id)
-                .Index(t => t.Profession_Id);
+                .ForeignKey("dbo.ResumeManagers", t => t.Id)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.Contacts",
@@ -107,7 +105,7 @@ namespace Entities.Migrations
                 "dbo.ResumeManagers",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         ProfessionId = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
@@ -115,8 +113,6 @@ namespace Entities.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Professions", t => t.ProfessionId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Resumes", t => t.Id)
-                .Index(t => t.Id)
                 .Index(t => t.UserId)
                 .Index(t => t.ProfessionId);
             
@@ -278,13 +274,12 @@ namespace Entities.Migrations
             DropForeignKey("dbo.Projects", "WorkPlaceId", "dbo.WorkPlaces");
             DropForeignKey("dbo.Duties", "WorkPlaceId", "dbo.WorkPlaces");
             DropForeignKey("dbo.Skills", "ResumeId", "dbo.Resumes");
-            DropForeignKey("dbo.ResumeManagers", "Id", "dbo.Resumes");
+            DropForeignKey("dbo.Resumes", "Id", "dbo.ResumeManagers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ResumeManagers", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ResumeManagers", "ProfessionId", "dbo.Professions");
-            DropForeignKey("dbo.Resumes", "Profession_Id", "dbo.Professions");
             DropForeignKey("dbo.PersonalQualities", "ResumeId", "dbo.Resumes");
             DropForeignKey("dbo.LanguageResumes", "Resume_Id", "dbo.Resumes");
             DropForeignKey("dbo.LanguageResumes", "Language_Id", "dbo.Languages");
@@ -306,12 +301,11 @@ namespace Entities.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.ResumeManagers", new[] { "ProfessionId" });
             DropIndex("dbo.ResumeManagers", new[] { "UserId" });
-            DropIndex("dbo.ResumeManagers", new[] { "Id" });
             DropIndex("dbo.PersonalQualities", new[] { "ResumeId" });
             DropIndex("dbo.Institutions", new[] { "ResumeId" });
             DropIndex("dbo.Contacts", new[] { "ResumeId" });
             DropIndex("dbo.Contacts", new[] { "ContactTitleId" });
-            DropIndex("dbo.Resumes", new[] { "Profession_Id" });
+            DropIndex("dbo.Resumes", new[] { "Id" });
             DropIndex("dbo.Certificates", new[] { "ResumeId" });
             DropTable("dbo.LanguageResumes");
             DropTable("dbo.AspNetRoles");

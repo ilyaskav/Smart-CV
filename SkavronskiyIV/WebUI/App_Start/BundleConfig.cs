@@ -30,7 +30,8 @@ namespace WebUI
 
             bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
                       "~/Scripts/bootstrap-datepicker.js",
-                      "~/Scripts/locales/bootstrap-datepicker.ru.min.js"));
+                      "~/Scripts/locales/bootstrap-datepicker.ru.min.js",
+                      "~/Scripts/jqueryValidateDate.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropdown-input").Include(
                       "~/Scripts/jquery.ddslick.js"));

@@ -24,10 +24,10 @@ namespace Entities.Classes
         #region navigation
 
         [ForeignKey("ResumeId")]
-        public Resume Resume { get; set; }
+        public virtual Resume Resume { get; set; }
 
         [ForeignKey("ContactTitleId")]
-        public ContactTitle ContactTitle { get; set; }
+        public virtual ContactTitle ContactTitle { get; set; }
 
         #endregion
     }

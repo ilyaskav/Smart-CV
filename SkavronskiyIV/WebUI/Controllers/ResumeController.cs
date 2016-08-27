@@ -18,13 +18,15 @@ namespace WebUI.Controllers
 
         private readonly IResumeService _resumeService = null;
         private readonly IResumeManagerService _managerService = null;
+        private readonly IContactService _contactService = null;
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService)
+        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService)
         {
             _resumeService = resumeService;
             _managerService = managerService;
+            _contactService = contactService;
         }
 
         // GET: Resume
@@ -34,7 +36,6 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult CreateEmptyResume(ResumeManagerModel model)
         {
@@ -89,19 +90,53 @@ namespace WebUI.Controllers
             if (model.Id == null)
             {
                 _resumeService.CreateResume(model);
+                
             }
             else
             {
                 _resumeService.UpdateResume(model);
             }
 
+            ViewBag.Success = "Изменения сохранены";
             return View(model);
         }
 
-
-        public ActionResult Contacts()
+        [HttpGet]
+        public ActionResult Contacts(int managerId)
         {
-            return View();
+            if (managerId <= 0) return HttpNotFound();
+
+            // проверяем, владелец ли резюме шлет запрос 
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            var viewModel = _contactService.Get(managerId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Contacts(int managerId, ContactAddModel addModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(addModel);
+            }
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            addModel.ResumeManagerId = managerId;
+            _contactService.UpdateContact(addModel);
+
+            ViewBag.Success = "Изменения сохранены";
+            return View(addModel);
         }
 
         public ActionResult Education()

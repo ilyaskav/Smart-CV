@@ -49,13 +49,7 @@ namespace Entities
             //Configure domain classes using modelBuilder here
 
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ResumeManager>()
-                .HasKey<int>(en => en.Id);
-
-            modelBuilder.Entity<ResumeManager>()
-                .HasRequired(prop => prop.Resume)
-                .WithRequiredPrincipal(en => en.ResumeManager);
+            
         }
 
         public static ApplicationDbContext Create()

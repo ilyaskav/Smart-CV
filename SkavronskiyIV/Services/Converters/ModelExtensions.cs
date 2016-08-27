@@ -27,15 +27,17 @@ namespace Services.Converters
                 DateOfBirth = model.DateOfBirth,
                 CurrentLocation = model.CurrentLocation,
                 Photo = model.Photo,
-                Goal = model.Goal,
-                ResumeManagerId=model.ManagerId.Value
-                //CreatedAt = model.CreatedAt,
-                //UserId = model.UserId
+                Goal = model.Goal
             };
         }
 
         public static ResumeModel ToModel(this Resume entity)
         {
+            if (entity == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return new ResumeModel()
             {
                 Id = entity.Id,
@@ -44,9 +46,7 @@ namespace Services.Converters
                 DateOfBirth = entity.DateOfBirth,
                 CurrentLocation = entity.CurrentLocation,
                 Photo = entity.Photo,
-                Goal = entity.Goal,
-                //CreatedAt = entity.CreatedAt,
-                //UserId = entity.UserId
+                Goal = entity.Goal
             };
         }
 
@@ -60,7 +60,6 @@ namespace Services.Converters
             {
                 Id= model.Id.HasValue ? model.Id.Value : 0,
                 CreatedAt=model.CreatedAt,
-                //ResumeId = model.ResumeId,
                 ProfessionId= model.ProfessionId,
                 UserId= model.UserId.HasValue ? model.UserId.Value : 0
             };
@@ -75,7 +74,7 @@ namespace Services.Converters
 
             return new ResumeManagerModel(){
                 Id= entity.Id,
-                //ResumeId = entity.ResumeId.HasValue ? entity.ResumeId.Value : 0,
+                CreatedAt=entity.CreatedAt,
                 ProfessionId = entity.ProfessionId,
                 UserId = entity.UserId
             };
@@ -219,6 +218,92 @@ namespace Services.Converters
                 Date = model.Date,
                 Location = model.Location,
                 ResumeId = model.ResumeId
+            };
+        }
+
+        public static ContactTitleModel ToModel(this ContactTitle entity){
+            if (entity == null)
+            {
+                throw new NullReferenceException("ContactTitle is null");
+            }
+
+            return new ContactTitleModel(){
+                Id=entity.Id,
+                Title=entity.Title
+            };
+        }
+
+        public static ContactTitle ToEntity(this ContactTitleModel model)
+        {
+            if (model == null)
+            {
+                throw new NullReferenceException("ContactTitleModel is null");
+            }
+
+            return new ContactTitle()
+            {
+                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Title = model.Title
+            };
+        }
+
+        public static ContactModel ToModel(this Contact entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("Contact is null");
+            }
+
+            return new ContactModel()
+            {
+                Id = entity.Id,
+                ContactTitle = entity.ContactTitle.ToModel(),
+                Data = entity.Data,
+                ResumeId=entity.ResumeId
+            };
+        }
+
+        public static Contact ToEntity(this ContactModel model)
+        {
+            if (model == null)
+            {
+                throw new NullReferenceException("ContactModel is null");
+            }
+
+            return new Contact()
+            {
+                Id = model.Id.HasValue ? model.Id.Value : 0,
+                ContactTitle = model.ContactTitle.ToEntity(),
+                Data = model.Data,
+                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+            };
+        }
+
+        public static ContactAddModel ToAddModel(this ICollection<Contact> entity)
+        {
+            string email=string.Empty, phone=string.Empty;
+            ICollection<ContactModel> additionalContacts = new List<ContactModel>();
+
+            foreach (var contact in entity)
+            {
+                switch (contact.ContactTitle.Title)
+                {
+                    case "EMail":
+                        email = contact.Data;
+                        break;
+                    case "Phone":
+                        phone = contact.Data;
+                        break;
+                    default:
+                        additionalContacts.Add(contact.ToModel());
+                        break;
+                }
+            }
+            return new ContactAddModel()
+            {
+                EMail = email,
+                Phone = phone,
+                Contacts = additionalContacts
             };
         }
     }

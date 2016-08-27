@@ -1,4 +1,4 @@
-﻿
+﻿@model Services.Models.ContactAddModel
 @{
     ViewBag.Title = "Contacts";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,37 +12,20 @@
         <div class="form-group">
             <label class="col-md-2 control-label">E-mail*</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="email">
+                @Html.EditorFor(model => model.EMail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EMail, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Телефон*</label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="phone" />
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="contact">
-            <div class="form-group">
-                <div class="col-md-2">
-                    <select class="form-control dropdown-contact">
-                        <option value="0">E-Mail</option>
-                        <option value="1">Телефон</option>
-                        <option value="2">LinkedIn</option>
-                        <option value="3">GitHub</option>
-                    </select>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" name="data" class="form-control">
-                </div>
-                <div class="col-md-1 delete-line">
-                    <p class="text-danger remove-contact">
-                        <span class="glyphicon glyphicon-remove"></span> Удалить
-                    </p>
-                </div>
-            </div>
-        </div>*@
+        @Html.EditorFor(model => model.Contacts)
 
         <div class="col-md-10 col-md-offset-2">
             <p id="addContact" aria-label="Добавить контакт" class="text-info">
@@ -52,9 +35,10 @@
 
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <a href="~/Resume/" class="btn btn-default">Назад</a>
+                <a href="~/Resume/PersonalData" class="btn btn-default">Назад</a>
                 <a href="~/Resume/Education" class="btn btn-default">Далее</a>
                 <button class="btn btn-primary">Сохранить</button>
+                <span class="text-success disappearance">@ViewBag.Success</span>
             </div>
         </div>
     </form>
@@ -62,5 +46,6 @@
 
 @section Scripts{
     @*@Scripts.Render("~/bundles/dropdown-input")*@
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/addingData.js")
 }

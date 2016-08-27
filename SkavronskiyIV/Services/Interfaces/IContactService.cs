@@ -9,10 +9,13 @@ namespace Services.Interfaces
 {
     public interface IContactService : IDisposable
     {
+        ContactAddModel Get(int managerId);
 
         void CreateContact(ContactModel model);
 
-        void UpdateContact(ContactModel model);
+        bool UpdateContact(ContactModel model);
+
+        void UpdateContact(ContactAddModel addModel);
 
         void RemoveContact(ContactModel model);
 

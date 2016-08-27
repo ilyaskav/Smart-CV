@@ -13,8 +13,6 @@ namespace Services.Models
 
         public int? UserId { get; set; }
 
-        //public int? ResumeId { get; set; }
-
         [Required]
         public DateTime CreatedAt { get; set; }
 

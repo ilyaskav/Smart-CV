@@ -8,7 +8,7 @@ namespace Services.Models
 {
     public class ContactTitleModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public String Title { get; set; }
     }

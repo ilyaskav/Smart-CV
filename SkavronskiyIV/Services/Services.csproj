@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\ISkillService.cs" />
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
     <Compile Include="Models\CertificateModel.cs" />
+    <Compile Include="Models\ContactAddModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ContactTitleModel.cs" />
     <Compile Include="Models\DutyModel.cs" />

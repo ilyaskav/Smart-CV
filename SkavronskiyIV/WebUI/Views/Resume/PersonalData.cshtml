@@ -18,7 +18,6 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Имя*</label>
             <div class="col-md-10">
-                @*<input type="text" class="form-control" name="FirstName">*@
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
@@ -27,7 +26,6 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Фамилия*</label>
             <div class="col-md-10">
-                @*<input type="text" class="form-control" name="lastName"/>*@
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
@@ -36,16 +34,15 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Дата рождения</label>
             <div class="col-md-10">
-                <input id="datePicker" data-provide="datepicker" class="form-control" name="DateOfBirth" />
-                @*@Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "datePicker", data_provide = "datepicker" } })
-                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })*@
+                @*<input id="datePicker" data-provide="datepicker" class="form-control" name="DateOfBirth" />*@
+                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "datePicker", data_provide = "datepicker" } })
+                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Город</label>
             <div class="col-md-10">
-                @*<input type="text" class="form-control" name="currentLocation" data-toggle="tooltip" data-placement="bottom" title="Место вашего настоящего проживания"/>*@
                 @Html.EditorFor(model => model.CurrentLocation, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", data_placement = "bottom", title = "Место вашего настоящего проживания" } })
                 @Html.ValidationMessageFor(model => model.CurrentLocation, "", new { @class = "text-danger" })
             </div>
@@ -54,7 +51,6 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Цель*</label>
             <div class="col-md-10">
-                @*<input type="text" class="form-control" name="goal" data-toggle="tooltip" data-placement="bottom" title="Напр. Получение должности Junior .NET Developer"/>*@
                 @Html.EditorFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control", data_toggle="tooltip", data_placement="bottom", title="Напр. Получение должности Junior .NET Developer" } })
                 @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
             </div>
@@ -69,7 +65,7 @@
             <div class="col-md-10 col-md-offset-2">
                 <a href="~/Resume/Contacts" class="btn btn-default">Далее</a>
                 <input type="submit" class="btn btn-primary" value="Сохранить" />
-
+                <span class="text-success disappearance">@ViewBag.Success</span>
             </div>
         </div>      
     </div>

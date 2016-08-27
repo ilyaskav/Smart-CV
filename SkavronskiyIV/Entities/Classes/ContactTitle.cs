@@ -20,7 +20,7 @@ namespace Entities.Classes
         
         #region navigation
 
-        public ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
 
         #endregion
 

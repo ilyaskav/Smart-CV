@@ -10,3 +10,4 @@
 /// <reference path="locales/bootstrap-datepicker.ru.min.js" />
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="respond.js" />
+/// <reference path="jqueryvalidatedate.js" />

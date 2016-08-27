@@ -10,13 +10,11 @@ namespace Entities.Classes
 {
     public class ResumeManager:IEntity
     {
-        //[Key]
+        [Key]
         public int Id { get; set; }
 
         [Required]
         public int UserId { get; set; }
-
-        //public int? ResumeId { get; set; }
 
         [Required]
         public int ProfessionId { get; set; }
@@ -30,7 +28,6 @@ namespace Entities.Classes
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
-        //[ForeignKey("ResumeId")]
         public virtual Resume Resume { get; set; }
 
         [ForeignKey("ProfessionId")]

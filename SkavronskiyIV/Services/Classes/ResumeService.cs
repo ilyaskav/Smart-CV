@@ -45,7 +45,10 @@ namespace Services.Classes
 
         public void CreateResume(ResumeModel model)
         {
-            _resumeRepository.Add(model.ToEntity());
+            var resumeManager = _resumeManagerRepository.Get(model.ManagerId);
+            resumeManager.Resume = model.ToEntity();
+
+            _resumeManagerRepository.Update(resumeManager);
         }
 
         public void UpdateResume(ResumeModel model)
@@ -85,9 +88,9 @@ namespace Services.Classes
             doc.Bookmarks["FULLNAME"].Range.Text = myResume.FirstName + " " + myResume.LastName;
             doc.Bookmarks["GOAL"].Range.Text = myResume.Goal;
             doc.Bookmarks["LOCATION"].Range.Text = myResume.CurrentLocation;
-            doc.Bookmarks["EMAIL"].Range.Text = myResume.Contacts.FirstOrDefault(c => c.ContactTitle.Title.Equals("E-mail")).Data;
+            doc.Bookmarks["EMAIL"].Range.Text = myResume.Contacts.FirstOrDefault(c => c.ContactTitle.Title.Equals("EMail")).Data;
             doc.Bookmarks["TELNUM"].Range.Text = myResume.Contacts.FirstOrDefault(c => c.ContactTitle.Title.Equals("Phone")).Data;
-            foreach (var contact in myResume.Contacts.Where(c => !c.ContactTitle.Title.Equals("E-mail") && !c.ContactTitle.Title.Equals("Phone")))
+            foreach (var contact in myResume.Contacts.Where(c => !c.ContactTitle.Title.Equals("EMail") && !c.ContactTitle.Title.Equals("Phone")))
             {
                 doc.Bookmarks["OTHER_CONTACTS"].Range.Text = String.Format("{0}: {1}\n", contact.ContactTitle.Title, contact.Data);
             }
