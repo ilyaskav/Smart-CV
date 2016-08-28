@@ -20,9 +20,6 @@ namespace Entities.Classes
         [Required]
         public String Level { get; set; }
 
-        //public int ResumeId { get; set; }
-
-
         #region navigation
 
         //[ForeignKey("ResumeId")]

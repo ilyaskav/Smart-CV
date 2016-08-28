@@ -102,7 +102,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Entities.Classes.Project" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Entities.Classes.Project" BaseTypeListCollapsed="true">
     <Position X="4.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAiAEEAEAAAAAAAAAAECAAAAAEAAAAAAAA=</HashCode>
@@ -110,15 +110,15 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Entities.Classes.Resume" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="3.5" Width="1.5" />
+  <Class Name="Entities.Classes.Resume" BaseTypeListCollapsed="true">
+    <Position X="10" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>FwACAEACCAAAACAAAAAAAAgAAAAQAAAAABAgAAAACAg=</HashCode>
       <FileName>Classes\Resume.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Entities.Classes.ResumeManager" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Entities.Classes.ResumeManager" BaseTypeListCollapsed="true">
     <Position X="8.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAADAAAAAAAAAAAAACAAAAgAAAAAAAAAAAAgAAgBAAA=</HashCode>
@@ -134,7 +134,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Entities.Classes.WorkPlace" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Entities.Classes.WorkPlace" BaseTypeListCollapsed="true">
     <Position X="3" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgACAACBAAAgAAAoAAAAAAQAAAAIAAAAAAAAAAgAAQA=</HashCode>

@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-//using Autofac.Integration.Owin;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using System.Configuration;
 using Autofac.Integration.Owin;
 using System.Reflection;
 using Repository.Classes;
-//using Repository;
 using Repository.Interfaces;
 using Services.Classes;
 using Services.Interfaces;
@@ -42,6 +40,7 @@ namespace WebUI
             builder.RegisterType<ResumeManagerService>().As<IResumeManagerService>();
             builder.RegisterType<ProfessionService>().As<IProfessionService>();
             builder.RegisterType<ContactService>().As<IContactService>();
+            builder.RegisterType<InstitutionService>().As<IInstitutionService>();
 
             #endregion
 

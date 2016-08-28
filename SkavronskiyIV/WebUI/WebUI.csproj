@@ -260,6 +260,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Views\Contacts.js" />
+    <Content Include="Scripts\Views\Education.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -303,6 +305,7 @@
     <Content Include="Views\Resume\PersonalQualities.cshtml" />
     <Content Include="Views\Resume\Certificates.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\ContactModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\InstitutionModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

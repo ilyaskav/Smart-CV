@@ -94,21 +94,11 @@ namespace Services.Classes
         public void UpdateContact(ContactAddModel addModel)
         {
             var resume=_resumeRepository.Get(addModel.ResumeManagerId.Value);
-            foreach (var contact in addModel.Contacts)
-            {
-                contact.ResumeId = resume.Id;
-                // обновить контакт если такой есть
-                if (!this.UpdateContact(contact))
-                    // создать новый если нет
-                    this.CreateContact(contact);
-            }
 
             if (resume.Contacts.Count == 0)
             {
                 this.CreateContact(new ContactModel() { Data = addModel.EMail, ContactTitle = _contactTitleRepository.Get(t => t.Title.Equals("EMail")).FirstOrDefault().ToModel(), ResumeId = resume.Id });
                 this.CreateContact(new ContactModel() { Data = addModel.Phone, ContactTitle = _contactTitleRepository.Get(t => t.Title.Equals("Phone")).FirstOrDefault().ToModel(), ResumeId = resume.Id });
-                //contacts.Add(new Contact() { Data = addModel.EMail, ContactTitle = _contactTitleRepository.Get(t => t.Title.Equals("EMail")).FirstOrDefault() });
-                //contacts.Add(new Contact() { Data = addModel.Phone, ContactTitle = _contactTitleRepository.Get(t => t.Title.Equals("Phone")).FirstOrDefault() });
             }
             else
             {
@@ -120,7 +110,16 @@ namespace Services.Classes
                     phone.Data = addModel.Phone;
                     _contactRepository.Update(phone);
             }
-            
+
+            foreach (var contact in addModel.Contacts)
+            {
+                contact.ResumeId = resume.Id;
+                // обновить контакт если такой есть
+                if (!this.UpdateContact(contact))
+                    // создать новый если нет
+                    this.CreateContact(contact);
+            }
+
         }
     }
 }

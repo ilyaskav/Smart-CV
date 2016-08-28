@@ -166,16 +166,41 @@ namespace Services.Converters
 
         public static Institution ToEntity(this InstitutionModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException("InstitutionModel is null");
+            }
             return new Institution()
             {
-                Id = model.Id.Value,
+                Id = model.Id.HasValue? model.Id.Value: 0,
+                Name=model.Name,
                 City = model.City,
                 Department = model.Department,
                 Specialty = model.Specialty,
                 Degree = model.Degree,
                 From = model.From,
-                To = model.To.Value,
-                ResumeId = model.ResumeId
+                To = model.To,
+                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+            };
+        }
+
+        public static InstitutionModel ToModel(this Institution entity){
+            if (entity == null)
+            {
+                throw new NullReferenceException("Institution is null");
+            }
+
+            return new InstitutionModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                City = entity.City,
+                Department = entity.Department,
+                Specialty = entity.Specialty,
+                Degree = entity.Degree,
+                From = entity.From,
+                To = entity.To,
+                ResumeId = entity.ResumeId
             };
         }
 

@@ -1,0 +1,68 @@
+﻿@model Services.Models.InstitutionModel
+
+@{
+    Layout = null;
+}
+
+<div class="institution">
+    @Html.HiddenFor(model=>model.Id)
+    @Html.HiddenFor(model=>model.ResumeId)
+    <div class="form-group">
+        <label class="col-md-2 control-label">Уч. заведение*</label>
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Город</label>
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Кафедра</label>
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-1 delete-line">
+            <p class="text-danger remove-institution">
+                <span class="glyphicon glyphicon-remove"></span> Удалить
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Специальность*</label>
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.Specialty, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Specialty, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Степень*</label>
+        <div class="col-md-9">
+            @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Период*</label>
+        <div class="col-md-9">
+            <div class="input-daterange input-group datePicker-month" id="datePicker-month">
+                @*<input type="text" class="input-sm form-control" name="start" />*@
+                @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                <span class="input-group-addon">по</span>
+                @*<input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />*@
+                @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control", placeholder = "настоящее время" } })
+            </div>
+        </div>
+    </div>
+</div>

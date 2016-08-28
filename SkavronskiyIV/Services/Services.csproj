@@ -70,6 +70,7 @@
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ContactTitleModel.cs" />
     <Compile Include="Models\DutyModel.cs" />
+    <Compile Include="Models\InstitutionAddModel.cs" />
     <Compile Include="Models\InstitutionModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\PersonalQualityModel.cs" />

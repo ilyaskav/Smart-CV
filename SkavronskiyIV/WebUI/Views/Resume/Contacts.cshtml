@@ -37,10 +37,9 @@
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
                 @Html.RouteLink("Назад",  new { action= "PersonalData", controller= "Resume", managerId = ViewBag.ManagerId }, new { @class="btn btn-default"})
-                @*<a href="~/Resume/PersonalData" class="btn btn-default">Назад</a>*@
-                <a href="~/Resume/Education" class="btn btn-default">Далее</a>
+                @Html.RouteLink("Далее", new { action = "Education", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                 <button class="btn btn-primary">Сохранить</button>
-                <span class="text-success disappearance">@ViewBag.Success</span>
+                @*<span class="text-success disappearance">@ViewBag.Success</span>*@
             </div>
         </div>
     </form>
@@ -50,4 +49,5 @@
     @*@Scripts.Render("~/bundles/dropdown-input")*@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/addingData.js")
+    @Scripts.Render("~/Scripts/Views/Contacts.js")
 }

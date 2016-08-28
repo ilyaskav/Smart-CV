@@ -29,9 +29,11 @@ namespace Entities.Migrations
             //
 
             context.ContactTitles.AddOrUpdate(
-                t=>t.Title,
+                t => t.Title,
                 new ContactTitle { Title = "EMail", },
-                new ContactTitle { Title = "Phone" });
+                new ContactTitle { Title = "Phone" },
+                new ContactTitle { Title = "Сайт" },
+                new ContactTitle { Title = "LinkedIn"});
 
             context.Professions.AddOrUpdate(
                 p=>p.Name,

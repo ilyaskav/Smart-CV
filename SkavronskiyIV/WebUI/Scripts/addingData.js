@@ -1,108 +1,23 @@
-﻿//  http://htmltojavascript.com/
+﻿// Полезные ссылки
+//  http://htmltojavascript.com/
 // https://www.sitepoint.com/16-jquery-selectboxdrop-down-plugins/
 
+// НАЧАЛО Общие для всех функции
+var getManagerIdFromURI = function () {
+    var sPageURL, managerId=0;
+    if (window.location.search == "") {
+        sPageURL = decodeURIComponent(window.location.pathname);
+        managerId = sPageURL.substring(sPageURL.lastIndexOf('/') + 1, sPageURL.length);
+    }
+    else {
+        sPageURL = decodeURIComponent(window.location.search);
+        managerId = sPageURL.substring(sPageURL.lastIndexOf('=') + 1, sPageURL.length);
+    }
+    return managerId;
+};
+// КОНЕЦ
+
 $(function () {
-    //добавление дополнительного поля для контакта
-    $('#addContact').on('click', function () {
-        var contactIndex=0;
-        var contactSection = $(this).parent().prev().find('input[type = "hidden"]').attr('name');
-        if (contactSection != undefined) {
-            contactIndex =parseInt( contactSection.toString().charAt(contactSection.toString().indexOf("[") + 1)) +1;
-        }
-
-        var html = [
-        '<div class="contact">',
-        '    <div class="form-group">',
-        '        <input type="hidden" value="" name="Contacts[',contactIndex,'].Id" id="Contacts_',contactIndex,'__Id" data-val-number="The field Id must be a number." data-val="true">',
-        '        <input type="hidden" value="" name="Contacts[', contactIndex, '].ContactTitle.Id" id="Contacts_', contactIndex, '__ContactTitle_Id" data-val-required="Требуется поле Id." data-val-number="The field Id must be a number." data-val="true">',
-        '        <div class="col-md-2">',
-        '            <input type="text" value="" name="Contacts[', contactIndex, '].ContactTitle.Title" id="Contacts_', contactIndex, '__ContactTitle_Title" class="form-control text-right font-bold text-box single-line">',
-        '        </div>',
-        '        <div class="col-md-9">',
-        '            <input type="text" value="" name="Contacts[', contactIndex, '].Data" id="Contacts_', contactIndex, '__Data" data-val-required="Требуется поле Data." data-val="true" class="form-control text-box single-line">',
-        '        </div>',
-        '        <div class="col-md-1 delete-line">',
-        '            <p class="text-danger remove-contact">',
-        '                <span class="glyphicon glyphicon-remove"></span> Удалить',
-        '            </p>',
-        '        </div>',
-        '    </div>',
-        '</div>'
-        ].join('');
-
-        $(this).parent().before(html);
-    });
-
-    // удаление поля для контакта
-    $(document).on('click', 'p.remove-contact', function () {
-        //$(this).closest('div.contact').remove();
-
-        var contactIndex = $(this).closest('div.contact').find('input[type = "hidden"]').val();
-
-        var sPageURL, managerId;
-        if (window.location.search == "") {
-            sPageURL = decodeURIComponent(window.location.pathname);
-            managerId = sPageURL.substring(sPageURL.lastIndexOf('/') + 1, sPageURL.length);
-        }
-        else {
-            sPageURL = decodeURIComponent(window.location.search);
-            managerId = sPageURL.substring(sPageURL.lastIndexOf('=') + 1, sPageURL.length);
-        }
-        //console.log(managerId)
-        window.location.href='/Resume/DeleteContact/?managerId=' + managerId + '&contactId=' + contactIndex;
-    });
-
-    //добавление полей для нового учебного заведения
-    $('#addInstitution').on('click', function () {
-        var html = [
-'    <hr/>',
-'    <div class="row">',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Уч. заведение*</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="name">',
-'            </div>',
-'        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Город</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="city" />',
-'            </div>',
-'        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Кафедра</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="department" />',
-'            </div>',
-'        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Специальность*</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="speciality" />',
-'            </div>',
-'        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Степень*</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="degree" />',
-'            </div>',
-'        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Период*</label>',
-'            <div class="col-md-10">',
-'                <div class="input-daterange input-group" id="datePicker">',
-'                    <input type="text" class="input-sm form-control" name="start" />',
-'                    <span class="input-group-addon">по</span>',
-'                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />',
-'                </div>',
-'            </div>',
-'        </div>',
-'    </div>',
-''
-        ].join('');
-        $(this).parent().parent().before(html);
-    });
-
     // добавление поля для обязанности на работе
     $(document).on('click', '#addDuty', function () {
         var html = [
@@ -282,40 +197,33 @@ $(function () {
         $(this).closest('div.certificate').remove();
     });
 
-    // включение поля с выпадающим списком
-    //$('.dropdown-contact').ddslick({
-    //    onSelected: function (selectedData) {
-    //        //callback function: do something with selectedData;
-    //    }
+
+    //// выбор даты с днями
+    //$('#datePicker').datepicker({
+    //    format: "dd.mm.yyyy",
+    //    startView: 2,
+    //    maxViewMode: 3,
+    //    language: "ru",
+    //    autoclose: true
     //});
 
-    //var selectedData = function (data) {
-    //    $('.dropdown-contact').val(data);
-    //}
+    //// выбор даты только месяцы и годы
+    //$(document).on('mouseover', '.datePicker-month', (function () {
+    //    $(this).datepicker({
+    //        format: "dd.mm.yyyy",
+    //        startView: 2,
+    //        minViewMode: 1,
+    //        maxViewMode: 3,
+    //        language: "ru",
+    //        autoclose: true
+    //    });
+    //}));
+    
 
-    // выбор даты с днями
-    $('#datePicker').datepicker({
-        format: "dd.mm.yyyy",
-        startView: 2,
-        maxViewMode: 3,
-        language: "ru",
-        autoclose: true
-    });
+    //// включеиня подсказок
+    //$('[data-toggle="tooltip"]').tooltip();
 
-    // выбор даты только месяцы и годы
-    $('#datePicker-month').datepicker({
-        format: "dd.mm.yyyy",
-        startView: 2,
-        minViewMode: 1,
-        maxViewMode: 3,
-        language: "ru",
-        autoclose: true
-    });
-
-    // включеиня подсказок
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // исчезновение
-    $('.disappearance').fadeOut(5000);
+    //// исчезновение
+    //$('.disappearance').fadeOut(5000);
 });
 

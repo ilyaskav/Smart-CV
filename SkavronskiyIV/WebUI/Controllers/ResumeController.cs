@@ -19,14 +19,16 @@ namespace WebUI.Controllers
         private readonly IResumeService _resumeService = null;
         private readonly IResumeManagerService _managerService = null;
         private readonly IContactService _contactService = null;
+        private readonly IInstitutionService _institutionService = null;
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService)
+        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, IInstitutionService instService)
         {
             _resumeService = resumeService;
             _managerService = managerService;
             _contactService = contactService;
+            _institutionService = instService;
         }
 
         // GET: Resume
@@ -98,6 +100,7 @@ namespace WebUI.Controllers
                 _resumeService.UpdateResume(model);
             }
 
+            ViewBag.ManagerId = managerId;
             ViewBag.Success = "Изменения сохранены";
             return View(model);
         }
@@ -156,11 +159,32 @@ namespace WebUI.Controllers
             return RedirectToAction(string.Format("Contacts/{0}", managerId));
         }
 
-        public ActionResult Education(int managerId, WorkPlaceModel model)
+        [HttpGet]
+        public ActionResult Education(int managerId)
+        {
+            if (managerId <= 0) return HttpNotFound();
+
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            ViewBag.ManagerId = managerId;
+            var viewModel = _institutionService.Get(managerId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Education(int managerId, InstitutionAddModel addModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(addModel);
             }
             int userId = User.Identity.GetUserId<int>();
             // проверяем, владелец ли резюме шлет запрос на его изменение
@@ -169,10 +193,24 @@ namespace WebUI.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            
+            //addModel.ResumeManagerId = managerId;
+            _institutionService.CreateOrUpdate (addModel);
 
-            ViewBag.Success = "Изменения сохранены";
-            return View(model);
+            return RedirectToAction(string.Format("Education/{0}", managerId));
+        }
+
+        [HttpGet]
+        public ActionResult RemoveInstitution(int managerId, int institutionId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _institutionService.RemoveInstitution(institutionId);
+
+            return RedirectToAction(string.Format("Education/{0}", managerId));
         }
 
         public ActionResult WorkExperience()

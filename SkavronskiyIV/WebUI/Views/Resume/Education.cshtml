@@ -1,4 +1,4 @@
-﻿@model Services.Models.InstitutionModel
+﻿@model Services.Models.InstitutionAddModel
 @{
     ViewBag.Title = "Education";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,70 +7,12 @@
 <div class="row">
     <div class="h2 text-center section">Образование</div>
 </div>
-@using (Html.BeginForm())
-{ 
+<form class="form-horizontal" method="post">
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class="text-danger"})
-
-<div class="form-horizontal">
-    <div class="row">
-        <div class="form-group">
-            <label class="col-md-2 control-label">Уч. заведение*</label>
-            <div class="col-md-10">
-                @*<input type="text" class="form-control" name="name">*@
-                @Html.EditorFor(model=>model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model=>model.Name, "", new { @class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Город</label>
-            <div class="col-md-10">
-                @*<input type="text" class="form-control" name="city" />*@
-                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Кафедра</label>
-            <div class="col-md-10">
-                @*<input type="text" class="form-control" name="department" />*@
-                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Специальность*</label>
-            <div class="col-md-10">
-                @*<input type="text" class="form-control" name="speciality" />*@
-                @Html.EditorFor(model => model.Specialty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Specialty, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Степень*</label>
-            <div class="col-md-10">
-                @*<input type="text" class="form-control" name="degree" />*@
-                @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Период*</label>
-            <div class="col-md-10">
-                <div class="input-daterange input-group" id="datePicker">
-                    <input type="text" class="input-sm form-control" name="start" />
-                    <span class="input-group-addon">по</span>
-                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ResumeManagerId)
+        <div class="row">
+            @Html.EditorFor(model => model.Institutions)
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
                 <p id="addInstitution" aria-label="Добавить учебное заведение" class="text-info">
@@ -80,20 +22,19 @@
         </div>
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <a href="~/Resume/Contacts" class="btn btn-default" >Назад</a>
-                <a href="~/Resume/WorkExperience" class="btn btn-default">Далее</a>
+                @Html.RouteLink("Назад", new { action = "Contacts", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                @Html.RouteLink("Далее", new { action = "WorkExperience", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                 <button class="btn btn-primary">Сохранить</button>
             </div>
-
         </div>
     </div>
-</div>
-}
+</form> 
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datePicker")
     @Scripts.Render("~/Scripts/addingData.js")
+    @Scripts.Render("~/Scripts/Views/Education.js")
 }
 
 
