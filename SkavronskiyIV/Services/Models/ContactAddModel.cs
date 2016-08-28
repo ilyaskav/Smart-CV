@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,11 @@ namespace Services.Models
     {
         [Required]
         [DataType(DataType.EmailAddress)]
+        [DisplayName("Электронная почта")]
         public string EMail { get; set; }
 
         [Required]
+        [DisplayName("Контактный телефон")]
         public string Phone { get; set; }
 
         public int? ResumeManagerId { get; set; }

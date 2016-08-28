@@ -273,7 +273,7 @@ namespace Services.Converters
             return new Contact()
             {
                 Id = model.Id.HasValue ? model.Id.Value : 0,
-                ContactTitle = model.ContactTitle.ToEntity(),
+                ContactTitleId = model.ContactTitle.Id.HasValue ? model.ContactTitle.Id.Value : 0,
                 Data = model.Data,
                 ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
             };

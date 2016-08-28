@@ -65,6 +65,7 @@ namespace WebUI.Controllers
                 return View("~/Views/Shared/Error.cshtml");
             }
 
+            ViewBag.ManagerId = managerId;
             var viewModel = _resumeService.GetResumeByManagerId(managerId);
             if (viewModel == null) return View();
 
@@ -112,6 +113,7 @@ namespace WebUI.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            ViewBag.ManagerId = managerId;
             var viewModel = _contactService.Get(managerId);
             if (viewModel == null) return View();
 
@@ -119,6 +121,7 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Contacts(int managerId, ContactAddModel addModel)
         {
             if (!ModelState.IsValid)
@@ -136,12 +139,40 @@ namespace WebUI.Controllers
             _contactService.UpdateContact(addModel);
 
             ViewBag.Success = "Изменения сохранены";
-            return View(addModel);
+            return RedirectToAction(string.Format("Contacts/{0}", managerId));
         }
 
-        public ActionResult Education()
+        [HttpGet]
+        public ActionResult DeleteContact(int managerId, int contactId)
         {
-            return View();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _contactService.RemoveContact(contactId);
+
+            return RedirectToAction(string.Format("Contacts/{0}", managerId));
+        }
+
+        public ActionResult Education(int managerId, WorkPlaceModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            
+
+            ViewBag.Success = "Изменения сохранены";
+            return View(model);
         }
 
         public ActionResult WorkExperience()

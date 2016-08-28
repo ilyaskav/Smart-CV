@@ -39,7 +39,6 @@ namespace Services.Classes
         }
         public void CreateContact(ContactModel model)
         {
-            //int contTitleId;
             if (_contactTitleRepository.Has(e => e.Title.Equals(model.ContactTitle.Title)))
             {
                 var entity=_contactTitleRepository.Get(e => e.Title.Equals(model.ContactTitle.Title)).FirstOrDefault();
@@ -50,9 +49,10 @@ namespace Services.Classes
             _contactRepository.Add(model.ToEntity());
         }
 
-        public void RemoveContact(int id)
+        public void RemoveContact(int contactId)
         {
-            if (_contactRepository.Has(id)) _contactRepository.Remove(id);
+
+            if (_contactRepository.Has(contactId)) _contactRepository.Remove(contactId);
         }
 
         public void RemoveContact(ContactModel model)
@@ -74,7 +74,7 @@ namespace Services.Classes
             {
                 var entity = _contactRepository.Get(model.Id.Value);
                 entity.Data = model.Data;
-                if (!entity.ContactTitle.Equals(model.ContactTitle))
+                if (!entity.ContactTitle.Title.Equals(model.ContactTitle.Title))
                 {
                     int contTitleId;
                     if (_contactTitleRepository.Has(e => e.Title.Equals(model.ContactTitle.Title)))
@@ -96,6 +96,7 @@ namespace Services.Classes
             var resume=_resumeRepository.Get(addModel.ResumeManagerId.Value);
             foreach (var contact in addModel.Contacts)
             {
+                contact.ResumeId = resume.Id;
                 // обновить контакт если такой есть
                 if (!this.UpdateContact(contact))
                     // создать новый если нет

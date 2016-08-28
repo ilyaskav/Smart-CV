@@ -9,6 +9,7 @@
 </div>
 <div class="row">
     <form class="form-horizontal" method="POST">
+        @Html.AntiForgeryToken()
         <div class="form-group">
             <label class="col-md-2 control-label">E-mail*</label>
             <div class="col-md-10">
@@ -35,7 +36,8 @@
 
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <a href="~/Resume/PersonalData" class="btn btn-default">Назад</a>
+                @Html.RouteLink("Назад",  new { action= "PersonalData", controller= "Resume", managerId = ViewBag.ManagerId }, new { @class="btn btn-default"})
+                @*<a href="~/Resume/PersonalData" class="btn btn-default">Назад</a>*@
                 <a href="~/Resume/Education" class="btn btn-default">Далее</a>
                 <button class="btn btn-primary">Сохранить</button>
                 <span class="text-success disappearance">@ViewBag.Success</span>

@@ -6,12 +6,9 @@ $(function () {
     $('#addContact').on('click', function () {
         var contactIndex=0;
         var contactSection = $(this).parent().prev().find('input[type = "hidden"]').attr('name');
-        //console.log(contactSection);
         if (contactSection != undefined) {
             contactIndex =parseInt( contactSection.toString().charAt(contactSection.toString().indexOf("[") + 1)) +1;
         }
-
-        //console.log(contactIndex);
 
         var html = [
         '<div class="contact">',
@@ -38,7 +35,21 @@ $(function () {
 
     // удаление поля для контакта
     $(document).on('click', 'p.remove-contact', function () {
-        $(this).closest('div.contact').remove();
+        //$(this).closest('div.contact').remove();
+
+        var contactIndex = $(this).closest('div.contact').find('input[type = "hidden"]').val();
+
+        var sPageURL, managerId;
+        if (window.location.search == "") {
+            sPageURL = decodeURIComponent(window.location.pathname);
+            managerId = sPageURL.substring(sPageURL.lastIndexOf('/') + 1, sPageURL.length);
+        }
+        else {
+            sPageURL = decodeURIComponent(window.location.search);
+            managerId = sPageURL.substring(sPageURL.lastIndexOf('=') + 1, sPageURL.length);
+        }
+        //console.log(managerId)
+        window.location.href='/Resume/DeleteContact/?managerId=' + managerId + '&contactId=' + contactIndex;
     });
 
     //добавление полей для нового учебного заведения
