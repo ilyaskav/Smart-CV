@@ -45,69 +45,81 @@
 
     // добавление полей для нового места работы
     $('#addWorkPlace').on('click', function () {
+        var workId = 0;
+        var workPlace = $(this).closest('div.row').prev().find('div.workplace').last();
+        if (workPlace != undefined) {
+            var str = workPlace.find('input[type="hidden"]').attr('name').toString();
+            workId = parseInt(str.charAt(str.lastIndexOf("[") + 1)) + 1;
+        }
+
+
         var html = [
-'    <hr>    ',
-'    <div class="row">',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Место работы*</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="name">',
-'            </div>',
+'        <div class="workplace">',
+'           <input data-val="true" data-val-number="The field Id must be a number." id="WorkPlaces_', workId, '__Id" name="WorkPlaces[', workId, '].Id" type="hidden" value="">',
+'    <div class="form-group">',
+'        <label class="col-md-2 control-label">Место работы*</label>',
+'        <div class="col-md-10">',
+'            <input class="form-control text-box single-line" data-val="true" data-val-required="The Name field is required." id="WorkPlaces_', workId, '__Name" name="WorkPlaces[', workId, '].Name" type="text" value="">',
+'            <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].Name" data-valmsg-replace="true"></span>',
 '        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Город</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="city" />',
-'            </div>',
+'    </div>',
+
+'    <div class="form-group">',
+'        <label class="col-md-2 control-label">Город</label>',
+'        <div class="col-md-10">',
+'            <input class="form-control text-box single-line" id="WorkPlaces_', workId, '__City" name="WorkPlaces[', workId, '].City" type="text" value="">',
+'            <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].City" data-valmsg-replace="true"></span>',
 '        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Описание</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="description" />',
-'            </div>',
+'    </div>',
+
+'   <div class="form-group">',
+'        <label class="col-md-2 control-label">Описание</label>',
+'        <div class="col-md-10">',
+'            <input class="form-control text-box single-line" id="WorkPlaces_', workId, '__Description" name="WorkPlaces[', workId, '].Description" type="text" value="">',
+'            <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].Description" data-valmsg-replace="true"></span>',
 '        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Должность*</label>',
-'            <div class="col-md-10">',
-'                <input type="text" class="form-control" name="position" />',
-'            </div>',
+'    </div>',
+
+'    <div class="form-group">',
+'        <label class="col-md-2 control-label">Должность*</label>',
+'        <div class="col-md-10">',
+'            <input class="form-control text-box single-line" data-val="true" data-val-required="The Position field is required." id="WorkPlaces_', workId, '__Position" name="WorkPlaces[', workId, '].Position" type="text" value="">',
+'            <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].Position" data-valmsg-replace="true"></span>',
 '        </div>',
-'        <div class="form-group">',
-'            <label class="col-md-2 control-label">Обязанности*</label>',
-'            <div class="col-md-9">',
-'                <input type="text" class="form-control" name="duty" />',
+'    </div>',
+'    <div class="form-group">',
+'        <label class="col-md-2 control-label">Обязанности*</label>',
+'    <div class="duty">',
+'            <div class="col-md-10">',
+'                <input data-val="true" data-val-number="The field Id must be a number." id="WorkPlaces_', workId, '__Duties_0__Id" name="WorkPlaces[', workId, '].Duties[0].Id" type="hidden" value="">',
+'                <input data-val="true" data-val-number="The field WorkPlaceId must be a number." data-val-required="The WorkPlaceId field is required." id="WorkPlaces_', workId, '__Duties_0__WorkPlaceId" name="WorkPlaces[', workId, '].Duties[0].WorkPlaceId" type="hidden" value="">',
+'                <input class="form-control text-box single-line" data-val="true" data-val-required="The Name field is required." id="WorkPlaces_', workId, '__Duties_0__Name" name="WorkPlaces[', workId, '].Duties[0].Name" type="text" value="">',
+'                <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].Duties[0].Name" data-valmsg-replace="true"></span>',
 '            </div>',
-'            <div class="duty">',
-'                <div class="col-md-9 col-md-offset-2">',
-'                    <input type="text" class="form-control" name="duty" />',
-'                </div>',
-'                <div class="col-md-1 delete-line">',
-'                    <p class="text-danger remove-duty">',
-'                        <span class="glyphicon glyphicon-remove"></span> Удалить',
-'                    </p>',
-'                </div>',
-'            </div>',
+'    </div>',
+
 '            <div class="col-md-10 col-md-offset-2">',
 '                <p id="addDuty" aria-label="Добавить обязанность" class="text-info">',
 '                    <span class="glyphicon glyphicon-plus"></span> Добавить обязанность',
 '                </p>',
 '            </div>',
-'        </div>',
+'       </div>',
+
 '        <div class="form-group">',
 '            <label class="col-md-2 control-label">Период*</label>',
 '            <div class="col-md-10">',
-'                <div class="input-daterange input-group" id="datePicker">',
-'                    <input type="text" class="input-sm form-control" name="start" />',
-'                    <span class="input-group-addon">по</span>',
-'                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />',
+'                <div class="input-daterange input-group datePicker-month" id="datePicker-month">',             
+'                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field From must be a date." data-val-required="The From field is required." id="WorkPlaces_', workId, '__From" name="WorkPlaces[', workId, '].From" type="datetime" value="">',
+'                    <span class="input-group-addon">по</span>',                    
+'                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field To must be a date." id="WorkPlaces_', workId, '__To" name="WorkPlaces[', workId, '].To" placeholder="настоящее время" type="datetime" value="">',
+'                    <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlaces[', workId, '].From" data-valmsg-replace="true"></span>',
 '                </div>',
 '            </div>',
-'        </div>',
 '    </div>',
-''
+'</div>'
         ].join('');
 
-        $(this).parent().parent().parent().before(html);
+        workPlace.after(html);
     });
 
 

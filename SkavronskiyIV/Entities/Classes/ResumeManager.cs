@@ -22,6 +22,7 @@ namespace Entities.Classes
         [Required]
         public DateTime CreatedAt { get; set; }
 
+        public string Link { get; set; }
 
         #region navigation
 

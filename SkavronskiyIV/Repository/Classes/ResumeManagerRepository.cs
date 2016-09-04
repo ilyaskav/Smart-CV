@@ -20,11 +20,12 @@ namespace Repository.Classes
         }
 
 
-
         public void Clone(int managerId)
         {
             var clone= _context.ResumeManager.Include("Resume.Education")
-                                              .Include("Resume.WorkExp")
+                                              //.Include("Resume.WorkExp")
+                                              .Include("Resume.WorkExp.Duties")
+                                              .Include("Resume.WorkExp.Projects")
                                               .Include("Resume.Skills")
                                               .Include("Resume.Languages")
                                               .Include("Resume.PersonalQualities")
@@ -42,7 +43,19 @@ namespace Repository.Classes
             foreach (var workExp in clone.Resume.WorkExp)
             {
                 workExp.Id = 0;
+                foreach (var duty in workExp.Duties)
+                {
+                    duty.Id = 0;
+                    duty.WorkPlaceId = 0;
+                }
+
+                foreach (var proj in workExp.Projects)
+                {
+                    proj.Id = 0;
+                    proj.WorkPlaceId = 0;
+                }
             }
+            
             foreach (var skill in clone.Resume.Skills)
             {
                 skill.Id = 0;
