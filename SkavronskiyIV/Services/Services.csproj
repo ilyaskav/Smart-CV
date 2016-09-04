@@ -73,6 +73,7 @@
     <Compile Include="Models\InstitutionAddModel.cs" />
     <Compile Include="Models\InstitutionModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\ManagerViewModel.cs" />
     <Compile Include="Models\PersonalQualityModel.cs" />
     <Compile Include="Models\PesonalQualityModel.cs" />
     <Compile Include="Models\ProfessionModel.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Models\ResumeManagerModel.cs" />
     <Compile Include="Models\ResumeModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
+    <Compile Include="Models\WorkPlaceAddModel.cs" />
     <Compile Include="Models\WorkPlaceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

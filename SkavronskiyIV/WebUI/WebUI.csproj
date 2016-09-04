@@ -216,6 +216,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ResumeController.cs" />
+    <Compile Include="Converters\HtmlHeplers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +230,41 @@
     <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\theme\error.css" />
+    <Content Include="Content\theme\fontawesome\font-awesome.min.css" />
+    <Content Include="Content\theme\font\fontawesome-webfont.svg" />
+    <Content Include="Content\theme\icons.css" />
+    <Content Include="Content\theme\img\demo\avatar-1.jpg" />
+    <Content Include="Content\theme\img\demo\avatar-2.jpg" />
+    <Content Include="Content\theme\img\demo\avatar-3.jpg" />
+    <Content Include="Content\theme\img\demo\avatar-large.jpg" />
+    <Content Include="Content\theme\img\icons\iconsweets\icos-dark.png" />
+    <Content Include="Content\theme\img\icons\iconsweets\icos-white.png" />
+    <Content Include="Content\theme\img\icons\led\sprite.png" />
+    <Content Include="Content\theme\img\logo.png" />
+    <Content Include="Content\theme\img\sidebar\sidebar-divider-dots.png" />
+    <Content Include="Content\theme\login.css" />
+    <Content Include="Content\theme\main.css" />
+    <Content Include="Content\theme\plugins.css" />
+    <Content Include="Content\theme\plugins\bootstrap-colorpicker.css" />
+    <Content Include="Content\theme\plugins\bootstrap-multiselect.css" />
+    <Content Include="Content\theme\plugins\bootstrap-switch.css" />
+    <Content Include="Content\theme\plugins\bootstrap-wizard.css" />
+    <Content Include="Content\theme\plugins\bootstrap-wysihtml5.css" />
+    <Content Include="Content\theme\plugins\datatables.css" />
+    <Content Include="Content\theme\plugins\datatables_bootstrap.css" />
+    <Content Include="Content\theme\plugins\daterangepicker.css" />
+    <Content Include="Content\theme\plugins\duallistbox.css" />
+    <Content Include="Content\theme\plugins\fullcalendar.css" />
+    <Content Include="Content\theme\plugins\jquery-ui.css" />
+    <Content Include="Content\theme\plugins\nestable.css" />
+    <Content Include="Content\theme\plugins\nprogress.css" />
+    <Content Include="Content\theme\plugins\pickadate.css" />
+    <Content Include="Content\theme\plugins\select2.css" />
+    <Content Include="Content\theme\plugins\tagsinput.css" />
+    <Content Include="Content\theme\plugins\typeahead.css" />
+    <Content Include="Content\theme\plugins\uniform.css" />
+    <Content Include="Content\theme\responsive.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -249,6 +285,12 @@
     </Content>
     <Content Include="Content\bootstrap-datepicker3.css.map" />
     <Content Include="Content\bootstrap-datepicker3.min.css.map" />
+    <Content Include="Content\theme\font\fontawesome-webfont.eot%40" />
+    <Content Include="Content\theme\font\fontawesome-webfont.eot%40v=3.2.1" />
+    <Content Include="Content\theme\font\fontawesome-webfont.ttf%40v=3.2.1" />
+    <Content Include="Content\theme\font\fontawesome-webfont.woff%40v=3.2.1" />
+    <None Include="Properties\PublishProfiles\CV.pubxml" />
+    <None Include="Properties\PublishProfiles\Somee.pubxml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -260,10 +302,25 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\theme-script\app.js" />
+    <Content Include="Scripts\theme-script\custom.js" />
+    <Content Include="Scripts\theme-script\libs\breakpoints.js" />
+    <Content Include="Scripts\theme-script\libs\lodash.compat.min.js" />
+    <Content Include="Scripts\theme-script\login.js" />
+    <Content Include="Scripts\theme-script\plugins.form-components.js" />
+    <Content Include="Scripts\theme-script\plugins.js" />
+    <Content Include="Scripts\theme-script\uniform\images\bg-input-focus.png" />
+    <Content Include="Scripts\theme-script\uniform\images\bg-input.png" />
+    <Content Include="Scripts\theme-script\uniform\images\sprite.png" />
+    <Content Include="Scripts\theme-script\uniform\jquery.uniform.min.js" />
     <Content Include="Scripts\Views\Contacts.js" />
     <Content Include="Scripts\Views\Education.js" />
+    <Content Include="Scripts\Views\PersonalData.js" />
+    <Content Include="Scripts\Views\WorkExperience.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -283,7 +340,7 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -306,6 +363,12 @@
     <Content Include="Views\Resume\Certificates.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\ContactModel.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\InstitutionModel.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Resume\Manage.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\ManagerViewModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\WorkPlaceModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\DutyModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,6 +2,7 @@
 using Repository.Interfaces;
 using Services.Converters;
 using Services.Interfaces;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,16 @@ namespace Services.Classes
         private readonly IWorkPlaceRepository _workPlaceRepository = null;
         private readonly IDutyRepository _dutyRepository = null;
         private readonly IProjectRepository _projectRepository = null;
+        private readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo)
+        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IResumeRepository resumeRepo)
         {
             _workPlaceRepository = workRepo;
             _dutyRepository = dutyRepo;
             _projectRepository = projRepo;
+            _resumeRepository = resumeRepo;
         }
 
 
@@ -33,45 +36,56 @@ namespace Services.Classes
             _workPlaceRepository.Dispose();
             _dutyRepository.Dispose();
             _projectRepository.Dispose();
+            _resumeRepository.Dispose();
         }
 
+        public WorkPlaceAddModel Get(int managerId)
+        {
+            var resume=_resumeRepository.Get().FirstOrDefault(r=>r.ResumeManager.Id == managerId);
+            if (resume == null || resume.WorkExp.Count == 0) return null;
+
+            WorkPlaceAddModel addModel = new WorkPlaceAddModel();
+            addModel.ResumeManagerId = managerId;
+            foreach (var work in resume.WorkExp)
+            {
+                addModel.WorkPlaces.Add(work.ToModel());
+            }
+
+            return addModel;
+        }
 
         public void CreateWorkplace(Models.WorkPlaceModel model)
         {
             // создаем новую работу
             _workPlaceRepository.Add(model.ToEntity());
-
-            //var entity = _workPlaceRepository.Get(workPlaceId);
-
-            //// добавляем в нее обязанности
-            //foreach (var duty in model.Duties)
-            //{
-            //    entity.Duties.Add(duty.ToEntity());
-            //    //_dutyRepository.Add(duty.ToEntity());
-            //}
-
-            //// добавляем в нее проекты
-            //foreach (var project in model.Projects)
-            //{
-            //    entity.Projects.Add(project.ToEntity());
-            //    //_projectRepository.Add(project.ToEntity());
-            //}
         }
 
-        public void UpdateWorkplace(Models.WorkPlaceModel model)
+        public void CreateOrUpdate(WorkPlaceAddModel addModel)
         {
-            if (model.Id==null) return;
+
+        }
+
+        public bool UpdateWorkplace(Models.WorkPlaceModel model)
+        {
+            if (model.Id==null) return false;
             if (_workPlaceRepository.Has(model.Id.Value))
             {
                 WorkPlace entity = model.ToEntity();
 
-                _workPlaceRepository.Update(entity);
+                return _workPlaceRepository.Update(entity);
             }
+            return false;
+        }
+
+        public void RemoveDuty(int id)
+        {
+            _dutyRepository.Remove(id);
         }
 
         public void RemoveWorkplace(int id)
         {
             if (_workPlaceRepository.Has(id)) _workPlaceRepository.Remove(id);
         }
+
     }
 }

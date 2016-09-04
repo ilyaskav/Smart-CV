@@ -1,99 +1,48 @@
-﻿
+﻿@model Services.Models.WorkPlaceAddModel
 @{
     ViewBag.Title = "Опыт работы";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="h2 text-center section">Опыт работы</div>
+<div class="widget box">
+    <div class="widget-header"> <h2><i class="icon-reorder"></i> Опыт работы</h2> </div>
+    <div class="widget-content">
+
+        <form class="form-horizontal" method="POST">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model=>model.ResumeManagerId)
+            <div class="row">
+                @Html.EditorFor(model=>model.WorkPlaces)
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <p id="addWorkPlace" aria-label="Добавить место работы" class="text-info">
+                            <span class="glyphicon glyphicon-plus"></span> Добавить место работы
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        @Html.RouteLink("Назад", new { action = "Education", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                        @Html.RouteLink("Далее", new { action = "Certificates", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                        <button class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
 </div>
-<form class="form-horizontal" method="POST">
-    <div class="row">
-        <div class="form-group">
-            <label class="col-md-2 control-label">Место работы*</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" name="name">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Город</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" name="city" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Описание</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" name="description" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Должность*</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" name="position" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Обязанности*</label>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="duty" />
-            </div>
-            <div class="duty">
-                <div class="col-md-9 col-md-offset-2">
-                    <input type="text" class="form-control" name="duty" />
-                </div>
-                <div class="col-md-1 delete-line">
-                    <p class="text-danger remove-duty">
-                        <span class="glyphicon glyphicon-remove"></span> Удалить
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-10 col-md-offset-2">
-                <p id="addDuty" aria-label="Добавить обязанность" class="text-info">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить обязанность
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Период*</label>
-            <div class="col-md-10">
-                <div class="input-daterange input-group" id="datePicker">
-                    <input type="text" class="input-sm form-control" name="start" />
-                    <span class="input-group-addon">по</span>
-                    <input type="text" class="input-sm form-control" placeholder="настоящее время" name="end" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <p id="addWorkPlace" aria-label="Добавить место работы" class="text-info">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить место работы
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <a href="~/Resume/Education" class="btn btn-default">Назад</a>
-                <a href="~/Resume/Certificates" class="btn btn-default">Далее</a>
-                <button class="btn btn-primary">Сохранить</button>
-            </div>
-
-        </div>
-    </div>
-</form>
 
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datePicker")
     @Scripts.Render("~/Scripts/addingData.js")
+    @Scripts.Render("~/Scripts/Views/WorkExperience.js")
 }
 
 

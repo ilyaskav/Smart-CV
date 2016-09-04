@@ -41,6 +41,7 @@ namespace WebUI
             builder.RegisterType<ProfessionService>().As<IProfessionService>();
             builder.RegisterType<ContactService>().As<IContactService>();
             builder.RegisterType<InstitutionService>().As<IInstitutionService>();
+            builder.RegisterType<WorkPlaceService>().As<IWorkPlaceService>();
 
             #endregion
 

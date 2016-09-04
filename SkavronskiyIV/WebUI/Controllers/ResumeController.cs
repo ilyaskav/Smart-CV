@@ -20,15 +20,19 @@ namespace WebUI.Controllers
         private readonly IResumeManagerService _managerService = null;
         private readonly IContactService _contactService = null;
         private readonly IInstitutionService _institutionService = null;
+        private readonly IProfessionService _professionService = null;
+        private readonly IWorkPlaceService _workPlaceService = null;
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, IInstitutionService instService)
+        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService)
         {
             _resumeService = resumeService;
             _managerService = managerService;
             _contactService = contactService;
             _institutionService = instService;
+            _professionService = profService;
+            _workPlaceService = workService;
         }
 
         // GET: Resume
@@ -48,7 +52,6 @@ namespace WebUI.Controllers
             model.UserId = User.Identity.GetUserId<int>();
             int managerId=_managerService.CreateEmptyResume(model);
 
-            //return RedirectToAction("PersonalData", new { id = resumeId });
             return RedirectToAction(string.Format("PersonalData/{0}", managerId));
         }
 
@@ -213,11 +216,77 @@ namespace WebUI.Controllers
             return RedirectToAction(string.Format("Education/{0}", managerId));
         }
 
-        public ActionResult WorkExperience()
+        [HttpGet]
+        public ActionResult Manage()
         {
-            return View();
+            var userId = User.Identity.GetUserId<int>();
+
+            ViewBag.ProfessionId = new SelectList(_professionService.GetAll(), "Id", "Name");
+            var viewModel = _managerService.GetAllResumes(userId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
         }
 
+        [HttpGet]
+        public ActionResult Remove(int managerId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _managerService.DeleteResume(managerId);
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        public ActionResult Copy(int managerId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _managerService.CopyResume(managerId);
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        public ActionResult WorkExperience(int managerId)
+        {
+            if (managerId <= 0) return HttpNotFound();
+
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            ViewBag.ManagerId = managerId;
+            var viewModel = _workPlaceService.Get(managerId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult RemoveDuty(int managerId, int dutyId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _workPlaceService.RemoveDuty(dutyId);
+
+            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+        }
         public ActionResult Skills()
         {
             return View();

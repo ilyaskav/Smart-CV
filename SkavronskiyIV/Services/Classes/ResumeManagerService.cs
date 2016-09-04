@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Services.Converters;
+using Services.Models;
 
 namespace Services.Classes
 {
@@ -14,11 +15,14 @@ namespace Services.Classes
         #region declarations
 
         IResumeManagerRepository _resumeManagerRepository = null;
+        IResumeRepository _resumeRepository = null;
+
         #endregion
 
-        public ResumeManagerService(IResumeManagerRepository resumeManRepo)
+        public ResumeManagerService(IResumeManagerRepository resumeManRepo, IResumeRepository resumeRepo)
         {
             _resumeManagerRepository = resumeManRepo;
+            _resumeRepository = resumeRepo;
         }
 
         public int CreateEmptyResume(Models.ResumeManagerModel model)
@@ -26,13 +30,21 @@ namespace Services.Classes
             return _resumeManagerRepository.Add(model.ToEntity());
         }
 
-        public ICollection<Models.ResumeManagerModel> GetAllResumes(int userId)
+        public void CopyResume(int managerId)
         {
-            var entities = _resumeManagerRepository.Get().Where(user => user.UserId.Equals(userId)).ToList();
-            ICollection<Models.ResumeManagerModel> models = new List<Models.ResumeManagerModel>();
+            if (!_resumeManagerRepository.Has(managerId)) return;
+
+            _resumeManagerRepository.Clone(managerId);
+        } 
+
+        public ICollection<ManagerViewModel> GetAllResumes(int userId)
+        {
+            var entities = _resumeManagerRepository.Get().Where(user => user.UserId.Equals(userId)).OrderByDescending(e=>e.CreatedAt).ToList();
+            ICollection<ManagerViewModel> models = new List<ManagerViewModel>();
+
             foreach (var entity in entities)
             {
-                models.Add(entity.ToModel());
+                models.Add(new ManagerViewModel() { Id=entity.Id, CreatedAt=entity.CreatedAt, Profession=entity.Profession.Name });
             }
             return models;
 
@@ -40,7 +52,16 @@ namespace Services.Classes
 
         public void DeleteResume(int id)
         {
-            if (_resumeManagerRepository.Has(id)) _resumeManagerRepository.Remove(id);
+            if (_resumeManagerRepository.Has(id))
+            {
+                var manager=_resumeManagerRepository.Get(id);
+
+                if (manager.Resume != null)
+                {
+                    _resumeRepository.Remove(manager.Resume.Id);
+                }
+                _resumeManagerRepository.Remove(id);
+            }
         }
 
         public void Dispose()

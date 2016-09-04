@@ -126,7 +126,12 @@ namespace Services.Converters
 
         public static WorkPlaceModel ToModel(this WorkPlace entity)
         {
-            return new WorkPlaceModel()
+            if (entity == null)
+            {
+                throw new NullReferenceException("WorkPlace is null");
+            }
+
+            var model=new WorkPlaceModel()
             {
                 Id = entity.Id,
                 City = entity.City,
@@ -137,6 +142,17 @@ namespace Services.Converters
                 To = entity.To,
                 ResumeId = entity.ResumeId
             };
+
+            foreach (var duty in entity.Duties)
+            {
+                model.Duties.Add(duty.ToModel());
+            }
+
+            foreach (var project in entity.Projects)
+            {
+                model.Projects.Add(project.ToModel());
+            }
+            return model;
         }
 
         public static Duty ToEntity(this DutyModel model)
@@ -146,6 +162,16 @@ namespace Services.Converters
                 Id=model.Id.Value,
                 Name = model.Name,
                 WorkPlaceId = model.WorkPlaceId
+            };
+        }
+
+        public static DutyModel ToModel(this Duty entity)
+        {
+            return new DutyModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                WorkPlaceId = entity.WorkPlaceId
             };
         }
 
@@ -161,6 +187,21 @@ namespace Services.Converters
                 TechStack = model.TechStack,
                 About = model.About,
                 WorkPlaceId = model.WorkPlaceId
+            };
+        }
+
+        public static ProjectModel ToModel(this Project entity)
+        {
+            return new ProjectModel()
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Duration = entity.Duration,
+                Description = entity.Description,
+                Role = entity.Role,
+                TechStack = entity.TechStack,
+                About = entity.About,
+                WorkPlaceId = entity.WorkPlaceId
             };
         }
 

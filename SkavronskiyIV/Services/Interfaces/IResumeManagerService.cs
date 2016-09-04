@@ -11,7 +11,9 @@ namespace Services.Interfaces
     {
         int CreateEmptyResume(ResumeManagerModel model);
 
-        ICollection<ResumeManagerModel> GetAllResumes(int userId);
+        void CopyResume(int managerId);
+
+        ICollection<ManagerViewModel> GetAllResumes(int userId);
 
         bool IsOwnedBy(int userId, int managerId);
 

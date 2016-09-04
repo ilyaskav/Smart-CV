@@ -35,6 +35,12 @@ namespace WebUI
 
             bundles.Add(new ScriptBundle("~/bundles/dropdown-input").Include(
                       "~/Scripts/jquery.ddslick.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/theme").IncludeDirectory(
+                    "~/Content/theme", "*.css", true));
+
+            bundles.Add(new ScriptBundle("~/bundles/theme-script").IncludeDirectory(
+                    "~/Scripts/theme-script/", "*.js", true));
         }
     }
 }

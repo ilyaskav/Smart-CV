@@ -36,7 +36,10 @@ namespace Services.Classes
 
         public InstitutionAddModel Get(int managerId)
         {
-            var institutions = _managerRepository.Get(managerId).Resume.Education;
+            var manager = _managerRepository.Get(managerId);
+            if (manager.Resume == null) return null; 
+
+            var institutions = manager.Resume.Education;
             var addModel = new InstitutionAddModel() { ResumeManagerId = managerId };
 
             foreach (var inst in institutions)

@@ -33,10 +33,12 @@ namespace Services.Classes
         public ContactAddModel Get(int managerId)
         {
             var resumeManager = _managerRepository.Get(managerId);
-            var model = resumeManager.Resume.Contacts.ToAddModel();
+            if (resumeManager.Resume ==null) return null;
 
+            var model = resumeManager.Resume.Contacts.ToAddModel();
             return model;
         }
+
         public void CreateContact(ContactModel model)
         {
             if (_contactTitleRepository.Has(e => e.Title.Equals(model.ContactTitle.Title)))

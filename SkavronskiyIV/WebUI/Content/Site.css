@@ -37,3 +37,17 @@ p.text-info, p.text-danger{
 }
 .font-bold {
 font-weight: bold;}
+
+DIV.widget.box{
+    margin-top:35px;
+}
+
+div.duty::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+div.duty{
+
+    margin-bottom:10px;
+}
