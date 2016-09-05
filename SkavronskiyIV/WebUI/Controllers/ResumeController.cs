@@ -22,10 +22,13 @@ namespace WebUI.Controllers
         private readonly IInstitutionService _institutionService = null;
         private readonly IProfessionService _professionService = null;
         private readonly IWorkPlaceService _workPlaceService = null;
+        private readonly ICertificateService _certificateService = null;
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService)
+        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, 
+                                IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService,
+                                ICertificateService certService)
         {
             _resumeService = resumeService;
             _managerService = managerService;
@@ -33,6 +36,7 @@ namespace WebUI.Controllers
             _institutionService = instService;
             _professionService = profService;
             _workPlaceService = workService;
+            _certificateService = certService;
         }
 
         // GET: Resume
@@ -274,6 +278,41 @@ namespace WebUI.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult WorkExperience(int managerId, WorkPlaceAddModel addModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(addModel);
+            }
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            addModel.ResumeManagerId = managerId;
+            _workPlaceService.CreateOrUpdate(addModel);
+
+            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+        }
+
+        [HttpGet]
+        public ActionResult RemoveWork(int managerId, int workPlaceId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _workPlaceService.RemoveWorkplace(workPlaceId);
+
+            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+        }
+
         [HttpGet]
         public ActionResult RemoveDuty(int managerId, int dutyId)
         {
@@ -297,9 +336,58 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public ActionResult Certificates()
+        [HttpGet]
+        public ActionResult Certificates(int managerId)
         {
-            return View();
+            if (managerId <= 0) return HttpNotFound();
+
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            ViewBag.ManagerId = managerId;
+            var viewModel = _certificateService.Get(managerId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Certificates(int managerId, CertificateAddModel addModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(addModel);
+            }
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            addModel.ResumeManagerId = managerId;
+            _certificateService.CreateOrUpdate(addModel);
+
+            return RedirectToAction(string.Format("Certificates/{0}", managerId));
+        }
+
+        [HttpGet]
+        public ActionResult RemoveCertificate(int managerId, int certificateId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _certificateService.RemoveCertificate(certificateId);
+
+            return RedirectToAction(string.Format("Certificates/{0}", managerId));
         }
     }
 }

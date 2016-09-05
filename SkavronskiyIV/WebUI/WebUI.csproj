@@ -313,6 +313,7 @@
     <Content Include="Scripts\theme-script\uniform\images\bg-input.png" />
     <Content Include="Scripts\theme-script\uniform\images\sprite.png" />
     <Content Include="Scripts\theme-script\uniform\jquery.uniform.min.js" />
+    <Content Include="Scripts\Views\Certificates.js" />
     <Content Include="Scripts\Views\Contacts.js" />
     <Content Include="Scripts\Views\Education.js" />
     <Content Include="Scripts\Views\PersonalData.js" />
@@ -369,6 +370,7 @@
     <Content Include="Views\Resume\EditorTemplates\ManagerViewModel.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\WorkPlaceModel.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\DutyModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\CertificateModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -394,6 +396,9 @@
       <Project>{e6c7e1ab-afda-4da1-8e8e-5240e7f434df}</Project>
       <Name>Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

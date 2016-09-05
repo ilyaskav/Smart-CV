@@ -19,17 +19,18 @@ namespace Services.Classes
         private readonly IDutyRepository _dutyRepository = null;
         private readonly IProjectRepository _projectRepository = null;
         private readonly IResumeRepository _resumeRepository = null;
+        private readonly IResumeManagerRepository _managerRepository = null;
 
         #endregion
 
-        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IResumeRepository resumeRepo)
+        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IResumeRepository resumeRepo, IResumeManagerRepository managerRepo)
         {
             _workPlaceRepository = workRepo;
             _dutyRepository = dutyRepo;
             _projectRepository = projRepo;
             _resumeRepository = resumeRepo;
+            _managerRepository = managerRepo;
         }
-
 
         public void Dispose()
         {
@@ -37,6 +38,7 @@ namespace Services.Classes
             _dutyRepository.Dispose();
             _projectRepository.Dispose();
             _resumeRepository.Dispose();
+            _managerRepository.Dispose();
         }
 
         public WorkPlaceAddModel Get(int managerId)
@@ -62,17 +64,34 @@ namespace Services.Classes
 
         public void CreateOrUpdate(WorkPlaceAddModel addModel)
         {
-
+            var resume = _managerRepository.Get(addModel.ResumeManagerId.Value).Resume;
+            foreach (var work in addModel.WorkPlaces)
+            {
+                work.ResumeId = resume.Id;
+                if (!this.UpdateWorkplace(work))
+                {
+                    this.CreateWorkplace(work);
+                }
+            }
         }
 
-        public bool UpdateWorkplace(Models.WorkPlaceModel model)
+        public bool UpdateWorkplace(WorkPlaceModel model)
         {
             if (model.Id==null) return false;
             if (_workPlaceRepository.Has(model.Id.Value))
             {
                 WorkPlace entity = model.ToEntity();
 
-                return _workPlaceRepository.Update(entity);
+                _workPlaceRepository.Update(entity);
+                foreach (var duty in entity.Duties)
+                {
+                    _dutyRepository.Update(duty);
+                }
+                foreach (var proj in entity.Projects)
+                {
+                    _projectRepository.Update(proj);
+                }
+                return true;
             }
             return false;
         }

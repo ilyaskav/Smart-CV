@@ -9,7 +9,7 @@ namespace Services.Models
 {
     public class WorkPlaceAddModel
     {
-        public int ResumeManagerId { get; set; }
+        public int? ResumeManagerId { get; set; }
 
         [UIHint("WorkPlaces")]
         public ICollection<WorkPlaceModel> WorkPlaces { get; set; }

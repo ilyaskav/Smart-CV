@@ -6,7 +6,7 @@
     <div class="duty">
         @if (Convert.ToInt32(@Html.Index().ToString()) == 0)
         {
-            <div class="col-md-10">
+            <div class="col-md-9">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.WorkPlaceId)
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -15,7 +15,7 @@
         }
         else
         {
-                <div class="col-md-9 col-md-offset-2">
+                <div class="col-md-8 col-md-offset-2">
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.WorkPlaceId)
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })

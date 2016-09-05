@@ -1,62 +1,44 @@
-﻿
+﻿@model Services.Models.CertificateAddModel
 @{
     ViewBag.Title = "Certificates";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="h2 text-center section">Сертификаты и тренинги</div>
-</div>
-<form class="form-horizontal" method="POST">
-    <div class="row">
-            <div class="form-group">
-                <label class="col-md-2 control-label">Название*</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="name">
+<div class="widget box">
+    <div class="widget-header"> <h2><i class="icon-reorder"></i> Сертификаты и тренинги</h2> </div>
+    <div class="widget-content">
+
+        <form class="form-horizontal" method="POST">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ResumeManagerId)
+            <div class="row">
+                @Html.EditorFor(model => model.Certificates)
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <p id="addCertificate" aria-label="Добавить сертификат" class="text-info">
+                            <span class="glyphicon glyphicon-plus"></span> Добавить сертификат
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        @Html.RouteLink("Назад", new { action = "WorkExperience", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                        @Html.RouteLink("Далее", new { action = "Skills", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                        <button class="btn btn-primary">Сохранить</button>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Город</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="city" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Дата окончания*</label>
-                <div class="col-md-10">
-                    <input id="datePicker-month" data-provide="datepicker" class="form-control" name="date" />
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <p id="addCertificate" aria-label="Добавить сертификат" class="text-info remove-certificate">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить сертификат
-                </p>
-            </div>
-        </div>
-
-    <div class="row">
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <a href="~/Resume/WorkExperience" class="btn btn-default">Назад</a>
-                <a href="~/Resume/Skills" class="btn btn-default">Далее</a>
-                <button class="btn btn-primary">Сохранить</button>
-            </div>
-
-        </div>
+        </form>
     </div>
-</form>
+</div>
 
 
 @section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datePicker")
     @Scripts.Render("~/Scripts/addingData.js")
+    @Scripts.Render("~/Scripts/Views/Certificates.js")
 }
-
-
-
-

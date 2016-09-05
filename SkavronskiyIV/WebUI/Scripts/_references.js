@@ -23,3 +23,4 @@
 /// <reference path="theme-script/libs/lodash.compat.min.js" />
 /// <reference path="theme-script/uniform/jquery.uniform.min.js" />
 /// <reference path="views/workexperience.js" />
+/// <reference path="views/certificates.js" />

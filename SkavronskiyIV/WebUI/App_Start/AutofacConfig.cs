@@ -42,6 +42,7 @@ namespace WebUI
             builder.RegisterType<ContactService>().As<IContactService>();
             builder.RegisterType<InstitutionService>().As<IInstitutionService>();
             builder.RegisterType<WorkPlaceService>().As<IWorkPlaceService>();
+            builder.RegisterType<CertificateService>().As<ICertificateService>();
 
             #endregion
 

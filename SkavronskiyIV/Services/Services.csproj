@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\IResumeService.cs" />
     <Compile Include="Interfaces\ISkillService.cs" />
     <Compile Include="Interfaces\IWorkPlaceService.cs" />
+    <Compile Include="Models\CertificateAddModel.cs" />
     <Compile Include="Models\CertificateModel.cs" />
     <Compile Include="Models\ContactAddModel.cs" />
     <Compile Include="Models\ContactModel.cs" />

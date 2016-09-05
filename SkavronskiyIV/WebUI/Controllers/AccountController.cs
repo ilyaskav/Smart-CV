@@ -80,7 +80,7 @@ namespace WebUI.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (returnUrl.Contains("CreateEmptyResume")) return RedirectToLocal("/");
+                    if (returnUrl !=null && returnUrl.Contains("CreateEmptyResume")) return RedirectToLocal("/");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

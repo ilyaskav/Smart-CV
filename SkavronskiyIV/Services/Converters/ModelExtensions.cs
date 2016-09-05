@@ -99,14 +99,14 @@ namespace Services.Converters
             // создаем новую работу
             var entity= new WorkPlace()
             {
-                Id = model.Id.Value,
+                Id = model.Id.HasValue ? model.Id.Value : 0,
                 City = model.City,
                 Name = model.Name,
                 Description = model.Description,
                 Position = model.Position,
                 From = model.From,
                 To = model.To,
-                ResumeId = model.ResumeId
+                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
             };
 
             // добавляем в нее обязанности
@@ -159,9 +159,9 @@ namespace Services.Converters
         {
             return new Duty()
             {
-                Id=model.Id.Value,
+                Id=model.Id.HasValue ? model.Id.Value : 0,
                 Name = model.Name,
-                WorkPlaceId = model.WorkPlaceId
+                WorkPlaceId = model.WorkPlaceId.HasValue ? model.WorkPlaceId.Value : 0
             };
         }
 
@@ -247,6 +247,10 @@ namespace Services.Converters
 
         public static Language ToEntity(this LanguageModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException("LanguageModel is null");
+            }
             return new Language()
             {
                 Id = model.Id.Value,
@@ -257,6 +261,10 @@ namespace Services.Converters
 
         public static Skill ToEntity(this SkillModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException("SkillModel is null");
+            }
             return new Skill()
             {
                 Id = model.Id.Value,
@@ -267,6 +275,10 @@ namespace Services.Converters
 
         public static PersonalQuality ToEntity(this PersonalQualityModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException("PersonalQualityModel is null");
+            }
             return new PersonalQuality()
             {
                 Id = model.Id.Value,
@@ -277,13 +289,33 @@ namespace Services.Converters
 
         public static Certificate ToEntity(this CertificateModel model)
         {
+            if (model == null)
+            {
+                throw new NullReferenceException("CertificateModel is null");
+            }
             return new Certificate()
             {
-                Id = model.Id.Value,
+                Id = model.Id.HasValue ? model.Id.Value : 0,
                 Name = model.Name,
                 Date = model.Date,
                 Location = model.Location,
-                ResumeId = model.ResumeId
+                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value :0
+            };
+        }
+
+        public static CertificateModel ToModel(this Certificate entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("Certificate is null");
+            }
+            return new CertificateModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Date = entity.Date,
+                Location = entity.Location,
+                ResumeId = entity.ResumeId
             };
         }
 

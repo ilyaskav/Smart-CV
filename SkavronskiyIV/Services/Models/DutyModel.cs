@@ -14,6 +14,6 @@ namespace Services.Models
         [Required]
         public string Name { get; set; }
 
-        public int WorkPlaceId { get; set; }
+        public int? WorkPlaceId { get; set; }
     }
 }

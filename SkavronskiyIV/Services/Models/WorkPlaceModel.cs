@@ -26,7 +26,7 @@ namespace Services.Models
 
         public DateTime? To { get; set; }
 
-        public int ResumeId { get; set; }
+        public int? ResumeId { get; set; }
 
         public ICollection<DutyModel> Duties { get; set; }
 

@@ -3,6 +3,7 @@
 // https://www.sitepoint.com/16-jquery-selectboxdrop-down-plugins/
 
 // НАЧАЛО Общие для всех функции
+// доставание managerId из URI
 var getManagerIdFromURI = function () {
     var sPageURL, managerId=0;
     if (window.location.search == "") {
@@ -15,6 +16,15 @@ var getManagerIdFromURI = function () {
     }
     return managerId;
 };
+
+// разделение секций
+var separate = function (selector) {
+    var element = $(selector);
+    if (element == undefined || element.size() == 0) return;
+
+    element.after('<hr/>');
+}
+
 // КОНЕЦ
 
 $(function () {
@@ -73,39 +83,6 @@ $(function () {
         $(this).closest('div.personalQuality').remove();
     });
 
-    // добавление полей для сертификата
-    $('#addCertificate').on('click', function () {
-        var html = [
-'        <hr />',
-'        <div class="certificate">',
-'            <div class="form-group">',
-'                <label class="col-md-2 control-label">Название*</label>',
-'                <div class="col-md-10">',
-'                    <input type="text" class="form-control" name="name">',
-'                </div>',
-'            </div>',
-'            <div class="form-group">',
-'                <label class="col-md-2 control-label">Город</label>',
-'                <div class="col-md-10">',
-'                    <input type="text" class="form-control" name="city" />',
-'                </div>',
-'            </div>',
-'            <div class="form-group">',
-'                <label class="col-md-2 control-label">Дата окончания*</label>',
-'                <div class="col-md-10">',
-'                    <input id="datePicker-month" data-provide="datepicker" class="form-control" name="date" />',
-'                </div>',
-'            </div>',
-'        </div>'
-        ].join('');
-
-        $(this).parent().before(html);
-    });
-
-    // удаление полей для сертификата 
-    $(document).on('click', 'p.remove-certificate', function () {
-        $(this).closest('div.certificate').remove();
-    });
 
 
     //// выбор даты с днями

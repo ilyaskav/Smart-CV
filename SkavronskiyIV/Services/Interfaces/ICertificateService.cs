@@ -9,8 +9,14 @@ namespace Services.Interfaces
 {
     public interface ICertificateService: IDisposable
     {
-        void AddCertificate(CertificateModel model);
-        void UpdateCertificate(CertificateModel model);
+        CertificateAddModel Get(int managerId);
+
+        void CreateCertificate(CertificateModel model);
+
+        bool UpdateCertificate(CertificateModel model);
+
+        void CreateOrUpdate(CertificateAddModel addModel);
+
         void RemoveCertificate(int id);
     }
 }
