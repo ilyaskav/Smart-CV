@@ -24,3 +24,4 @@
 /// <reference path="theme-script/uniform/jquery.uniform.min.js" />
 /// <reference path="views/workexperience.js" />
 /// <reference path="views/certificates.js" />
+/// <reference path="views/skillsandlanguages.js" />

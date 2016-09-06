@@ -43,6 +43,8 @@ namespace WebUI
             builder.RegisterType<InstitutionService>().As<IInstitutionService>();
             builder.RegisterType<WorkPlaceService>().As<IWorkPlaceService>();
             builder.RegisterType<CertificateService>().As<ICertificateService>();
+            builder.RegisterType<SkillService>().As<ISkillService>();
+            builder.RegisterType<LanguageService>().As<ILanguageService>();
 
             #endregion
 

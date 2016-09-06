@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace Services.Classes
@@ -74,15 +75,16 @@ namespace Services.Classes
         }
 
 
-        public void CreateMSWordDocument(int id)
+        public void CreateMSWordDocument(Guid identifier)
         {
             var wordApp = new Word.Application();
-            wordApp.Visible = true;
+            wordApp.Visible = false;
 
-            string projPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            
+            string projPath = HttpContext.Current.Server.MapPath("~/Content/");
             wordApp.Documents.Open(projPath + "MSWordTemplates\\template1.dotx");
 
-            var myResume = _resumeRepository.Get(id);
+            var myResume = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).First().Resume;
             var doc = wordApp.ActiveDocument;
 
             doc.Bookmarks["FULLNAME"].Range.Text = myResume.FirstName + " " + myResume.LastName;
@@ -220,13 +222,14 @@ namespace Services.Classes
             }
             else doc.Bookmarks["SECTION_SKILLS"].Range.Text = string.Empty;
 
-            doc.SaveAs2(FileName: projPath + "MSWordTemplates\\toPrint.doc");
+            
+            myResume.ResumeManager.Link = string.Format("cv-{0}-{1}.doc", myResume.ResumeManager.Id, myResume.ResumeManager.Profession.Name);
+            _resumeManagerRepository.Update(myResume.ResumeManager); 
+
+            doc.SaveAs2(FileName: Path.Combine(projPath, "doc", myResume.ResumeManager.Link));
             doc.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-
+            wordApp.Quit();
         }
-
-
-
 
         
     }

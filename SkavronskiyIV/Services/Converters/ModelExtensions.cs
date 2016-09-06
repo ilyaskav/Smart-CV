@@ -61,7 +61,25 @@ namespace Services.Converters
                 Id= model.Id.HasValue ? model.Id.Value : 0,
                 CreatedAt=model.CreatedAt,
                 ProfessionId= model.ProfessionId,
-                UserId= model.UserId.HasValue ? model.UserId.Value : 0
+                UserId= model.UserId.HasValue ? model.UserId.Value : 0,
+                Guid=Guid.NewGuid()
+            };
+        }
+
+        public static ResumeManagerPrintModel ToPrintModel(this ResumeManager entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("ResumeManager is null");
+            }
+
+            return new ResumeManagerPrintModel()
+            {
+                Id = entity.Id,
+                CreatedAt = entity.CreatedAt,
+                Link= entity.Link,
+                UserId = entity.UserId,
+                Guid=entity.Guid
             };
         }
 
@@ -253,9 +271,23 @@ namespace Services.Converters
             }
             return new Language()
             {
-                Id = model.Id.Value,
+                Id = model.Id.HasValue ? model.Id.Value : 0,
                 Name = model.Name,
                 Level = model.Level
+            };
+        }
+
+        public static LanguageModel ToModel(this Language entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("Language is null");
+            }
+            return new LanguageModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Level = entity.Level
             };
         }
 
@@ -267,11 +299,26 @@ namespace Services.Converters
             }
             return new Skill()
             {
-                Id = model.Id.Value,
+                Id = model.Id.HasValue ? model.Id.Value :0,
                 Name = model.Name,
-                ResumeId = model.ResumeId
+                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value :0
             };
         }
+
+        public static SkillModel ToModel(this Skill entity)
+        {
+            if (entity == null)
+            {
+                throw new NullReferenceException("Skill is null");
+            }
+            return new SkillModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                ResumeId = entity.ResumeId
+            };
+        }
+
 
         public static PersonalQuality ToEntity(this PersonalQualityModel model)
         {

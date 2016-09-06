@@ -20,4 +20,10 @@
             
             @*@Html.RouteLink("Удалить", new { action = "RemoveResume", managerId = Model.Id })*@
         </td>
+        <td>
+            @Html.HtmlLink(string.Format("/Resume/GetWordDoc/?identifier={0}", Model.Guid), "Word", new { @class = "btn" })
+            
+            @*<a href="" class="btn">Word</a>*@
+            <a href="" class="btn">PDF</a>
+        </td>
     </tr>

@@ -9,8 +9,14 @@ namespace Services.Interfaces
 {
     public interface ISkillService: IDisposable
     {
-        void AddSkill(SkillModel model);
-        void UpdateSkill(SkillModel model);
+        void CreateSkill(SkillModel model);
+
+        SkillLanguageAddModel Get(int managerId);
+
+        void CreateOrUpdate(SkillLanguageAddModel addModel);
+
+        bool UpdateSkill(SkillModel model);
+
         void RemoveSkill(int id);
     }
 }

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Services.Models
 {
-    public class ManagerViewModel
+    public class ResumeManagerPrintModel
     {
         public int Id { get; set; }
 
-        public string Profession { get; set; }
+        public int UserId { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string Link { get; set; }
 
         public Guid Guid { get; set; }
     }

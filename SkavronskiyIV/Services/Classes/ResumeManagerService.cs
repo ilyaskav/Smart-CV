@@ -25,6 +25,19 @@ namespace Services.Classes
             _resumeRepository = resumeRepo;
         }
 
+        public ResumeManagerPrintModel Get(int managerId)
+        {
+            return _resumeManagerRepository.Get(managerId).ToPrintModel();
+        }
+
+        public ResumeManagerPrintModel Get(Guid identifier)
+        {
+            var manager= _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
+            
+            if (manager == null) return null;
+            return manager.ToPrintModel();
+        }
+
         public int CreateEmptyResume(Models.ResumeManagerModel model)
         {
             return _resumeManagerRepository.Add(model.ToEntity());
@@ -44,7 +57,7 @@ namespace Services.Classes
 
             foreach (var entity in entities)
             {
-                models.Add(new ManagerViewModel() { Id=entity.Id, CreatedAt=entity.CreatedAt, Profession=entity.Profession.Name });
+                models.Add(new ManagerViewModel() { Id=entity.Id, CreatedAt=entity.CreatedAt, Profession=entity.Profession.Name, Guid=entity.Guid });
             }
             return models;
 
@@ -75,6 +88,14 @@ namespace Services.Classes
             var resumeManager=_resumeManagerRepository.Get(managerId);
 
             if (resumeManager.UserId == userId) return true;
+            else return false;
+        }
+
+        public bool IsOwnedBy(int userId, Guid identifier)
+        {
+            var manager = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
+
+            if (manager.UserId == userId) return true;
             else return false;
         }
     }

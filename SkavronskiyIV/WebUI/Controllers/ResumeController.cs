@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Services.Interfaces;
+using System.IO;
+using System.Net;
 
 namespace WebUI.Controllers
 {
@@ -23,12 +25,13 @@ namespace WebUI.Controllers
         private readonly IProfessionService _professionService = null;
         private readonly IWorkPlaceService _workPlaceService = null;
         private readonly ICertificateService _certificateService = null;
+        private readonly ISkillService _skillService = null;
 
         #endregion
 
         public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, 
                                 IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService,
-                                ICertificateService certService)
+                                ICertificateService certService, ISkillService skillService)
         {
             _resumeService = resumeService;
             _managerService = managerService;
@@ -37,12 +40,35 @@ namespace WebUI.Controllers
             _professionService = profService;
             _workPlaceService = workService;
             _certificateService = certService;
+            _skillService = skillService;
         }
 
         // GET: Resume
         public ActionResult Index()
         {
             return RedirectToAction("PersonalData");
+        }
+
+        [HttpGet]
+        [Route("{identifier}")]
+        public ActionResult GetWordDoc(Guid identifier)
+        {
+            if (identifier == null || identifier.Equals(Guid.Empty))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "BadRequest");
+            }
+
+            // проверяем, владелец ли резюме шлет запрос 
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), identifier))
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            _resumeService.CreateMSWordDocument(identifier);
+var manager=_managerService.Get(identifier);
+            string projPath = Server.MapPath("~/Content/");
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(projPath, "doc", manager.Link));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, manager.Link);
         }
 
         [HttpPost]
@@ -326,9 +352,59 @@ namespace WebUI.Controllers
 
             return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
         }
-        public ActionResult Skills()
+
+        [HttpGet]
+        public ActionResult Skills(int managerId)
         {
-            return View();
+            if (managerId <= 0) return HttpNotFound();
+
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            ViewBag.ManagerId = managerId;
+            var viewModel = _skillService.Get(managerId);
+            if (viewModel == null) return View();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Skills(int managerId, SkillLanguageAddModel addModel)
+        {
+           if (!ModelState.IsValid)
+            {
+                return View(addModel);
+            }
+            int userId = User.Identity.GetUserId<int>();
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(userId, managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            addModel.ResumeManagerId = managerId;
+            _skillService.CreateOrUpdate(addModel);
+
+            return RedirectToAction(string.Format("Skills/{0}", managerId));
+        }
+
+        [HttpGet]
+        public ActionResult RemoveSkill(int managerId, int skillId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), managerId))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            _skillService.RemoveSkill(skillId);
+
+            return RedirectToAction(string.Format("Skills/{0}", managerId));
         }
 
         public ActionResult PersonalQualities()

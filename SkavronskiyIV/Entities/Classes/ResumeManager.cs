@@ -24,6 +24,9 @@ namespace Entities.Classes
 
         public string Link { get; set; }
 
+        [Required]
+        public Guid Guid { get; set; }
+
         #region navigation
 
         [ForeignKey("UserId")]

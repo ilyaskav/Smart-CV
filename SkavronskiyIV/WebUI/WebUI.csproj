@@ -289,6 +289,7 @@
     <Content Include="Content\theme\font\fontawesome-webfont.eot%40v=3.2.1" />
     <Content Include="Content\theme\font\fontawesome-webfont.ttf%40v=3.2.1" />
     <Content Include="Content\theme\font\fontawesome-webfont.woff%40v=3.2.1" />
+    <Content Include="Content\MSWordTemplates\template1.dotx" />
     <None Include="Properties\PublishProfiles\CV.pubxml" />
     <None Include="Properties\PublishProfiles\Somee.pubxml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
@@ -317,6 +318,7 @@
     <Content Include="Scripts\Views\Contacts.js" />
     <Content Include="Scripts\Views\Education.js" />
     <Content Include="Scripts\Views\PersonalData.js" />
+    <Content Include="Scripts\Views\SkillsAndLanguages.js" />
     <Content Include="Scripts\Views\WorkExperience.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -371,9 +373,12 @@
     <Content Include="Views\Resume\EditorTemplates\WorkPlaceModel.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\DutyModel.cshtml" />
     <Content Include="Views\Resume\EditorTemplates\CertificateModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\SkillModel.cshtml" />
+    <Content Include="Views\Resume\EditorTemplates\LanguageModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\doc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

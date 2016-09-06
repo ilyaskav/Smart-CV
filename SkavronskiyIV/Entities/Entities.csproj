@@ -75,13 +75,9 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Classes\Duty.cs" />
     <Compile Include="Classes\Institution.cs" />
-    <Compile Include="Migrations\201608261721125_initial.cs" />
-    <Compile Include="Migrations\201608261721125_initial.Designer.cs">
-      <DependentUpon>201608261721125_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609041108323_adding Link field.cs" />
-    <Compile Include="Migrations\201609041108323_adding Link field.Designer.cs">
-      <DependentUpon>201609041108323_adding Link field.cs</DependentUpon>
+    <Compile Include="Migrations\201609061141276_initial.cs" />
+    <Compile Include="Migrations\201609061141276_initial.Designer.cs">
+      <DependentUpon>201609061141276_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,11 +90,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608261721125_initial.resx">
-      <DependentUpon>201608261721125_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609041108323_adding Link field.resx">
-      <DependentUpon>201609041108323_adding Link field.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609061141276_initial.resx">
+      <DependentUpon>201609061141276_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

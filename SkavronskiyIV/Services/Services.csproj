@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,7 +81,9 @@
     <Compile Include="Models\ProfessionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\ResumeManagerModel.cs" />
+    <Compile Include="Models\ResumeManagerPrintModel.cs" />
     <Compile Include="Models\ResumeModel.cs" />
+    <Compile Include="Models\SkillLanguageAddModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\WorkPlaceAddModel.cs" />
     <Compile Include="Models\WorkPlaceModel.cs" />

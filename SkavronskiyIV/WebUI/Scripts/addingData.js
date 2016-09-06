@@ -29,37 +29,6 @@ var separate = function (selector) {
 
 $(function () {
 
-    // удаление поля для навыка
-    $(document).on('click', 'p.remove-skill', function () {
-        $(this).closest('div.skill').remove();
-    });
-
-    // добавление полей для языка
-    $('#addLanguage').on('click', function () {
-        var html = [
-'            <div class="language">',
-'                <div class="col-md-2">',
-'                    <input type="text" placeholder="Язык" class="form-control" name="language" />',
-'                </div>',
-'                <div class="col-md-9">',
-'                    <input type="text" placeholder="Уровень владения" class="form-control" name="level" />',
-'                </div>',
-'                <div class="col-md-1 delete-line">',
-'                    <p class="text-danger remove-language">',
-'                        <span class="glyphicon glyphicon-remove"></span> Удалить',
-'                    </p>',
-'                </div>',
-'            </div>'
-        ].join('');
-
-        $(this).parent().before(html);
-    });
-
-    // удаление полей для языка
-    $(document).on('click', 'p.remove-language', function () {
-        $(this).closest('div.language').remove();
-    });
-
     // добавление поля для личного качества
     $('#addPersonalQuality').on('click', function () {
         var html = [
