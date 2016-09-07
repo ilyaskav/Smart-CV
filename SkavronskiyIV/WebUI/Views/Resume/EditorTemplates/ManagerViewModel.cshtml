@@ -11,7 +11,7 @@
         <td>
             @Model.CreatedAt.ToString("dd.MM.yyyy")
         </td>
-        <td class="text-right">
+        <td class="">
             @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
             @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
 
