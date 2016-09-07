@@ -43,7 +43,7 @@ namespace Services.Converters
                 Id = entity.Id,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                DateOfBirth = entity.DateOfBirth,
+                DateOfBirth = entity.DateOfBirth.HasValue ? (DateTime?)entity.DateOfBirth.Value : null,
                 CurrentLocation = entity.CurrentLocation,
                 Photo = entity.Photo,
                 Goal = entity.Goal

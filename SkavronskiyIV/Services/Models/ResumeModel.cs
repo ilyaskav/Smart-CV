@@ -28,7 +28,7 @@ namespace Services.Models
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Дата рождения")]
         // System.Globalization.Culture
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public String CurrentLocation { get; set; }
 

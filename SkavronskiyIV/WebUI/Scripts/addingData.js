@@ -52,7 +52,19 @@ $(function () {
         $(this).closest('div.personalQuality').remove();
     });
 
+    $.get("/Resume/GetRules/"+getManagerIdFromURI())
+            .success(function (data) {
+                var str = JSON.stringify(eval("(" + data + ")"));
+                var json = JSON.parse(str);
 
+                for (var propName in json.PersonalData) {
+                    $("input[name='" + propName + "']").closest('.form-group').remove();
+                }
+            })
+        .error(function (response) {
+            console.log(response.responseText);
+
+        });
 
     //// выбор даты с днями
     //$('#datePicker').datepicker({
@@ -81,5 +93,13 @@ $(function () {
 
     //// исчезновение
     //$('.disappearance').fadeOut(5000);
+
+
+    //{
+    //    "PesonalData" : {
+    //        "Photo" : false,
+    //        "DateOfBirth" : false
+    //    }
+    //}
 });
 

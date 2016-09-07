@@ -16,14 +16,16 @@ namespace Services.Classes
         #region declarations
 
         IProfessionRepository _professionRepository = null;
+        IResumeManagerRepository _managerRepository = null;
         #endregion
 
-        public ProfessionService(IProfessionRepository profRepo)
+        public ProfessionService(IProfessionRepository profRepo, IResumeManagerRepository managerRepo)
         {
             _professionRepository = profRepo;
+            _managerRepository = managerRepo;
         }
 
-        public ICollection<Models.ProfessionModel> GetAll()
+        public ICollection<ProfessionModel> GetAll()
         {
             var entities = _professionRepository.Get();
             ICollection<ProfessionModel> models = new List<ProfessionModel>();
@@ -32,7 +34,12 @@ namespace Services.Classes
                 models.Add(entity.ToModel());
             }
             return models;
-            //return _professionRepository.Get().Select(entity => entity.ToModel()).ToList();
+        }
+
+        public string GetRule(int managerId)
+        {
+            var profession =_managerRepository.Get(managerId).Profession;
+            return profession.Rules;
         }
 
         public void Dispose()

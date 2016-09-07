@@ -10,5 +10,7 @@ namespace Services.Interfaces
     public interface IProfessionService: IDisposable
     {
         ICollection<ProfessionModel> GetAll();
+
+        string GetRule(int managerId);
     }
 }

@@ -46,30 +46,53 @@
     });
 
     separate('div.skill');
+
     // добавление полей для языка
     $('#addLanguage').on('click', function () {
+        var langId = 0;
+        var row = $(this).closest('div.form-group').prev();
+        var language = row.find('div.language').last();
+        if (language.length != 0) {
+            var str = language.find('input[type="hidden"]').attr('name').toString();
+            langId = parseInt(str.charAt(str.lastIndexOf("[") + 1)) + 1;
+        }
+
         var html = [
-'            <div class="language">',
-'                <div class="col-md-2">',
-'                    <input type="text" placeholder="Язык" class="form-control" name="language" />',
-'                </div>',
-'                <div class="col-md-9">',
-'                    <input type="text" placeholder="Уровень владения" class="form-control" name="level" />',
-'                </div>',
-'                <div class="col-md-1 delete-line">',
-'                    <p class="text-danger remove-language">',
-'                        <span class="glyphicon glyphicon-remove"></span> Удалить',
-'                    </p>',
-'                </div>',
-'            </div>'
+        '<div class="language">',
+        '    <input type="hidden" value="" name="Languages[', langId, '].Id" id="Languages_', langId, '__Id" data-val-number="The field Id must be a number." data-val="true">',
+        '    <div class="form-group">',
+        '            <div class="col-md-2">',
+        '                <input type="text" value="" placeholder="Язык" name="Languages[', langId, '].Name" id="Languages_', langId, '__Name" data-val-required="Требуется поле Name." data-val="true" class="form-control text-right font-bold text-box single-line">',
+        '                <span data-valmsg-replace="true" data-valmsg-for="Languages[', langId, '].Name" class="field-validation-valid text-danger"></span>',
+        '            </div>',
+        '            <div class="col-md-9">',
+        '                <input type="text" value="" placeholder="Уровень владения" name="Languages[', langId, '].Level" id="Languages_', langId, '__Level" data-val-required="Требуется поле Level." data-val="true" class="form-control text-box single-line">',
+        '                <span data-valmsg-replace="true" data-valmsg-for="Languages[', langId, '].Level" class="field-validation-valid text-danger"></span>',
+        '            </div>',
+        '            <div class="col-md-1 delete-line">',
+        '                <p class="text-danger remove-language">',
+        '                    <span class="glyphicon glyphicon-remove"></span> Удалить',
+        '                </p>',
+        '            </div>',
+        '        </div>',
+        '    </div>'
         ].join('');
 
-        $(this).parent().before(html);
+        row.append(html);
     });
 
     // удаление полей для языка
     $(document).on('click', 'p.remove-language', function () {
-        $(this).closest('div.language').remove();
+        var language = $(this).closest('div.language');
+        if (language.find('input[type="hidden"]').val() == "") {
+            language.remove();
+        }
+        else {
+            var managerId = getManagerIdFromURI();
+            var languageId = language.find('input[type="hidden"]').val();
+
+            window.location.href = '/Resume/RemoveLanguage/?managerId=' + managerId + '&languageId=' + languageId;
+        }
     });
 
 });

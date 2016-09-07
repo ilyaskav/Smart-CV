@@ -19,7 +19,7 @@ namespace Entities.Classes
         [Required]
         public String LastName { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         //[Required]
         public String CurrentLocation { get; set; }

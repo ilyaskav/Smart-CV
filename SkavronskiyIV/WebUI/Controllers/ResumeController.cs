@@ -65,10 +65,17 @@ namespace WebUI.Controllers
             }
 
             _resumeService.CreateMSWordDocument(identifier);
-var manager=_managerService.Get(identifier);
+            var manager=_managerService.Get(identifier);
             string projPath = Server.MapPath("~/Content/");
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(projPath, "doc", manager.Link));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, manager.Link);
+        }
+
+        [HttpGet]
+        public ActionResult GetRules(int managerId)
+        {
+            var json=_professionService.GetRule(managerId);
+            return Content(json);
         }
 
         [HttpPost]
