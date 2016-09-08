@@ -1,4 +1,5 @@
 ﻿using Entities.Classes;
+using Microsoft.Office.Interop.Word;
 using Repository.Interfaces;
 using Services.Converters;
 using Services.Interfaces;
@@ -231,6 +232,24 @@ namespace Services.Classes
             wordApp.Quit();
         }
 
-        
+
+        public void CreatePDF(Guid identifier)
+        {
+            var myResume = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).First().Resume;
+            string projPath = HttpContext.Current.Server.MapPath("~/Content/");
+
+            if (!File.Exists(projPath + "doc\\" + myResume.ResumeManager.Link)) CreateMSWordDocument(identifier);
+
+            var wordApp = new Word.Application();
+            wordApp.Visible = false;
+
+            wordApp.Documents.Open(projPath + "doc\\"+myResume.ResumeManager.Link);
+
+            var fileName=myResume.ResumeManager.Link.Substring(0, myResume.ResumeManager.Link.Length-4);
+            var doc = wordApp.ActiveDocument;
+            doc.SaveAs2( Path.Combine(projPath, "doc", fileName),  WdSaveFormat.wdFormatPDF);
+            doc.Close();
+            wordApp.Quit();
+        }
     }
 }

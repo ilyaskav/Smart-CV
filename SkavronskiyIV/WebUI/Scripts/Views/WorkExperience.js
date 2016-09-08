@@ -10,11 +10,17 @@
         }
         workPlaceId = parseInt(idName.toString().charAt(idName.toString().indexOf("[") + 1));
 
+        var id = $(this).closest('.form-group').find('div.duty');
+        if (id.length == 0) id = 0;
+        else {
+            id=id.closest('div.workplace').find('input[type="hidden"]').val();
+        }
+
         var html = [
 '<div class="duty">',
-'                <div class="col-md-9 col-md-offset-2">',
+'                <div class="col-md-8 col-md-offset-2">',
 '                    <input type="hidden" value="" name="WorkPlaces[', workPlaceId, '].Duties[', dutyId, '].Id" id="WorkPlaces_', workPlaceId, '__Duties_', dutyId, '__Id" data-val-number="The field Id must be a number." data-val="true">',
-'                    <input type="hidden" value="" name="WorkPlaces[', workPlaceId, '].Duties[', dutyId, '].WorkPlaceId" id="WorkPlaces_', workPlaceId, '__Duties_', dutyId, '__WorkPlaceId" data-val-required="Требуется поле WorkPlaceId." data-val-number="The field WorkPlaceId must be a number." data-val="true">',
+'                    <input type="hidden" value="',id,'" name="WorkPlaces[', workPlaceId, '].Duties[', dutyId, '].WorkPlaceId" id="WorkPlaces_', workPlaceId, '__Duties_', dutyId, '__WorkPlaceId" data-val-required="Требуется поле WorkPlaceId." data-val-number="The field WorkPlaceId must be a number." data-val="true">',
 '                    <input type="text" value="" name="WorkPlaces[', workPlaceId, '].Duties[', dutyId, '].Name" id="WorkPlaces_', workPlaceId, '__Duties_', dutyId, '__Name" data-val-required="Требуется поле Name." data-val="true" class="form-control text-box single-line">',
 '                    <span data-valmsg-replace="true" data-valmsg-for="WorkPlaces[', workPlaceId, '].Duties[', dutyId, '].Name" class="field-validation-valid text-danger"></span>',
 '                </div>',

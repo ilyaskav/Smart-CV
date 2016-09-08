@@ -20,5 +20,7 @@ namespace Services.Interfaces
         void DeleteResume(int id);
 
         void CreateMSWordDocument(Guid id);
+
+        void CreatePDF(Guid id);
     }
 }

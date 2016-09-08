@@ -35,6 +35,7 @@ namespace Repository.Classes
             clone.Id = 0;
             clone.Resume.Id = 0;
             clone.CreatedAt = DateTime.Now;
+            clone.Guid = Guid.NewGuid();
 
             foreach (var institution in clone.Resume.Education)
             {

@@ -72,6 +72,30 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
+        [Route("{identifier}")]
+        public ActionResult GetPDF(Guid identifier)
+        {
+            if (identifier == null || identifier.Equals(Guid.Empty))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "BadRequest");
+            }
+
+            // проверяем, владелец ли резюме шлет запрос 
+            if (!_managerService.IsOwnedBy(User.Identity.GetUserId<int>(), identifier))
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            _resumeService.CreatePDF(identifier);
+            var manager = _managerService.Get(identifier);
+            string projPath = Server.MapPath("~/Content/");
+
+            var fileName = manager.Link.Substring(0, manager.Link.Length - 4);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(projPath, "doc", fileName+".pdf"));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName + ".pdf");
+        }
+
+        [HttpGet]
         public ActionResult GetRules(int managerId)
         {
             var json=_professionService.GetRule(managerId);
