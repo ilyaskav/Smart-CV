@@ -1,5 +1,6 @@
-﻿using Entities.Classes;
-using Microsoft.Office.Interop.Word;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Repository.Interfaces;
 using Services.Converters;
 using Services.Interfaces;
@@ -9,9 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace Services.Classes
 {
@@ -75,163 +74,272 @@ namespace Services.Classes
             _langRepository.Dispose();
         }
 
-
         public void CreateMSWordDocument(Guid identifier)
         {
-            var wordApp = new Word.Application();
-            wordApp.Visible = false;
-
-            
-            string projPath = HttpContext.Current.Server.MapPath("~/Content/");
-            wordApp.Documents.Open(projPath + "MSWordTemplates\\template1.dotx");
-
             var myResume = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).First().Resume;
-            var doc = wordApp.ActiveDocument;
+            string projPath = HttpContext.Current.Server.MapPath("~/Content/");
+            string outFilePath = Path.Combine(projPath, "doc", myResume.ResumeManager.Link);
+            byte[] templateBytes = System.IO.File.ReadAllBytes(projPath + "MSWordTemplates\\template4.dotx");
 
-            doc.Bookmarks["FULLNAME"].Range.Text = myResume.FirstName + " " + myResume.LastName;
-            doc.Bookmarks["GOAL"].Range.Text = myResume.Goal;
-            doc.Bookmarks["LOCATION"].Range.Text = myResume.CurrentLocation;
-            doc.Bookmarks["EMAIL"].Range.Text = myResume.Contacts.FirstOrDefault(c => c.ContactTitle.Title.Equals("EMail")).Data;
-            doc.Bookmarks["TELNUM"].Range.Text = myResume.Contacts.FirstOrDefault(c => c.ContactTitle.Title.Equals("Phone")).Data;
-            foreach (var contact in myResume.Contacts.Where(c => !c.ContactTitle.Title.Equals("EMail") && !c.ContactTitle.Title.Equals("Phone")))
+            using (MemoryStream templateStream = new MemoryStream())
             {
-                doc.Bookmarks["OTHER_CONTACTS"].Range.Text = String.Format("{0}: {1}\n", contact.ContactTitle.Title, contact.Data);
-            }
+                templateStream.Write(templateBytes, 0, (int)templateBytes.Length);
 
-            // ОПЫТ РАБОТЫ
-            if (myResume.WorkExp.Count > 0)
-            {
-                var expTable = doc.Tables[1];
-                int workNum = 0;
-                foreach (var work in myResume.WorkExp)
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(templateStream, true))
                 {
-                    workNum++;
-                    if (workNum > 1) expTable.Rows.Add();
+                    doc.ChangeDocumentType(WordprocessingDocumentType.Document);
+                    var mainPart = doc.MainDocumentPart;
 
-                    // период в который работали
-                    expTable.Cell(workNum, 1).Range.Text = string.Format("{0} –\n{1}", work.From.Format(), work.To.Format());
+                    // Get the Document Settings Part
+                    DocumentSettingsPart documentSettingPart1 = mainPart.DocumentSettingsPart;
 
-                    // описание работы
-                    expTable.Cell(workNum, 2).Range.Text = string.Empty;
-                    //  название работы и город
-                    var range = doc.Range(expTable.Cell(workNum, 2).Range.Start, expTable.Cell(workNum, 2).Range.Start);
+                    // Create a new attachedTemplate and specify a relationship ID
+                    AttachedTemplate attachedTemplate1 = new AttachedTemplate() { Id = "relationId1" };
 
-                    range.Text = string.Format("{0}, г. {1}\n", work.Name, work.City);
-                    range.Font.Bold = 1;
-                    //  должность
-                    range.SetRange(range.End, range.End);
-                    range.Text = string.Format("{0}\n", work.Position);
-                    range.Font.Italic = 1; range.Font.Bold = 0;
-                    //  обязанности
-                    range.SetRange(range.End, range.End);
-                    StringBuilder strBuilder = new StringBuilder();
-                    foreach (var duty in work.Duties)
+                    // Append the attached template to the DocumentSettingsPart
+                    documentSettingPart1.Settings.Append(attachedTemplate1);
+
+                    // Add an ExternalRelationShip of type AttachedTemplate.
+                    // Specify the path of template and the relationship ID
+                    documentSettingPart1.AddExternalRelationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate", new Uri(projPath + "MSWordTemplates\\template4.dotx", UriKind.Absolute), "relationId1");
+
+                    string fullname = string.Format("{0} {1}", myResume.FirstName, myResume.LastName);
+                    SetCCText(mainPart, "FullName", fullname);
+
+                    SetCCText(mainPart, "Goal", myResume.Goal);
+                    SetCCText(mainPart, "Location", myResume.CurrentLocation);
+
+                    string email = myResume.Contacts.First(c => c.ContactTitle.Title.Equals("EMail")).Data;
+                    SetCCText(mainPart, "Email", email);
+
+                    string phone = myResume.Contacts.First(c => c.ContactTitle.Title.Equals("Phone")).Data;
+                    SetCCText(mainPart, "Phone", phone);
+
+                    RemoveCCChild(mainPart, "OtherContacts");
+                    foreach (var contact in myResume.Contacts.Where(c => !c.ContactTitle.Title.Equals("EMail") && !c.ContactTitle.Title.Equals("Phone")))
                     {
-                        strBuilder.AppendFormat("– {0}\n", duty.Name);
+                        AppendCCText(mainPart, "OtherContacts", string.Format("{0}: {1}", contact.ContactTitle.Title, contact.Data));
                     }
-                    range.Text = strBuilder.ToString();
-                    range.Font.Italic = 0; range.Font.Bold = 0;
+
+                    // ОБРАЗОВАНИЕ
+                    if (myResume.Education.Count > 0)
+                    {
+                        SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Education").Single();
+                        Table theTable = contentControl.Descendants<Table>().Single();
+                        TableRow defaultRow = theTable.Elements<TableRow>().Last();
+
+                        foreach (var institution in myResume.Education)
+                        {
+                            TableRow rowCopy = (TableRow)defaultRow.CloneNode(true);
+
+                            // период учебы
+                            var periodRun = rowCopy.Descendants<TableCell>().ElementAt(0).GetFirstChild<Paragraph>().GetFirstChild<Run>();
+                            periodRun.GetFirstChild<Text>().Text = string.Format("{0} –", institution.From.Format());
+                            periodRun.Append(new Break());
+                            periodRun.Append(new Text(institution.To.Format()));
+
+                            // описание уч. заведениия:
+                            // название и город
+                            TableCell secondColumn = rowCopy.Descendants<TableCell>().ElementAt(1);
+                            SetCCText(secondColumn, "InstitutionName", string.Format("{0}, г. {1}", institution.Name, institution.City));
+
+                            // кафедра
+                            if (string.IsNullOrEmpty(institution.Department))
+                                secondColumn.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "InstitutionDepartment").Single().Parent.Remove();
+                            else
+                                SetCCText(secondColumn, "InstitutionDepartment", institution.Department);
+
+                            // специальность
+                            SetCCText(secondColumn, "InstitutionSpeciality", institution.Specialty);
+                            secondColumn.Elements<Paragraph>().Last().Append(new Run(new Break()));
+
+                            theTable.AppendChild(rowCopy);
+                        }
+                        theTable.RemoveChild(defaultRow);
+                    }
+                    else mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Education").Single().Remove();
+
+                    // ОПЫТ РАБОТЫ
+                    if (myResume.WorkExp.Count > 0)
+                    {
+                        SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Experience").Single();
+                        Table theTable = contentControl.Descendants<Table>().Single();
+                        TableRow defaultRow = theTable.Elements<TableRow>().Last();
+
+                        foreach (var workPlace in myResume.WorkExp)
+                        {
+                            TableRow rowCopy = (TableRow)defaultRow.CloneNode(true);
+
+                            // период в который работали
+                            var periodRun = rowCopy.Descendants<TableCell>().ElementAt(0).GetFirstChild<Paragraph>().GetFirstChild<Run>();
+                            periodRun.GetFirstChild<Text>().Text = string.Format("{0} –", workPlace.From.Format());
+                            periodRun.Append(new Break());
+                            periodRun.Append(new Text(workPlace.To.Format()));
+
+                            // описание работы:
+                            // название работы и город
+                            TableCell secondColumn = rowCopy.Descendants<TableCell>().ElementAt(1);
+                            SetCCText(secondColumn, "WorkplaceName", string.Format("{0}, г. {1}", workPlace.Name, workPlace.City));
+
+                            // должность
+                            SetCCText(secondColumn, "WorkplacePosition", workPlace.Position);
+
+                            // обязанности
+                            if (workPlace.Duties.Count > 0)
+                            {
+                                RemoveCCChild(secondColumn, "WorkplaceDuties");
+                                foreach (var duty in workPlace.Duties)
+                                {
+                                    AppendCCText(secondColumn, "WorkplaceDuties", string.Format("– {0}", duty.Name));
+                                }
+                            }
+                            else
+                            {
+                                secondColumn.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "WorkplaceDuties").Single().Parent.Remove();
+                            }
+
+                            //secondColumn.Elements<Paragraph>().Last().Append(new Run(new Break()));
+
+                            theTable.AppendChild(rowCopy);
+                        }
+                        theTable.RemoveChild(defaultRow);
+                    }
+                    else mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Experience").Single().Remove();
+
+
+                    // СЕРТИФИКАТЫ
+                    if (myResume.CertificatesAndTrainings.Count > 0)
+                    {
+                        RemoveCCChild(mainPart, "Certificates");
+                        foreach (var certificate in myResume.CertificatesAndTrainings)
+                        {
+                            AppendCCText(mainPart, "Certificates", string.Format("{0} – {1}{2}", certificate.Date.Year, certificate.Name, certificate.Location != null ? string.Format(", г. {0}", certificate.Location) : ""));
+                        }
+                    }
+                    else RemoveCC(mainPart, "Section_Certificates");
+
+                    // ЯЗЫКИ
+                    if (myResume.Languages.Count > 0)
+                    {
+                        SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Languages").Single();
+                        SdtContentBlock contentRun = contentControl.GetFirstChild<SdtContentBlock>();
+                        Paragraph defaultLi = contentRun.GetFirstChild<Paragraph>();
+
+                        foreach (var language in myResume.Languages)
+                        {
+                            Paragraph copy = (Paragraph)defaultLi.CloneNode(true);
+                            copy.Descendants<Text>().Where(t => t.Text == "lang").Single().Text = language.Name;
+                            copy.Descendants<Text>().Where(t => t.Text == "level").Single().Text = language.Level;
+                            contentRun.Append(copy);
+                        }
+                        contentRun.RemoveChild(defaultLi);
+                    }
+                    else RemoveCC(mainPart, "Section_Languages");
+
+                    // ЛИЧНЫЕ КАЧЕСТВА
+                    if (myResume.PersonalQualities.Count > 0)
+                    {
+                        SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "PersonalQualities").Single();
+                        SdtContentBlock contentRun = contentControl.GetFirstChild<SdtContentBlock>();
+                        Paragraph defaultLi = contentRun.GetFirstChild<Paragraph>();
+
+                        foreach (var quality in myResume.PersonalQualities)
+                        {
+                            Paragraph copy = (Paragraph)defaultLi.CloneNode(true);
+                            copy.Descendants<Text>().Where(t => t.Text == "quality").Single().Text = quality.Name;
+                            contentRun.Append(copy);
+                        }
+                        contentRun.RemoveChild(defaultLi);
+                    }
+                    else
+                    {
+                        mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_PersonalQualities").Single().Remove();
+                    }
+
+                    // НАВЫКИ
+                    if (myResume.Skills.Count > 0)
+                    {
+                        SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Skills").Single();
+                        SdtContentBlock contentRun = contentControl.GetFirstChild<SdtContentBlock>();
+                        Paragraph defaultLi = contentRun.GetFirstChild<Paragraph>();
+
+                        foreach (var skill in myResume.Skills)
+                        {
+                            Paragraph copy = (Paragraph)defaultLi.CloneNode(true);
+                            copy.Descendants<Text>().Where(t => t.Text == "skill").Single().Text = skill.Name;
+                            contentRun.Append(copy);
+                        }
+                        contentRun.RemoveChild(defaultLi);
+                    }
+                    else mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Skills").Single().Remove();
+
+                    mainPart.Document.Save();
                 }
+                File.WriteAllBytes(outFilePath, templateStream.ToArray());
             }
-            else doc.Bookmarks["SECTION_EXPERIENCE"].Range.Text = string.Empty;
-
-            // ОБРАЗОВАНИЕ
-            if (myResume.Education.Count > 0)
-            {
-                var eduTable = doc.Tables[2];
-                int eduNum = 0;
-                foreach (var institution in myResume.Education)
-                {
-                    eduNum++;
-                    if (eduNum > 1) eduTable.Rows.Add();
-
-                    // период учебы
-                    eduTable.Cell(eduNum, 1).Range.Text = string.Format("{0} –\n{1}", institution.From.Format(), institution.To.Format());
-
-                    // описание уч. заведениия:
-                    eduTable.Cell(eduNum, 2).Range.Text = string.Empty;
-                    var range = doc.Range(eduTable.Cell(eduNum, 2).Range.Start, eduTable.Cell(eduNum, 2).Range.Start);
-                    // название и город
-                    range.Text = string.Format("{0}, {1}\n", institution.Name, institution.City);
-                    range.Font.Bold = 1;
-                    // кафедра
-                    range.SetRange(range.End, range.End);
-                    range.Text = string.Format("{0}\n", institution.Department);
-                    range.Font.Bold = 0; range.Font.Italic = 1;
-                    // специальность
-                    range.SetRange(range.End, range.End);
-                    range.Text = string.Format("{0}", institution.Specialty);
-                    range.Font.Italic = 0; range.Font.Bold = 0;
-                }
-            }
-            else doc.Bookmarks["SECTION_EDUCATION"].Range.Text = string.Empty;
-
-            // СЕРТИФИКАТЫ
-            if (myResume.CertificatesAndTrainings.Count > 0)
-            {
-                StringBuilder strBuilder = new StringBuilder();
-                foreach (var certificate in myResume.CertificatesAndTrainings)
-                {
-                    strBuilder.AppendFormat("{0} – {1}", certificate.Date.Year, certificate.Name);
-                    if (certificate.Location != null) strBuilder.AppendFormat(", г. {0}", certificate.Location);
-                    strBuilder.Append("\n");
-                }
-                doc.Bookmarks["CERTIFICATES"].Range.Text = strBuilder.ToString();
-            }
-            else doc.Bookmarks["SECTION_CERTIFICATES"].Range.Text = string.Empty;
-
-            // ЯЗЫКИ
-            if (myResume.Languages.Count > 0)
-            {
-                var range = doc.Range(doc.Bookmarks["LANGUAGES"].Range.Start, doc.Bookmarks["LANGUAGES"].Range.End);
-                range.Text = string.Empty;
-
-                foreach (var language in myResume.Languages)
-                {
-                    //var paragraph = range.Paragraphs.Add();
-                    range.InsertAfter(string.Format("{0} – {1}\n", language.Name, language.Level));
-                }
-                range.ListFormat.ApplyBulletDefault();
-            }
-            else doc.Bookmarks["SECTION_LANGUAGES"].Range.Text = string.Empty;
-
-            // ЛИЧНЫЕ КАЧЕСТВА
-            if (myResume.PersonalQualities.Count > 0)
-            {
-                var range = doc.Range(doc.Bookmarks["PERSONAL_QUALITIES"].Range.Start, doc.Bookmarks["PERSONAL_QUALITIES"].Range.End);
-                range.Text = string.Empty;
-
-                foreach (var quality in myResume.PersonalQualities)
-                {
-                    range.InsertAfter(string.Format("{0}\n", quality.Name));
-                }
-                range.ListFormat.ApplyBulletDefault();
-            }
-            else doc.Bookmarks["SECTION_PERSONAL_QUALITIES"].Range.Text = string.Empty;
-
-            // НАВЫКИ
-            if (myResume.Skills.Count > 0)
-            {
-                var range = doc.Range(doc.Bookmarks["SKILLS"].Range.Start, doc.Bookmarks["SKILLS"].Range.End);
-                range.Text = string.Empty;
-
-                foreach (var skill in myResume.Skills)
-                {
-                    range.InsertAfter(string.Format("{0}\n", skill.Name));
-                }
-                range.ListFormat.ApplyBulletDefault();
-            }
-            else doc.Bookmarks["SECTION_SKILLS"].Range.Text = string.Empty;
-
-            
-            myResume.ResumeManager.Link = string.Format("cv-{0}-{1}.doc", myResume.ResumeManager.Id, myResume.ResumeManager.Profession.Name);
-            _resumeManagerRepository.Update(myResume.ResumeManager); 
-
-            doc.SaveAs2(FileName: Path.Combine(projPath, "doc", myResume.ResumeManager.Link));
-            doc.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-            wordApp.Quit();
         }
 
+        private void SetCCText(MainDocumentPart mainPart, string contentControlTag, string text)
+        {
+            SdtRun contentControl = mainPart.Document.Body.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            SdtContentRun contentRun = contentControl.GetFirstChild<SdtContentRun>();
+            contentRun.GetFirstChild<Run>().GetFirstChild<Text>().Text = text;
+        }
+
+        private void SetCCText(TableCell tableCell, string contentControlTag, string text)
+        {
+            SdtRun contentControl = tableCell.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            SdtContentRun contentRun = contentControl.GetFirstChild<SdtContentRun>();
+            contentRun.GetFirstChild<Run>().GetFirstChild<Text>().Text = text;
+        }
+
+        private void RemoveCC(MainDocumentPart mainPart, string contentControlTag)
+        {
+            SdtRun contentControl = mainPart.Document.Body.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).SingleOrDefault();
+
+            var breaks = contentControl.Parent.Descendants<Break>();
+            foreach (var item in breaks)
+            {
+                item.Remove();
+            }
+            contentControl.Remove();
+        }
+
+        private void AppendCCText(MainDocumentPart mainPart, string contentControlTag, string text, bool clearCC = false)
+        {
+            SdtRun contentControl = mainPart.Document.Body.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            SdtContentRun contentRun = contentControl.GetFirstChild<SdtContentRun>();
+
+            //if (clearCC == true) contentRun.RemoveAllChildren<Text>();
+
+            Text textElement = contentRun.GetFirstChild<Run>().AppendChild(new Text(text));
+            textElement.InsertAfterSelf(new Break());
+        }
+
+        private void AppendCCText(TableCell tableCell, string contentControlTag, string text)
+        {
+            SdtRun contentControl = tableCell.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            SdtContentRun contentRun = contentControl.GetFirstChild<SdtContentRun>();
+
+            Text textElement = contentRun.GetFirstChild<Run>().AppendChild(new Text(text));
+            textElement.InsertAfterSelf(new Break());
+        }
+
+        private void RemoveCCChild(MainDocumentPart mainPart, string contentControlTag)
+        {
+            SdtRun contentControl = mainPart.Document.Body.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            Run contentRun = contentControl.GetFirstChild<SdtContentRun>().GetFirstChild<Run>();
+
+            contentRun.RemoveAllChildren<Text>();
+        }
+
+        private void RemoveCCChild(TableCell tableCell, string contentControlTag)
+        {
+            SdtRun contentControl = tableCell.Descendants<SdtRun>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == contentControlTag).Single();
+            Run contentRun = contentControl.GetFirstChild<SdtContentRun>().GetFirstChild<Run>();
+
+            contentRun.RemoveAllChildren<Text>();
+        }
 
         public void CreatePDF(Guid identifier)
         {
@@ -240,16 +348,16 @@ namespace Services.Classes
 
             if (!File.Exists(projPath + "doc\\" + myResume.ResumeManager.Link)) CreateMSWordDocument(identifier);
 
-            var wordApp = new Word.Application();
-            wordApp.Visible = false;
+            //var wordApp = new Word.Application();
+            //wordApp.Visible = false;
 
-            wordApp.Documents.Open(projPath + "doc\\"+myResume.ResumeManager.Link);
+            //wordApp.Documents.Open(projPath + "doc\\" + myResume.ResumeManager.Link);
 
-            var fileName=myResume.ResumeManager.Link.Substring(0, myResume.ResumeManager.Link.Length-4);
-            var doc = wordApp.ActiveDocument;
-            doc.SaveAs2( Path.Combine(projPath, "doc", fileName),  WdSaveFormat.wdFormatPDF);
-            doc.Close();
-            wordApp.Quit();
+            //var fileName = myResume.ResumeManager.Link.Substring(0, myResume.ResumeManager.Link.Length - 4);
+            //var doc = wordApp.ActiveDocument;
+            //doc.SaveAs2(Path.Combine(projPath, "doc", fileName), WdSaveFormat.wdFormatPDF);
+            //doc.Close();
+            //wordApp.Quit();
         }
     }
 }
