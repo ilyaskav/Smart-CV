@@ -1,9 +1,9 @@
-/SkavronskiyIV/packages/
-/SkavronskiyIV/WebUI/Properties/PublishProfiles
-/SkavronskiyIV/WebUI/Content/doc
-/SkavronskiyIV/WebUI/App_Data
+/packages/
+/WebUI/Properties/PublishProfiles
+/WebUI/Content/doc
+/WebUI/App_Data
 
-**/.vs
+/.vs
 *.suo
 *.user
 
