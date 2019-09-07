@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Models
 {
@@ -15,5 +11,7 @@ namespace Services.Models
         public DateTime CreatedAt { get; set; }
 
         public Guid Guid { get; set; }
+
+        public bool HasLink { get; set; }
     }
 }

@@ -1,15 +1,11 @@
-﻿using Repository.Interfaces;
-using Services.Classes;
-using Services.Models;
+﻿using Services.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Services.Interfaces;
 using System.IO;
 using System.Net;
+using System.Net.Mime;
 
 namespace WebUI.Controllers
 {
@@ -68,7 +64,7 @@ namespace WebUI.Controllers
             var manager=_managerService.Get(identifier);
             string projPath = Server.MapPath("~/Content/");
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(projPath, "doc", manager.Link));
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, manager.Link);
+            return File(fileBytes, MediaTypeNames.Application.Octet, manager.Link);
         }
 
         [HttpGet]
@@ -92,7 +88,7 @@ namespace WebUI.Controllers
 
             var fileName = manager.Link.Substring(0, manager.Link.Length - 4);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(projPath, "doc", fileName+".pdf"));
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName + ".pdf");
+            return File(fileBytes, MediaTypeNames.Application.Octet, fileName + ".pdf");
         }
 
         [HttpGet]

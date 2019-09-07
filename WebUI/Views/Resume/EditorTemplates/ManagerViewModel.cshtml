@@ -4,26 +4,30 @@
     Layout = null;
 }
 
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.Profession, new { @class = "text-bold" })
-        </td>
-        <td>
-            @Model.CreatedAt.ToString("dd.MM.yyyy")
-        </td>
-        <td class="">
-            @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
-            @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.Profession, new { @class = "text-bold" })
+    </td>
+    <td>
+        @Model.CreatedAt.ToString("dd.MM.yyyy")
+    </td>
+    <td class="">
+        @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
+        @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
 
-            @Html.HtmlLink(string.Format("/Resume/Remove/{0}", Model.Id), "<span class='glyphicon glyphicon-remove'></span>Удалить", new { @class="text-danger"}) 
-                
-            
-            @*@Html.RouteLink("Удалить", new { action = "RemoveResume", managerId = Model.Id })*@
-        </td>
-        <td>
-            @Html.HtmlLink(string.Format("/Resume/GetWordDoc/?identifier={0}", Model.Guid), "Word", new { @class = "btn" })
-            @Html.HtmlLink(string.Format("/Resume/GetPDF/?identifier={0}", Model.Guid), "PDF", new { @class = "btn" })
-            @*<a href="" class="btn">Word</a>*@
-            @*<a href="" class="btn">PDF</a>*@
-        </td>
-    </tr>
+        @Html.HtmlLink(string.Format("/Resume/Remove/{0}", Model.Id), "<span class='glyphicon glyphicon-remove'></span>Удалить", new { @class = "text-danger" })
+
+
+        @*@Html.RouteLink("Удалить", new { action = "RemoveResume", managerId = Model.Id })*@
+    </td>
+    <td>
+        @{
+            object linkAttributes = new { @class = "btn" };
+            if (!Model.HasLink) { linkAttributes = new { @class = "btn", @disabled = "" }; }
+        }
+
+        @Html.HtmlLink(string.Format("/Resume/GetWordDoc/?identifier={0}", Model.Guid), "Word", linkAttributes)
+        @Html.HtmlLink(string.Format("/Resume/GetPDF/?identifier={0}", Model.Guid), "PDF", linkAttributes)
+
+    </td>
+</tr>

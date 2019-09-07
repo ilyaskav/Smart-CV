@@ -3,8 +3,6 @@ using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Services.Converters;
 using Services.Models;
 
@@ -32,8 +30,8 @@ namespace Services.Classes
 
         public ResumeManagerPrintModel Get(Guid identifier)
         {
-            var manager= _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
-            
+            var manager = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
+
             if (manager == null) return null;
             return manager.ToPrintModel();
         }
@@ -48,16 +46,23 @@ namespace Services.Classes
             if (!_resumeManagerRepository.Has(managerId)) return;
 
             _resumeManagerRepository.Clone(managerId);
-        } 
+        }
 
         public ICollection<ManagerViewModel> GetAllResumes(int userId)
         {
-            var entities = _resumeManagerRepository.Get().Where(user => user.UserId.Equals(userId)).OrderByDescending(e=>e.CreatedAt).ToList();
+            var entities = _resumeManagerRepository.Get().Where(user => user.UserId.Equals(userId)).OrderByDescending(e => e.CreatedAt).ToList();
             ICollection<ManagerViewModel> models = new List<ManagerViewModel>();
 
             foreach (var entity in entities)
             {
-                models.Add(new ManagerViewModel() { Id=entity.Id, CreatedAt=entity.CreatedAt, Profession=entity.Profession.Name, Guid=entity.Guid });
+                models.Add(new ManagerViewModel()
+                {
+                    Id = entity.Id,
+                    CreatedAt = entity.CreatedAt,
+                    Profession = entity.Profession.Name,
+                    Guid = entity.Guid,
+                    HasLink = entity.Link != null
+                });
             }
             return models;
 
@@ -67,7 +72,7 @@ namespace Services.Classes
         {
             if (_resumeManagerRepository.Has(id))
             {
-                var manager=_resumeManagerRepository.Get(id);
+                var manager = _resumeManagerRepository.Get(id);
 
                 if (manager.Resume != null)
                 {
@@ -85,7 +90,7 @@ namespace Services.Classes
 
         public bool IsOwnedBy(int userId, int managerId)
         {
-            var resumeManager=_resumeManagerRepository.Get(managerId);
+            var resumeManager = _resumeManagerRepository.Get(managerId);
 
             if (resumeManager.UserId == userId) return true;
             else return false;

@@ -74,7 +74,12 @@ namespace Services.Classes
 
         public void CreateMSWordDocument(Guid identifier)
         {
-            var myResume = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).First().Resume;
+            var myResume = _resumeManagerRepository
+                .Get(m => m.Guid.Equals(identifier) && m.Link != null)
+                .Select(m => m.Resume)
+                .FirstOrDefault();
+            if (myResume is null) throw new NullReferenceException("Resume was not found or it is not completed");
+
             string projPath = HttpContext.Current.Server.MapPath("~/Content/");
             string outFilePath = Path.Combine(projPath, "doc", myResume.ResumeManager.Link);
             byte[] templateBytes = System.IO.File.ReadAllBytes(projPath + "MSWordTemplates\\template4.dotx");
