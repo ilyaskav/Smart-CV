@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartCV.Entity\SmartCV.Entity.csproj" />
+    <ProjectReference Include="..\SmartCV.Repository\SmartCV.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

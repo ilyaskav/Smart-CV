@@ -1,0 +1,23 @@
+﻿@model SmartCV.Service.Models.LanguageModel
+@{
+    Layout = null;
+}
+
+<div class="language">
+    @Html.HiddenFor(model=>model.Id)
+    <div class="form-group">
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control text-right font-bold", placeholder = "Язык" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Level, new { htmlAttributes = new { @class = "form-control", placeholder = "Уровень владения" } })
+                @Html.ValidationMessageFor(model => model.Level, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-1 delete-line">
+                <p class="text-danger remove-language">
+                    <span class="glyphicon glyphicon-remove"></span> Удалить
+                </p>
+            </div>
+        </div>
+    </div>

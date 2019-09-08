@@ -1,0 +1,18 @@
+[
+  {
+    "outputFileName": "wwwroot/dist/jqueryval-bundle.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "wwwroot/js/jqueryValidateDate.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/dist/bootstrap-datepicker-bundle.js",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap-datepicker/bootstrap-datepicker.js",
+      "wwwroot/lib/bootstrap-datepicker/bootstrap-datepicker.ru.min.js",
+      "wwwroot/js/jqueryValidateDate.js"
+    ]
+  }
+]

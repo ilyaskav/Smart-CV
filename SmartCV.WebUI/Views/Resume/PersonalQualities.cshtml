@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "PersonalQualities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="h2 text-center section">Личные качества</div>
+</div>
+<form class="form-horizontal" method="POST">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Качества</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="name" />
+            </div>
+            <div class="personalQuality">
+                <div class="col-md-9 col-md-offset-2">
+                    <input type="text" class="form-control" name="name" />
+                </div>
+                <div class="col-md-1 delete-line">
+                    <p class="text-danger remove-personalQuality">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-md-offset-2">
+                <p id="addDuty" aria-label="Добавить качество" class="text-info">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить качество
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <a href="~/Resume/WorkExperience" class="btn btn-default">Назад</a>
+                <a href="~/Resume/Manage" class="btn btn-default">Далее</a>
+                <button class="btn btn-primary">Сохранить</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    <script src="~/js/addingData.js"></script>
+}
