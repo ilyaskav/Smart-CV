@@ -3,6 +3,7 @@ using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartCV.Service.Classes
 {
@@ -33,8 +34,10 @@ namespace SmartCV.Service.Classes
 
         public string GetRule(int managerId)
         {
-            var profession =_managerRepository.Get(managerId).Profession;
-            return profession.Rules;
+            return _professionRepository
+                .Get(p=> p.ResumeManagers.Any(rm=>rm.Id == managerId))
+                .Select(p=>p.Rules)
+                .FirstOrDefault();
         }
 
         public void Dispose()

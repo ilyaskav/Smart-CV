@@ -112,7 +112,7 @@ namespace SmartCV.WebUI.Controllers
             model.UserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             int managerId = _managerService.CreateEmptyResume(model);
 
-            return RedirectToAction("PersonalData", managerId);
+            return RedirectToAction("PersonalData", new { managerId });
         }
 
         [HttpGet]

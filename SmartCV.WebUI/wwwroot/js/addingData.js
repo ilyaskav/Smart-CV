@@ -5,7 +5,7 @@
 // НАЧАЛО Общие для всех функции
 // доставание managerId из URI
 var getManagerIdFromURI = function () {
-    var sPageURL, managerId=0;
+    var sPageURL, managerId = 0;
     if (window.location.search == "") {
         sPageURL = decodeURIComponent(window.location.pathname);
         managerId = sPageURL.substring(sPageURL.lastIndexOf('/') + 1, sPageURL.length);
@@ -32,16 +32,16 @@ $(function () {
     // добавление поля для личного качества
     $('#addPersonalQuality').on('click', function () {
         var html = [
-'            <div class="personalQuality">',
-'                <div class="col-md-9 col-md-offset-2">',
-'                    <input type="text" class="form-control" name="name" />',
-'                </div>',
-'                <div class="col-md-1 delete-line">',
-'                    <p class="text-danger remove-personalQuality">',
-'                        <span class="glyphicon glyphicon-remove"></span> Удалить',
-'                    </p>',
-'                </div>',
-'            </div>'
+            '            <div class="personalQuality">',
+            '                <div class="col-md-9 col-md-offset-2">',
+            '                    <input type="text" class="form-control" name="name" />',
+            '                </div>',
+            '                <div class="col-md-1 delete-line">',
+            '                    <p class="text-danger remove-personalQuality">',
+            '                        <span class="glyphicon glyphicon-remove"></span> Удалить',
+            '                    </p>',
+            '                </div>',
+            '            </div>'
         ].join('');
 
         $(this).parent().before(html);
@@ -52,18 +52,17 @@ $(function () {
         $(this).closest('div.personalQuality').remove();
     });
 
-    $.get("/Resume/GetRules/"+getManagerIdFromURI())
-            .success(function (data) {
-                var str = JSON.stringify(eval("(" + data + ")"));
-                var json = JSON.parse(str);
+    $.get("/Resume/GetRules?managerId=" + getManagerIdFromURI())
+        .then(function (data) {
+            var str = JSON.stringify(eval("(" + data + ")"));
+            var json = JSON.parse(str);
 
-                for (var propName in json.PersonalData) {
-                    $("input[name='" + propName + "']").closest('.form-group').remove();
-                }
-            })
-        .error(function (response) {
+            for (var propName in json.PersonalData) {
+                $("input[name='" + propName + "']").closest('.form-group').remove();
+            }
+        })
+        .catch(function (response) {
             console.log(response.responseText);
-
         });
 
     //// выбор даты с днями
@@ -86,7 +85,7 @@ $(function () {
     //        autoclose: true
     //    });
     //}));
-    
+
 
     //// включеиня подсказок
     //$('[data-toggle="tooltip"]').tooltip();
