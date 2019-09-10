@@ -1,20 +1,23 @@
 ﻿@model ICollection<SmartCV.Service.Models.ManagerViewModel>
 
-    <div class="widget box">
-        <div class="widget-header"> <h2><i class="icon-reorder"></i> Мои резюме</h2> </div>
-        <div class="widget-content form-inline">
+<div class="widget box">
+    <div class="widget-header">
+        <h2><i class="icon-reorder"></i> Мои резюме</h2>
+    </div>
+    <div class="widget-content">
+        <form action="~/Resume/CreateEmptyResume" method="post">
             <div class="row clearfix">
-                <form action="~/Resume/CreateEmptyResume" method="post">
-                    @Html.AntiForgeryToken()
-                    <div class="col-md-2">
-                        @Html.DropDownList("ProfessionId", null, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" href="/Resume/CreateEmptyResume" class="btn btn-primary" value="Создать резюме" />
-                    </div>
-                </form>
+                @Html.AntiForgeryToken()
+                <div class="col-md-2">
+                    @Html.DropDownList("ProfessionId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" href="/Resume/CreateEmptyResume" class="btn btn-primary" value="Создать резюме" />
+                </div>
             </div>
-            @if (Model.Count > 0) { 
+        </form>
+        @if (Model.Count > 0)
+        {
             <table class="table table-striped table-bordered table-hover datatable dataTable">
                 <thead>
                     <tr>
@@ -22,17 +25,19 @@
                         <th>Дата создания</th>
                         <th>Действия</th>
                         <th>Вывести</th>
-                    </tr>                   
+                    </tr>
                 </thead>
                 <tbody>
-                    @Html.EditorForModel("~/Views/Resume/EditorTemplates/ManagerViewModel.cshtml")
+                    @foreach (var item in Model)
+                    {
+                        @Html.EditorFor(m => item, "~/Views/Resume/EditorTemplates/ManagerViewModel.cshtml")
+                    }
                 </tbody>
             </table>
-            
-            }
-        </div>
+        }
     </div>
+</div>
 
-    @section Scripts{
+@section Scripts{
 
-    }
+}

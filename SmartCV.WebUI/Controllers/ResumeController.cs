@@ -29,7 +29,7 @@ namespace SmartCV.WebUI.Controllers
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService, 
+        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService,
                                 IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService,
                                 ICertificateService certService, ISkillService skillService, IHostingEnvironment hostingEnvironment)
         {
@@ -66,7 +66,7 @@ namespace SmartCV.WebUI.Controllers
             }
 
             _resumeService.CreateMSWordDocument(identifier);
-            var manager=_managerService.Get(identifier);
+            var manager = _managerService.Get(identifier);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment.WebRootPath, "doc", manager.Link));
             return File(fileBytes, MediaTypeNames.Application.Octet, manager.Link);
         }
@@ -90,14 +90,14 @@ namespace SmartCV.WebUI.Controllers
             var manager = _managerService.Get(identifier);
 
             var fileName = manager.Link.Substring(0, manager.Link.Length - 4);
-            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment.WebRootPath, "doc", fileName+".pdf"));
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment.WebRootPath, "doc", fileName + ".pdf"));
             return File(fileBytes, MediaTypeNames.Application.Octet, fileName + ".pdf");
         }
 
         [HttpGet]
         public IActionResult GetRules(int managerId)
         {
-            var json=_professionService.GetRule(managerId);
+            var json = _professionService.GetRule(managerId);
             return Content(json);
         }
 
@@ -110,13 +110,13 @@ namespace SmartCV.WebUI.Controllers
                 return View(model);
             }
             model.UserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            int managerId=_managerService.CreateEmptyResume(model);
+            int managerId = _managerService.CreateEmptyResume(model);
 
-            return RedirectToAction(string.Format("PersonalData/{0}", managerId));
+            return RedirectToAction("PersonalData", managerId);
         }
 
         [HttpGet]
-        public IActionResult PersonalData(int managerId)
+        public IActionResult PersonalData(int managerId) //NOT PASSED
         {
             if (managerId <= 0)
             {
@@ -156,7 +156,7 @@ namespace SmartCV.WebUI.Controllers
             if (model.Id == null)
             {
                 _resumeService.CreateResume(model);
-                
+
             }
             else
             {
@@ -257,7 +257,7 @@ namespace SmartCV.WebUI.Controllers
             }
 
             //addModel.ResumeManagerId = managerId;
-            _institutionService.CreateOrUpdate (addModel);
+            _institutionService.CreateOrUpdate(addModel);
 
             return RedirectToAction(string.Format("Education/{0}", managerId));
         }
@@ -406,7 +406,7 @@ namespace SmartCV.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Skills(int managerId, SkillLanguageAddModel addModel)
         {
-           if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(addModel);
             }

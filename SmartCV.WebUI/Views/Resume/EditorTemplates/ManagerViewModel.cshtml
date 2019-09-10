@@ -11,19 +11,21 @@
     <td>
         @Model.CreatedAt.ToString("dd.MM.yyyy")
     </td>
-    <td class="">
+    <td>
         @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
         @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
 
-        @Html.HtmlLink(string.Format("/Resume/Remove/{0}", Model.Id), "<span class='glyphicon glyphicon-remove'></span>Удалить", new { @class = "text-danger" })
-
+        <a href="@string.Format("/Resume/Remove/{0}", Model.Id)">
+            <span class="glyphicon glyphicon-remove"></span>
+            Удалить
+        </a>
 
         @*@Html.RouteLink("Удалить", new { action = "RemoveResume", managerId = Model.Id })*@
     </td>
     <td>
         @{
-            object linkAttributes = new { @class = "btn" };
-            if (!Model.HasLink) { linkAttributes = new { @class = "btn", @disabled = "" }; }
+            object linkAttributes = new { @class = "btn btn-light" };
+            if (!Model.HasLink) { linkAttributes = new { @class = "btn btn-light", @disabled = "" }; }
         }
 
         @Html.HtmlLink(string.Format("/Resume/GetWordDoc/?identifier={0}", Model.Guid), "Word", linkAttributes)
