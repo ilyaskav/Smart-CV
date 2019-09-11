@@ -9,65 +9,65 @@
     <div class="widget-content">
 
         <div class="row">
-            <form method="post" class="form-horizontal">
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id)
-                @*@Html.HiddenFor(model=>model.ManagerId)*@
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Имя*</label>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            <div class="col">
+                <form method="post" class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Имя*</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Фамилия*</label>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Фамилия*</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Дата рождения</label>
-                    <div class="col-md-10">
-                        @*<input id="datePicker" data-provide="datepicker" class="form-control" name="DateOfBirth" />*@
-                        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "datePicker", data_provide = "datepicker" } })
-                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Дата рождения</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "datePicker", data_provide = "datepicker" } })
+                            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Город</label>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.CurrentLocation, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", data_placement = "bottom", title = "Место вашего настоящего проживания" } })
-                        @Html.ValidationMessageFor(model => model.CurrentLocation, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Город</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CurrentLocation, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", data_placement = "bottom", title = "Место вашего настоящего проживания" } })
+                            @Html.ValidationMessageFor(model => model.CurrentLocation, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Цель*</label>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", data_placement = "bottom", title = "Напр. Получение должности Junior .NET Developer" } })
-                        @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Цель*</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", data_placement = "bottom", title = "Напр. Получение должности Junior .NET Developer" } })
+                            @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Фото</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" name="Photo">
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Фото</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="Photo">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10 col-md-offset-2">
-                        @Html.RouteLink("Далее", new { action = "Contacts", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
-                        <input type="submit" class="btn btn-primary" value="Сохранить" />
-                        <span class="text-success disappearance">@ViewBag.Success</span>
+                    <div class="form-group row">
+                        <div class="col-md-10 col-md-offset-2">
+                            <input type="submit" class="btn btn-light" value="Сохранить" />
+                            @Html.RouteLink("Далее", new { action = "Contacts", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-primary" })
+                            <span class="text-success disappearance">@ViewBag.Success</span>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
