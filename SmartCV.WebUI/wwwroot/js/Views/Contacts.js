@@ -9,7 +9,7 @@
 
         var html = [
         '<div class="contact">',
-        '    <div class="form-group">',
+        '    <div class="form-group row">',
         '        <input type="hidden" value="" name="Contacts[', contactIndex, '].Id" id="Contacts_', contactIndex, '__Id" data-val-number="The field Id must be a number." data-val="true">',
         '        <input type="hidden" value="" name="Contacts[', contactIndex, '].ContactTitle.Id" id="Contacts_', contactIndex, '__ContactTitle_Id" data-val-required="Требуется поле Id." data-val-number="The field Id must be a number." data-val="true">',
         '        <div class="col-md-2">',

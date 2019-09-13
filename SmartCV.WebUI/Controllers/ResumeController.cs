@@ -103,7 +103,7 @@ namespace SmartCV.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateEmptyResume(ResumeManagerModel model)
+        public IActionResult CreateEmptyResume(ResumeModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -131,7 +131,7 @@ namespace SmartCV.WebUI.Controllers
             }
 
             ViewBag.ManagerId = managerId;
-            var viewModel = _resumeService.GetResumeByManagerId(managerId);
+            var viewModel = _resumeService.GetPersonalDataByResumeId(managerId);
             if (viewModel == null) return View();
 
             return View(viewModel);
@@ -139,14 +139,14 @@ namespace SmartCV.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PersonalData(int managerId, ResumeModel model)
+        public IActionResult PersonalData(int managerId, PersonalDataModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             long userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            model.ManagerId = managerId;
+            model.ResumeId = managerId;
             // проверяем, владелец ли резюме шлет запрос на его изменение
             if (!_managerService.IsOwnedBy(userId, managerId))
             {

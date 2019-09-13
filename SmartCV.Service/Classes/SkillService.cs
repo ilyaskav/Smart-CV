@@ -6,31 +6,34 @@ using System.Linq;
 
 namespace SmartCV.Service.Classes
 {
-    public class SkillService: ISkillService
+    public class SkillService : ISkillService
     {
         #region Declarations
 
-        ISkillRepository _skillRepository = null;
-        ILanguageRepository _languageRepository = null;
-        IResumeManagerRepository _managerRepository = null;
+        readonly ISkillRepository _skillRepository = null;
+        readonly ILanguageRepository _languageRepository = null;
+        readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public SkillService(ISkillRepository skillRepo, ILanguageRepository langRepo, IResumeManagerRepository managerRepo)
+        public SkillService(ISkillRepository skillRepo, ILanguageRepository langRepo, IResumeRepository resumeRepo)
         {
             _skillRepository = skillRepo;
             _languageRepository = langRepo;
-            _managerRepository = managerRepo;
+            _resumeRepository = resumeRepo;
         }
 
         public SkillLanguageAddModel Get(int managerId)
         {
-            var resume = _managerRepository.Get(managerId).Resume;
+            var resume = _resumeRepository.Get(managerId);
             if (resume == null || (resume.Skills.Count == 0 && resume.ResumeLanguages.Count == 0)) return null;
 
-            SkillLanguageAddModel addModel = new SkillLanguageAddModel();
-            addModel.ResumeManagerId = managerId;
-            if (resume.Skills.Count>0)
+            SkillLanguageAddModel addModel = new SkillLanguageAddModel
+            {
+                ResumeManagerId = managerId
+            };
+
+            if (resume.Skills.Count > 0)
             {
                 foreach (var skill in resume.Skills)
                 {
@@ -82,7 +85,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(SkillLanguageAddModel addModel)
         {
-            var resume = _managerRepository.Get(addModel.ResumeManagerId.Value).Resume;
+            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
             foreach (var skill in addModel.Skills)
             {
                 skill.ResumeId = resume.Id;

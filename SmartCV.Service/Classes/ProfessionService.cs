@@ -11,14 +11,14 @@ namespace SmartCV.Service.Classes
     {
         #region declarations
 
-        IProfessionRepository _professionRepository = null;
-        IResumeManagerRepository _managerRepository = null;
+        readonly IProfessionRepository _professionRepository = null;
+        readonly IResumeRepository _resumeRepository = null;
         #endregion
 
-        public ProfessionService(IProfessionRepository profRepo, IResumeManagerRepository managerRepo)
+        public ProfessionService(IProfessionRepository profRepo, IResumeRepository resumeRepo)
         {
             _professionRepository = profRepo;
-            _managerRepository = managerRepo;
+            _resumeRepository = resumeRepo;
         }
 
         public ICollection<ProfessionModel> GetAll()
@@ -35,8 +35,8 @@ namespace SmartCV.Service.Classes
         public string GetRule(int managerId)
         {
             return _professionRepository
-                .Get(p=> p.ResumeManagers.Any(rm=>rm.Id == managerId))
-                .Select(p=>p.Rules)
+                .Get(p => p.Resumes.Any(rm => rm.Id == managerId))
+                .Select(p => p.Rules)
                 .FirstOrDefault();
         }
 

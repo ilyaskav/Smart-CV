@@ -14,18 +14,18 @@ namespace SmartCV.Service.Classes
         private readonly IWorkPlaceRepository _workPlaceRepository = null;
         private readonly IDutyRepository _dutyRepository = null;
         private readonly IProjectRepository _projectRepository = null;
+        private readonly IPersonalDataRepository _personalDataRepository = null;
         private readonly IResumeRepository _resumeRepository = null;
-        private readonly IResumeManagerRepository _managerRepository = null;
 
         #endregion
 
-        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IResumeRepository resumeRepo, IResumeManagerRepository managerRepo)
+        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IPersonalDataRepository personalDataRepo, IResumeRepository resumeRepo)
         {
             _workPlaceRepository = workRepo;
             _dutyRepository = dutyRepo;
             _projectRepository = projRepo;
+            _personalDataRepository = personalDataRepo;
             _resumeRepository = resumeRepo;
-            _managerRepository = managerRepo;
         }
 
         public void Dispose()
@@ -33,18 +33,20 @@ namespace SmartCV.Service.Classes
             _workPlaceRepository.Dispose();
             _dutyRepository.Dispose();
             _projectRepository.Dispose();
+            _personalDataRepository.Dispose();
             _resumeRepository.Dispose();
-            _managerRepository.Dispose();
         }
 
         public WorkPlaceAddModel Get(int managerId)
         {
-            var resume=_resumeRepository.Get().FirstOrDefault(r=>r.ResumeManager.Id == managerId);
-            if (resume == null || resume.WorkExp.Count == 0) return null;
+            var resume = _personalDataRepository.Get().FirstOrDefault(r => r.Resume.Id == managerId);
+            if (resume == null || resume.Resume.WorkExp.Count == 0) return null;
 
-            WorkPlaceAddModel addModel = new WorkPlaceAddModel();
-            addModel.ResumeManagerId = managerId;
-            foreach (var work in resume.WorkExp)
+            WorkPlaceAddModel addModel = new WorkPlaceAddModel
+            {
+                ResumeManagerId = managerId
+            };
+            foreach (var work in resume.Resume.WorkExp)
             {
                 addModel.WorkPlaces.Add(work.ToModel());
             }
@@ -60,7 +62,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(WorkPlaceAddModel addModel)
         {
-            var resume = _managerRepository.Get(addModel.ResumeManagerId.Value).Resume;
+            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
             foreach (var work in addModel.WorkPlaces)
             {
                 work.ResumeId = resume.Id;
@@ -73,7 +75,7 @@ namespace SmartCV.Service.Classes
 
         public bool UpdateWorkplace(WorkPlaceModel model)
         {
-            if (model.Id==null) return false;
+            if (model.Id == null) return false;
             if (_workPlaceRepository.Has(model.Id.Value))
             {
                 WorkPlace entity = model.ToEntity();

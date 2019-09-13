@@ -10,8 +10,8 @@ using SmartCV.Entity;
 namespace SmartCV.Entity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190908193633_data-seed")]
-    partial class dataseed
+    [Migration("20190913195012_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -328,6 +328,30 @@ namespace SmartCV.Entity.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("SmartCV.Entity.Classes.PersonalData", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("CurrentLocation");
+
+                    b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("Goal")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("Photo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonalData");
+                });
+
             modelBuilder.Entity("SmartCV.Entity.Classes.PersonalQuality", b =>
                 {
                     b.Property<int>("Id")
@@ -415,24 +439,25 @@ namespace SmartCV.Entity.Migrations
 
             modelBuilder.Entity("SmartCV.Entity.Classes.Resume", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CurrentLocation");
+                    b.Property<DateTime>("CreatedAt");
 
-                    b.Property<DateTime?>("DateOfBirth");
+                    b.Property<Guid>("Guid");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("Link");
 
-                    b.Property<string>("Goal")
-                        .IsRequired();
+                    b.Property<int>("ProfessionId");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.Property<string>("Photo");
+                    b.Property<long>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Resumes");
                 });
@@ -454,31 +479,6 @@ namespace SmartCV.Entity.Migrations
                     b.HasIndex("ResumeId");
 
                     b.ToTable("ResumeLanguage");
-                });
-
-            modelBuilder.Entity("SmartCV.Entity.Classes.ResumeManager", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<Guid>("Guid");
-
-                    b.Property<string>("Link");
-
-                    b.Property<int>("ProfessionId");
-
-                    b.Property<long>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfessionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ResumeManager");
                 });
 
             modelBuilder.Entity("SmartCV.Entity.Classes.Skill", b =>
@@ -610,6 +610,14 @@ namespace SmartCV.Entity.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SmartCV.Entity.Classes.PersonalData", b =>
+                {
+                    b.HasOne("SmartCV.Entity.Classes.Resume", "Resume")
+                        .WithOne("PersonalData")
+                        .HasForeignKey("SmartCV.Entity.Classes.PersonalData", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SmartCV.Entity.Classes.PersonalQuality", b =>
                 {
                     b.HasOne("SmartCV.Entity.Classes.Resume", "Resume")
@@ -628,9 +636,14 @@ namespace SmartCV.Entity.Migrations
 
             modelBuilder.Entity("SmartCV.Entity.Classes.Resume", b =>
                 {
-                    b.HasOne("SmartCV.Entity.Classes.ResumeManager", "ResumeManager")
-                        .WithOne("Resume")
-                        .HasForeignKey("SmartCV.Entity.Classes.Resume", "Id")
+                    b.HasOne("SmartCV.Entity.Classes.Profession", "Profession")
+                        .WithMany("Resumes")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SmartCV.Entity.Classes.ApplicationUser", "User")
+                        .WithMany("Resumes")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -644,19 +657,6 @@ namespace SmartCV.Entity.Migrations
                     b.HasOne("SmartCV.Entity.Classes.Resume", "Resume")
                         .WithMany("ResumeLanguages")
                         .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SmartCV.Entity.Classes.ResumeManager", b =>
-                {
-                    b.HasOne("SmartCV.Entity.Classes.Profession", "Profession")
-                        .WithMany("ResumeManagers")
-                        .HasForeignKey("ProfessionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SmartCV.Entity.Classes.ApplicationUser", "User")
-                        .WithMany("Resumes")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

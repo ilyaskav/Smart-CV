@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartCV.Entity.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -197,7 +197,7 @@ namespace SmartCV.Entity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ResumeManager",
+                name: "Resumes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -210,40 +210,17 @@ namespace SmartCV.Entity.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ResumeManager", x => x.Id);
+                    table.PrimaryKey("PK_Resumes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ResumeManager_Professions_ProfessionId",
+                        name: "FK_Resumes_Professions_ProfessionId",
                         column: x => x.ProfessionId,
                         principalTable: "Professions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ResumeManager_AspNetUsers_UserId",
+                        name: "FK_Resumes_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Resumes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    CurrentLocation = table.Column<string>(nullable: true),
-                    Photo = table.Column<string>(nullable: true),
-                    Goal = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Resumes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Resumes_ResumeManager_Id",
-                        column: x => x.Id,
-                        principalTable: "ResumeManager",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -318,6 +295,29 @@ namespace SmartCV.Entity.Migrations
                     table.ForeignKey(
                         name: "FK_Institutions_Resumes_ResumeId",
                         column: x => x.ResumeId,
+                        principalTable: "Resumes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonalData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
+                    CurrentLocation = table.Column<string>(nullable: true),
+                    Photo = table.Column<string>(nullable: true),
+                    Goal = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonalData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonalData_Resumes_Id",
+                        column: x => x.Id,
                         principalTable: "Resumes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -459,6 +459,27 @@ namespace SmartCV.Entity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ContactTitles",
+                columns: new[] { "Id", "Title" },
+                values: new object[,]
+                {
+                    { 1, "EMail" },
+                    { 2, "Phone" },
+                    { 3, "Сайт" },
+                    { 4, "LinkedIn" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Professions",
+                columns: new[] { "Id", "Name", "Rules" },
+                values: new object[,]
+                {
+                    { 1, "IT", "1" },
+                    { 2, "Спорт", "2" },
+                    { 3, "Менеджмент", "3" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -544,13 +565,13 @@ namespace SmartCV.Entity.Migrations
                 column: "ResumeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ResumeManager_ProfessionId",
-                table: "ResumeManager",
+                name: "IX_Resumes_ProfessionId",
+                table: "Resumes",
                 column: "ProfessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ResumeManager_UserId",
-                table: "ResumeManager",
+                name: "IX_Resumes_UserId",
+                table: "Resumes",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -594,6 +615,9 @@ namespace SmartCV.Entity.Migrations
                 name: "Institutions");
 
             migrationBuilder.DropTable(
+                name: "PersonalData");
+
+            migrationBuilder.DropTable(
                 name: "PersonalQualities");
 
             migrationBuilder.DropTable(
@@ -619,9 +643,6 @@ namespace SmartCV.Entity.Migrations
 
             migrationBuilder.DropTable(
                 name: "Resumes");
-
-            migrationBuilder.DropTable(
-                name: "ResumeManager");
 
             migrationBuilder.DropTable(
                 name: "Professions");

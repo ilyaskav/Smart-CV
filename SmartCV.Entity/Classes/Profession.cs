@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Entity.Classes
 {
-    public class Profession:IEntity
+    public class Profession : IEntity
     {
         [Key]
         public int Id { get; set; }
@@ -20,13 +16,13 @@ namespace SmartCV.Entity.Classes
 
         #region navigation
 
-        public ICollection<ResumeManager> ResumeManagers { get; set; }
+        public ICollection<Resume> Resumes { get; set; }
 
         #endregion
 
         public Profession()
         {
-            ResumeManagers = new List<ResumeManager>();
+            Resumes = new List<Resume>();
         }
     }
 }

@@ -9,14 +9,14 @@ namespace SmartCV.Service.Converters
     {
         // AutoMapper - дополнение для автоматизации этого процесса
 
-        public static Resume ToEntity(this ResumeModel model)
+        public static PersonalData ToEntity(this PersonalDataModel model)
         {
             if (model == null)
             {
                 throw new NullReferenceException();
             }
 
-            return new Resume()
+            return new PersonalData()
             {
                 Id = model.Id.HasValue ? model.Id.Value : 0,
                 FirstName = model.FirstName,
@@ -24,18 +24,19 @@ namespace SmartCV.Service.Converters
                 DateOfBirth = model.DateOfBirth,
                 CurrentLocation = model.CurrentLocation,
                 Photo = model.Photo,
-                Goal = model.Goal
+                Goal = model.Goal,
+                
             };
         }
 
-        public static ResumeModel ToModel(this Resume entity)
+        public static PersonalDataModel ToModel(this PersonalData entity)
         {
             if (entity == null)
             {
                 throw new NullReferenceException();
             }
 
-            return new ResumeModel()
+            return new PersonalDataModel()
             {
                 Id = entity.Id,
                 FirstName = entity.FirstName,
@@ -47,13 +48,13 @@ namespace SmartCV.Service.Converters
             };
         }
 
-        public static ResumeManager ToEntity(this ResumeManagerModel model)
+        public static Resume ToEntity(this ResumeModel model)
         {
             if (model == null)
             {
-                throw new NullReferenceException("ResumeManagerModel is null");
+                throw new NullReferenceException("ResumeModel is null");
             }
-            return new ResumeManager()
+            return new Resume()
             {
                 Id = model.Id.HasValue ? model.Id.Value : 0,
                 CreatedAt = model.CreatedAt,
@@ -63,11 +64,11 @@ namespace SmartCV.Service.Converters
             };
         }
 
-        public static ResumeManagerPrintModel ToPrintModel(this ResumeManager entity)
+        public static ResumeManagerPrintModel ToPrintModel(this Resume entity)
         {
             if (entity == null)
             {
-                throw new NullReferenceException("ResumeManager is null");
+                throw new NullReferenceException("Resume is null");
             }
 
             return new ResumeManagerPrintModel()
@@ -80,14 +81,14 @@ namespace SmartCV.Service.Converters
             };
         }
 
-        public static ResumeManagerModel ToModel(this ResumeManager entity)
+        public static ResumeModel ToModel(this Resume entity)
         {
             if (entity == null)
             {
-                throw new NullReferenceException("ResumeManager is null");
+                throw new NullReferenceException("Resume is null");
             }
 
-            return new ResumeManagerModel()
+            return new ResumeModel()
             {
                 Id = entity.Id,
                 CreatedAt = entity.CreatedAt,

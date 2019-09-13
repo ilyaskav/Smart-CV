@@ -71,7 +71,7 @@ namespace SmartCV.WebUI
 
             #region регистрация репозиториев
 
-            containerBuilder.RegisterType<ResumeRepository>().As<IResumeRepository>();
+            containerBuilder.RegisterType<PersonalDataRepository>().As<IPersonalDataRepository>();
             containerBuilder.RegisterType<CertificateRepository>().As<ICertificateRepository>();
             containerBuilder.RegisterType<ContactRepository>().As<IContactRepository>();
             containerBuilder.RegisterType<ContactTitleRepository>().As<IContactTitleRepository>();
@@ -82,7 +82,7 @@ namespace SmartCV.WebUI
             containerBuilder.RegisterType<ProjectRepository>().As<IProjectRepository>();
             containerBuilder.RegisterType<SkillRepository>().As<ISkillRepository>();
             containerBuilder.RegisterType<WorkPlaceRepository>().As<IWorkPlaceRepository>();
-            containerBuilder.RegisterType<ResumeManagerRepository>().As<IResumeManagerRepository>();
+            containerBuilder.RegisterType<ResumeRepository>().As<IResumeRepository>();
             containerBuilder.RegisterType<ProfessionRepository>().As<IProfessionRepository>();
 
             #endregion

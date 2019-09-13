@@ -12,45 +12,45 @@ namespace SmartCV.Service.Classes
     {
         #region declarations
 
-        IResumeManagerRepository _resumeManagerRepository = null;
-        IResumeRepository _resumeRepository = null;
+        readonly IResumeRepository _resumeRepository = null;
+        readonly IPersonalDataRepository _personalDataRepository = null;
 
         #endregion
 
-        public ResumeManagerService(IResumeManagerRepository resumeManRepo, IResumeRepository resumeRepo)
+        public ResumeManagerService(IResumeRepository resumeRepo, IPersonalDataRepository personalDataRepo)
         {
-            _resumeManagerRepository = resumeManRepo;
             _resumeRepository = resumeRepo;
+            _personalDataRepository = personalDataRepo;
         }
 
         public ResumeManagerPrintModel Get(int managerId)
         {
-            return _resumeManagerRepository.Get(managerId).ToPrintModel();
+            return _resumeRepository.Get(managerId).ToPrintModel();
         }
 
         public ResumeManagerPrintModel Get(Guid identifier)
         {
-            var manager = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
+            var manager = _resumeRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
 
             if (manager == null) return null;
             return manager.ToPrintModel();
         }
 
-        public int CreateEmptyResume(Models.ResumeManagerModel model)
+        public int CreateEmptyResume(Models.ResumeModel model)
         {
-            return _resumeManagerRepository.Add(model.ToEntity());
+            return _resumeRepository.Add(model.ToEntity());
         }
 
         public void CopyResume(int managerId)
         {
-            if (!_resumeManagerRepository.Has(managerId)) return;
+            if (!_resumeRepository.Has(managerId)) return;
 
-            _resumeManagerRepository.Clone(managerId);
+            _resumeRepository.Clone(managerId);
         }
 
         public ICollection<ManagerViewModel> GetAllResumes(long userId)
         {
-            var entities = _resumeManagerRepository.Get().Where(user => user.UserId.Equals(userId)).OrderByDescending(e => e.CreatedAt).ToList();
+            var entities = _resumeRepository.Get().Where(user => user.UserId.Equals(userId)).OrderByDescending(e => e.CreatedAt).ToList();
             ICollection<ManagerViewModel> models = new List<ManagerViewModel>();
 
             foreach (var entity in entities)
@@ -70,27 +70,27 @@ namespace SmartCV.Service.Classes
 
         public void DeleteResume(int id)
         {
-            if (_resumeManagerRepository.Has(id))
+            if (_resumeRepository.Has(id))
             {
-                var manager = _resumeManagerRepository.Get(id);
+                var resume = _resumeRepository.Get(id);
 
-                if (manager.Resume != null)
+                if (resume != null)
                 {
-                    _resumeRepository.Remove(manager.Resume.Id);
+                    _personalDataRepository.Remove(resume.Id);
                 }
-                _resumeManagerRepository.Remove(id);
+                _resumeRepository.Remove(id);
             }
         }
 
         public void Dispose()
         {
-            _resumeManagerRepository.Dispose();
+            _resumeRepository.Dispose();
         }
 
 
         public bool IsOwnedBy(long userId, int managerId)
         {
-            var resumeManager = _resumeManagerRepository.Get(managerId);
+            var resumeManager = _resumeRepository.Get(managerId);
 
             if (resumeManager.UserId == userId) return true;
             else return false;
@@ -98,7 +98,7 @@ namespace SmartCV.Service.Classes
 
         public bool IsOwnedBy(long userId, Guid identifier)
         {
-            var manager = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
+            var manager = _resumeRepository.Get(m => m.Guid.Equals(identifier)).FirstOrDefault();
 
             if (manager.UserId == userId) return true;
             else return false;

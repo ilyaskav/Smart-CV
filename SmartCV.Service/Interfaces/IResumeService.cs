@@ -5,13 +5,13 @@ namespace SmartCV.Service.Interfaces
 {
     public interface IResumeService : IDisposable
     {
-        void CreateResume(ResumeModel model);
+        void CreateResume(PersonalDataModel model);
 
-        void UpdateResume(ResumeModel model);
+        void UpdateResume(PersonalDataModel model);
 
-        ResumeModel GetResume(int id);
+        PersonalDataModel GetResume(int id);
 
-        ResumeModel GetResumeByManagerId(int id);
+        PersonalDataModel GetPersonalDataByResumeId(int id);
 
         void DeleteResume(int id);
 

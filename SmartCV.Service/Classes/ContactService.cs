@@ -14,25 +14,25 @@ namespace SmartCV.Service.Classes
 
         private readonly IContactRepository _contactRepository = null;
         private readonly IContactTitleRepository _contactTitleRepository = null;
-        private readonly IResumeManagerRepository _managerRepository = null;
         private readonly IResumeRepository _resumeRepository = null;
+        private readonly IPersonalDataRepository _personalDataRepository = null;
 
         #endregion
 
-        public ContactService(IContactRepository contRep, IContactTitleRepository contTitleRep, IResumeManagerRepository manRep, IResumeRepository resumeRep)
+        public ContactService(IContactRepository contRepo, IContactTitleRepository contTitleRepo, IResumeRepository resumeRepo, IPersonalDataRepository personalDataRepo)
         {
-            _contactRepository = contRep;
-            _contactTitleRepository = contTitleRep;
-            _managerRepository = manRep;
-            _resumeRepository = resumeRep;
+            _contactRepository = contRepo;
+            _contactTitleRepository = contTitleRepo;
+            _resumeRepository = resumeRepo;
+            _personalDataRepository = personalDataRepo;
         }
 
         public ContactAddModel Get(int managerId)
         {
-            var resumeManager = _managerRepository.Get(managerId);
-            if (resumeManager.Resume ==null) return null;
+            var contacts = _contactRepository.Get(c => c.ResumeId == managerId).ToList();
+            if (contacts == null || !contacts.Any()) return null;
 
-            var model = resumeManager.Resume.Contacts.ToAddModel();
+            var model = contacts.ToAddModel();
             return model;
         }
 
@@ -40,10 +40,10 @@ namespace SmartCV.Service.Classes
         {
             if (_contactTitleRepository.Has(e => e.Title.Equals(model.ContactTitle.Title)))
             {
-                var entity=_contactTitleRepository.Get(e => e.Title.Equals(model.ContactTitle.Title)).FirstOrDefault();
+                var entity = _contactTitleRepository.Get(e => e.Title.Equals(model.ContactTitle.Title)).FirstOrDefault();
                 model.ContactTitle.Id = entity.Id;
             }
-            else model.ContactTitle.Id = _contactTitleRepository.Add(new ContactTitle() { Title=model.ContactTitle.Title });
+            else model.ContactTitle.Id = _contactTitleRepository.Add(new ContactTitle() { Title = model.ContactTitle.Title });
 
             _contactRepository.Add(model.ToEntity());
         }
@@ -63,7 +63,7 @@ namespace SmartCV.Service.Classes
         {
             _contactTitleRepository.Dispose();
             _contactRepository.Dispose();
-            _managerRepository.Dispose();
+            _resumeRepository.Dispose();
         }
 
         public bool UpdateContact(ContactModel model)
@@ -92,7 +92,7 @@ namespace SmartCV.Service.Classes
 
         public void UpdateContact(ContactAddModel addModel)
         {
-            var resume=_resumeRepository.Get(addModel.ResumeManagerId.Value);
+            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
 
             if (resume.Contacts.Count == 0)
             {
@@ -102,12 +102,12 @@ namespace SmartCV.Service.Classes
             else
             {
                 var email = resume.Contacts.FirstOrDefault(e => e.ContactTitle.Title.Equals("EMail"));
-                    email.Data = addModel.EMail;
-                    _contactRepository.Update(email);
+                email.Data = addModel.EMail;
+                _contactRepository.Update(email);
 
                 var phone = resume.Contacts.FirstOrDefault(e => e.ContactTitle.Title.Equals("Phone"));
-                    phone.Data = addModel.Phone;
-                    _contactRepository.Update(phone);
+                phone.Data = addModel.Phone;
+                _contactRepository.Update(phone);
             }
 
             foreach (var contact in addModel.Contacts)

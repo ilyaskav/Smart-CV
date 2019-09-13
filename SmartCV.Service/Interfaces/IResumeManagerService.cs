@@ -10,7 +10,7 @@ namespace SmartCV.Service.Interfaces
 
         ResumeManagerPrintModel Get(Guid identifier);
 
-        int CreateEmptyResume(ResumeManagerModel model);
+        int CreateEmptyResume(ResumeModel model);
 
         void CopyResume(int managerId);
 

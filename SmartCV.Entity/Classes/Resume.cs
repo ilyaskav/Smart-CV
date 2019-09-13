@@ -5,32 +5,35 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartCV.Entity.Classes
 {
-    // данные резюме
     [Table("Resumes")]
     public class Resume : IEntity
     {
-        [Key, ForeignKey("ResumeManager")]
+        [Key]
         public int Id { get; set; }
 
         [Required]
-        public String FirstName { get; set; }
+        public long UserId { get; set; }
 
         [Required]
-        public String LastName { get; set; }
-
-        public DateTime? DateOfBirth { get; set; }
-
-        //[Required]
-        public String CurrentLocation { get; set; }
-
-        // path to img
-        public String Photo { get; set; }
+        public int ProfessionId { get; set; }
 
         [Required]
-        public String Goal { get; set; }
+        public DateTime CreatedAt { get; set; }
 
+        public string Link { get; set; }
+
+        [Required]
+        public Guid Guid { get; set; }
 
         #region navigation
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual PersonalData PersonalData { get; set; }
+
+        [ForeignKey("ProfessionId")]
+        public virtual Profession Profession { get; set; }
 
         public virtual ICollection<Institution> Education { get; set; }
 
@@ -46,19 +49,10 @@ namespace SmartCV.Entity.Classes
 
         public virtual ICollection<Contact> Contacts { get; set; }
 
-        public virtual ResumeManager ResumeManager { get; set; }
-
         #endregion
-
 
         public Resume()
         {
-            Education = new List<Institution>();
-            WorkExp = new List<WorkPlace>();
-            Skills = new List<Skill>();
-            ResumeLanguages = new List<ResumeLanguage>();
-            PersonalQualities = new List<PersonalQuality>();
-            CertificatesAndTrainings = new List<Certificate>();
             Contacts = new List<Contact>();
         }
     }

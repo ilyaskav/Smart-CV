@@ -52,7 +52,7 @@ namespace SmartCV.Entity
 
         public DbSet<ContactTitle> ContactTitles { get; set; }
 
-        public DbSet<ResumeManager> ResumeManager { get; set; }
+        public DbSet<PersonalData> PersonalData { get; set; }
 
         public DbSet<Profession> Professions { get; set; }
 

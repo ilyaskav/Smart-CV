@@ -10,32 +10,32 @@ namespace SmartCV.Service.Classes
     {
         #region Declarations
 
-        IInstitutionRepository _institutionRepository = null;
-        IResumeRepository _resumeRepository = null;
-        IResumeManagerRepository _managerRepository = null;
+        readonly IInstitutionRepository _institutionRepository = null;
+        readonly IPersonalDataRepository _personalDataRepository = null;
+        readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public InstitutionService(IInstitutionRepository instRepo, IResumeRepository resumeRepo, IResumeManagerRepository managerRepo)
+        public InstitutionService(IInstitutionRepository instRepo, IPersonalDataRepository personalDataRepo, IResumeRepository resumeRepo)
         {
             _institutionRepository = instRepo;
+            _personalDataRepository = personalDataRepo;
             _resumeRepository = resumeRepo;
-            _managerRepository = managerRepo;
         }
 
         public void Dispose()
         {
             _institutionRepository.Dispose();
+            _personalDataRepository.Dispose();
             _resumeRepository.Dispose();
-            _managerRepository.Dispose();
         }
 
         public InstitutionAddModel Get(int managerId)
         {
-            var manager = _managerRepository.Get(managerId);
-            if (manager.Resume == null) return null; 
+            var resume = _resumeRepository.Get(managerId);
+            if (resume.PersonalData == null) return null;
 
-            var institutions = manager.Resume.Education;
+            var institutions = resume.Education;
             var addModel = new InstitutionAddModel() { ResumeManagerId = managerId };
 
             foreach (var inst in institutions)
@@ -52,7 +52,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(InstitutionAddModel addModel)
         {
-            var resume = _resumeRepository.Get(addModel.ResumeManagerId);
+            var resume = _personalDataRepository.Get(addModel.ResumeManagerId);
             foreach (var institution in addModel.Institutions)
             {
                 institution.ResumeId = resume.Id;

@@ -16,73 +16,73 @@ namespace SmartCV.Service.Classes
     {
         #region Declarations
 
-        private readonly IResumeRepository _resumeRepository = null;
+        private readonly IPersonalDataRepository _personalDataRepository = null;
         private readonly ILanguageRepository _langRepository = null;
-        private readonly IResumeManagerRepository _resumeManagerRepository = null;
+        private readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public ResumeService(IResumeRepository resumeRepository, ILanguageRepository langRepository, IResumeManagerRepository manRepo)
+        public ResumeService(IPersonalDataRepository personalDataRepository, ILanguageRepository langRepository, IResumeRepository manRepo)
         {
-            _resumeRepository = resumeRepository;
+            _personalDataRepository = personalDataRepository;
             _langRepository = langRepository;
-            _resumeManagerRepository = manRepo;
+            _resumeRepository = manRepo;
         }
 
-        public ResumeModel GetResume(int id)
+        public PersonalDataModel GetResume(int id)
         {
-            return _resumeRepository.Get(id).ToModel();
+            return _personalDataRepository.Get(id).ToModel();
         }
 
-        public ResumeModel GetResumeByManagerId(int managerId)
+        public PersonalDataModel GetPersonalDataByResumeId(int resumeId)
         {
-            var resumeManager = _resumeManagerRepository.Get(managerId);
-            if (resumeManager.Resume == null) return null;
+            var personalData = _personalDataRepository.Get(resumeId);
+            if (personalData == null) return null;
 
-            return resumeManager.Resume.ToModel();
+            return personalData.ToModel();
         }
 
-        public void CreateResume(ResumeModel model)
+        public void CreateResume(PersonalDataModel model)
         {
-            var resumeManager = _resumeManagerRepository.Get(model.ManagerId);
-            resumeManager.Resume = model.ToEntity();
+            var resume = _resumeRepository.Get(model.ResumeId);
+            //_personalDataRepository.Add(model.ToEntity());
+            resume.PersonalData = model.ToEntity();
 
-            _resumeManagerRepository.Update(resumeManager);
+            _resumeRepository.Update(resume);
         }
 
-        public void UpdateResume(ResumeModel model)
+        public void UpdateResume(PersonalDataModel model)
         {
             if (model.Id == null) return;
-            if (_resumeRepository.Has(model.Id.Value))
+            if (_personalDataRepository.Has(model.Id.Value))
             {
                 var entity = model.ToEntity();
-                _resumeRepository.Update(entity);
+                _personalDataRepository.Update(entity);
             }
         }
 
         public void DeleteResume(int id)
         {
-            if (_resumeRepository.Has(id)) _resumeRepository.Remove(id);
+            if (_personalDataRepository.Has(id)) _personalDataRepository.Remove(id);
         }
-
 
         public void Dispose()
         {
-            _resumeRepository.Dispose();
+            _personalDataRepository.Dispose();
             _langRepository.Dispose();
         }
 
         public void CreateMSWordDocument(Guid identifier)
         {
-            var myResume = _resumeManagerRepository
+            var myResume = _resumeRepository
                 .Get(m => m.Guid.Equals(identifier) && m.Link != null)
-                .Select(m => m.Resume)
+                //.Select(m => m.PersonalData)
                 .FirstOrDefault();
             if (myResume is null) throw new NullReferenceException("Resume was not found or it is not completed");
 
             string projPath = "somepath"; //HttpContext.Current.Server.MapPath("~/Content/");
-            string outFilePath = Path.Combine(projPath, "doc", myResume.ResumeManager.Link);
-            byte[] templateBytes = System.IO.File.ReadAllBytes(projPath + "MSWordTemplates\\template4.dotx");
+            string outFilePath = Path.Combine(projPath, "doc", myResume.Link);
+            byte[] templateBytes = File.ReadAllBytes(projPath + "MSWordTemplates\\template4.dotx");
 
             using (MemoryStream templateStream = new MemoryStream())
             {
@@ -106,11 +106,11 @@ namespace SmartCV.Service.Classes
                     // Specify the path of template and the relationship ID
                     documentSettingPart1.AddExternalRelationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate", new Uri(projPath + "MSWordTemplates\\template4.dotx", UriKind.Absolute), "relationId1");
 
-                    string fullname = string.Format("{0} {1}", myResume.FirstName, myResume.LastName);
+                    string fullname = string.Format("{0} {1}", myResume.PersonalData.FirstName, myResume.PersonalData.LastName);
                     SetCCText(mainPart, "FullName", fullname);
 
-                    SetCCText(mainPart, "Goal", myResume.Goal);
-                    SetCCText(mainPart, "Location", myResume.CurrentLocation);
+                    SetCCText(mainPart, "Goal", myResume.PersonalData.Goal);
+                    SetCCText(mainPart, "Location", myResume.PersonalData.CurrentLocation);
 
                     string email = myResume.Contacts.First(c => c.ContactTitle.Title.Equals("EMail")).Data;
                     SetCCText(mainPart, "Email", email);
@@ -346,7 +346,7 @@ namespace SmartCV.Service.Classes
 
         public void CreatePDF(Guid identifier)
         {
-            var myResume = _resumeManagerRepository.Get(m => m.Guid.Equals(identifier)).First().Resume;
+            var myResume = _resumeRepository.Get(m => m.Guid.Equals(identifier)).First();
             //string projPath = HttpContext.Current.Server.MapPath("~/Content/");
 
             //if (!File.Exists(projPath + "doc\\" + myResume.ResumeManager.Link)) CreateMSWordDocument(identifier);

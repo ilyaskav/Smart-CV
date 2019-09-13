@@ -11,15 +11,15 @@ namespace SmartCV.Service.Classes
     {
         #region Declarations
 
-        ICertificateRepository _certificateRepository = null;
-        IResumeManagerRepository _managerRepository = null;
+        readonly ICertificateRepository _certificateRepository = null;
+        readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public CertificateService(ICertificateRepository certRepo, IResumeManagerRepository managerRepo)
+        public CertificateService(ICertificateRepository certRepo, IResumeRepository resumeRepo)
         {
             _certificateRepository = certRepo;
-            _managerRepository = managerRepo;
+            _resumeRepository = resumeRepo;
         }
 
         public void CreateCertificate(CertificateModel model)
@@ -46,16 +46,18 @@ namespace SmartCV.Service.Classes
         public void Dispose()
         {
             _certificateRepository.Dispose();
-            _managerRepository.Dispose();
+            _resumeRepository.Dispose();
         }
 
         public CertificateAddModel Get(int managerId)
         {
-            var resume = _managerRepository.Get(managerId).Resume;
+            var resume = _resumeRepository.Get(managerId);
             if (resume == null || resume.CertificatesAndTrainings.Count == 0) return null;
 
-            CertificateAddModel addModel = new CertificateAddModel();
-            addModel.ResumeManagerId = managerId;
+            CertificateAddModel addModel = new CertificateAddModel
+            {
+                ResumeManagerId = managerId
+            };
             foreach (var certificate in resume.CertificatesAndTrainings)
             {
                 addModel.Certificates.Add(certificate.ToModel());
@@ -66,7 +68,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(CertificateAddModel addModel)
         {
-            var resume = _managerRepository.Get(addModel.ResumeManagerId.Value).Resume;
+            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
             foreach (var certificate in addModel.Certificates)
             {
                 certificate.ResumeId = resume.Id;
