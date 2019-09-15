@@ -1,5 +1,5 @@
 ﻿// выбор даты с днями
-$('#datePicker').datepicker({
+$('#dateOfBirth').datepicker({
     format: "dd.mm.yyyy",
     orientation: "bottom auto",
     startView: 2,

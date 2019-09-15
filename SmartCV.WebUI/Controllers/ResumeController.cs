@@ -205,7 +205,7 @@ namespace SmartCV.WebUI.Controllers
             _contactService.UpdateContact(addModel);
 
             ViewBag.Success = "Изменения сохранены";
-            return RedirectToAction(string.Format("Contacts/{0}", managerId));
+            return View(addModel);
         }
 
         [HttpGet]
@@ -219,7 +219,7 @@ namespace SmartCV.WebUI.Controllers
 
             _contactService.RemoveContact(contactId);
 
-            return RedirectToAction(string.Format("Contacts/{0}", managerId));
+            return RedirectToAction("Contacts", new { managerId });
         }
 
         [HttpGet]
@@ -259,7 +259,7 @@ namespace SmartCV.WebUI.Controllers
             //addModel.ResumeManagerId = managerId;
             _institutionService.CreateOrUpdate(addModel);
 
-            return RedirectToAction(string.Format("Education/{0}", managerId));
+            return RedirectToAction("Education", new { managerId });
         }
 
         [HttpGet]
@@ -273,7 +273,7 @@ namespace SmartCV.WebUI.Controllers
 
             _institutionService.RemoveInstitution(institutionId);
 
-            return RedirectToAction(string.Format("Education/{0}", managerId));
+            return RedirectToAction("Education", new { managerId });
         }
 
         [HttpGet]
@@ -352,7 +352,7 @@ namespace SmartCV.WebUI.Controllers
             addModel.ResumeManagerId = managerId;
             _workPlaceService.CreateOrUpdate(addModel);
 
-            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+            return RedirectToAction("WorkExperience", new { managerId });
         }
 
         [HttpGet]
@@ -366,7 +366,7 @@ namespace SmartCV.WebUI.Controllers
 
             _workPlaceService.RemoveWorkplace(workPlaceId);
 
-            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+            return RedirectToAction("WorkExperience", new { managerId });
         }
 
         [HttpGet]
@@ -380,7 +380,7 @@ namespace SmartCV.WebUI.Controllers
 
             _workPlaceService.RemoveDuty(dutyId);
 
-            return RedirectToAction(string.Format("WorkExperience/{0}", managerId));
+            return RedirectToAction("WorkExperience", new { managerId });
         }
 
         [HttpGet]
@@ -420,7 +420,7 @@ namespace SmartCV.WebUI.Controllers
             addModel.ResumeManagerId = managerId;
             _skillService.CreateOrUpdate(addModel);
 
-            return RedirectToAction(string.Format("Skills/{0}", managerId));
+            return RedirectToAction("Skills", new { managerId });
         }
 
         [HttpGet]
@@ -434,7 +434,7 @@ namespace SmartCV.WebUI.Controllers
 
             _skillService.RemoveSkill(skillId);
 
-            return RedirectToAction(string.Format("Skills/{0}", managerId));
+            return RedirectToAction("Skills", new { managerId });
         }
 
         public IActionResult PersonalQualities()
@@ -479,7 +479,7 @@ namespace SmartCV.WebUI.Controllers
             addModel.ResumeManagerId = managerId;
             _certificateService.CreateOrUpdate(addModel);
 
-            return RedirectToAction(string.Format("Certificates/{0}", managerId));
+            return RedirectToAction("Certificates", new { managerId });
         }
 
         [HttpGet]
@@ -493,7 +493,7 @@ namespace SmartCV.WebUI.Controllers
 
             _certificateService.RemoveCertificate(certificateId);
 
-            return RedirectToAction(string.Format("Certificates/{0}", managerId));
+            return RedirectToAction("Certificates", new { managerId });
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SmartCV.Entity.Classes;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartCV.Entity.Classes;
 using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
@@ -29,7 +30,7 @@ namespace SmartCV.Service.Classes
 
         public ContactAddModel Get(int managerId)
         {
-            var contacts = _contactRepository.Get(c => c.ResumeId == managerId).ToList();
+            var contacts = _contactRepository.Get(c => c.ResumeId == managerId).Include(c=>c.ContactTitle).ToList();
             if (contacts == null || !contacts.Any()) return null;
 
             var model = contacts.ToAddModel();
@@ -71,7 +72,7 @@ namespace SmartCV.Service.Classes
             if (!model.Id.HasValue) return false;
             if (_contactRepository.Has(model.Id.Value))
             {
-                var entity = _contactRepository.Get(model.Id.Value);
+                var entity = _contactRepository.Get(c=>c.Id == model.Id.Value).Include(c=>c.ContactTitle).FirstOrDefault();
                 entity.Data = model.Data;
                 if (!entity.ContactTitle.Title.Equals(model.ContactTitle.Title))
                 {

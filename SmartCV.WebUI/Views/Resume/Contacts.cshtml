@@ -11,17 +11,17 @@
             <form class="form-horizontal" method="POST">
                 @Html.AntiForgeryToken()
                 <div class="form-group row">
-                    <label class="col-md-2 control-label">E-mail*</label>
+                    <label class="col-md-2 col-form-label" for="email">E-mail*</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.EMail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.EMail, new { htmlAttributes = new { @class = "form-control", id="email" } })
                         @Html.ValidationMessageFor(model => model.EMail, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 control-label">Телефон*</label>
+                    <label class="col-md-2 col-form-label" for="phone">Телефон*</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", id="phone" } })
                         @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         @Html.RouteLink("Назад", new { action = "PersonalData", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                         @Html.RouteLink("Далее", new { action = "Education", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                         <button class="btn btn-primary">Сохранить</button>
-                        @*<span class="text-success disappearance">@ViewBag.Success</span>*@
+                        <span class="text-success disappearance">@ViewBag.Success</span>
                     </div>
                 </div>
             </form>
