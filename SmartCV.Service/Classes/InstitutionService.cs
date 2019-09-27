@@ -1,8 +1,10 @@
-﻿using SmartCV.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartCV.Service.Classes
 {
@@ -32,8 +34,8 @@ namespace SmartCV.Service.Classes
 
         public InstitutionAddModel Get(int managerId)
         {
-            var resume = _resumeRepository.Get(managerId);
-            if (resume.PersonalData == null) return null;
+            var resume = _resumeRepository.Get(r => r.Id == managerId && r.PersonalData != null).Include(r => r.Education).FirstOrDefault();
+            if (resume == null) return null;
 
             var institutions = resume.Education;
             var addModel = new InstitutionAddModel() { ResumeManagerId = managerId };
@@ -52,7 +54,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(InstitutionAddModel addModel)
         {
-            var resume = _personalDataRepository.Get(addModel.ResumeManagerId);
+            var resume = _resumeRepository.Get(addModel.ResumeManagerId);
             foreach (var institution in addModel.Institutions)
             {
                 institution.ResumeId = resume.Id;

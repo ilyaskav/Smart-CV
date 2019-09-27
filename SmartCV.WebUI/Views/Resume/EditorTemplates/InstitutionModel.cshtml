@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<div class="institution">
+<div class="institution gray-bottom-line">
     @Html.HiddenFor(model=>model.Id)
     @Html.HiddenFor(model=>model.ResumeId)
     <div class="form-group row">
@@ -55,7 +55,7 @@
     <div class="form-group row">
         <label class="col-md-2 col-form-label">Период*</label>
         <div class="col-md-9">
-            <div class="input-daterange input-group datePicker-month" id="datePicker-month">
+            <div class="input-daterange input-group datePicker-month">
                 @*<input type="text" class="input-sm form-control" name="start" />*@
                 @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })

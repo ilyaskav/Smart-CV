@@ -1,4 +1,5 @@
-﻿using SmartCV.Entity.Classes;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartCV.Entity.Classes;
 using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
@@ -39,14 +40,14 @@ namespace SmartCV.Service.Classes
 
         public WorkPlaceAddModel Get(int managerId)
         {
-            var resume = _personalDataRepository.Get().FirstOrDefault(r => r.Resume.Id == managerId);
-            if (resume == null || resume.Resume.WorkExp.Count == 0) return null;
+            var resume = _resumeRepository.Get(r => r.Id == managerId).Include(r => r.WorkExp).FirstOrDefault();
+            if (resume == null || !resume.WorkExp.Any()) return null;
 
             WorkPlaceAddModel addModel = new WorkPlaceAddModel
             {
                 ResumeManagerId = managerId
             };
-            foreach (var work in resume.Resume.WorkExp)
+            foreach (var work in resume.WorkExp)
             {
                 addModel.WorkPlaces.Add(work.ToModel());
             }

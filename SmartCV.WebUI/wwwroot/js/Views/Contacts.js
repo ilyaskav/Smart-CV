@@ -32,11 +32,11 @@
 
     // удаление поля для контакта
     $(document).on('click', 'p.remove-contact', function () {
-        const contactIndex = $(this).closest('div.contact').find('input[type = "hidden"]').val();
+        const contactId = $(this).closest('div.contact').find('input[type = "hidden"]').val();
 
-        if (contactIndex) {
+        if (contactId) {
             var managerId = getManagerIdFromURI();
-            window.location.href = '/Resume/DeleteContact/?managerId=' + managerId + '&contactId=' + contactIndex;
+            window.location.href = '/Resume/DeleteContact/?managerId=' + managerId + '&contactId=' + contactId;
         }
         else {
             $(this).closest('div.contact').remove();

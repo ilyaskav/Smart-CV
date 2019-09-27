@@ -3,22 +3,20 @@
     Layout = null;
 }
 
-@*<div class="contact">*@
-    <div class="form-group row contact">
-        @Html.HiddenFor(model=>model.Id)
-        @Html.HiddenFor(model => model.ContactTitle.Id)
-        <div class="col-md-2">
-            @Html.EditorFor(model => model.ContactTitle.Title, new { htmlAttributes = new { @class = "form-control text-right font-bold" } })
-            @Html.ValidationMessageFor(model => model.ContactTitle.Title, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-9">
-            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-1 delete-line">
-            <p class="text-danger remove-contact">
-                <span class="glyphicon glyphicon-remove"></span> Удалить
-            </p>
-        </div>
+<div class="form-group row contact">
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ContactTitle.Id)
+    <div class="col-md-2">
+        @Html.EditorFor(model => model.ContactTitle.Title, new { htmlAttributes = new { @class = "form-control text-right font-bold" } })
+        @Html.ValidationMessageFor(model => model.ContactTitle.Title, "", new { @class = "text-danger" })
     </div>
-@*</div>*@
+    <div class="col-md-9">
+        @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-1 delete-line">
+        <p class="text-danger remove-contact">
+            <span class="glyphicon glyphicon-remove"></span> Удалить
+        </p>
+    </div>
+</div>

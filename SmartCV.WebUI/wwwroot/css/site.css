@@ -86,3 +86,13 @@ div.duty::after {
 div.duty {
     margin-bottom: 10px;
 }
+
+.input-daterange .input-group-addon {
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.gray-bottom-line {
+    border-bottom: solid 1px #cecdcd;
+    margin-bottom: 15px;
+}

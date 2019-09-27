@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Entity.Classes
 {
@@ -14,22 +10,24 @@ namespace SmartCV.Entity.Classes
         [Key]
         public int Id { get; set; }        
 
-        public String City { get; set; }
+        public string City { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Department { get; set; }
-
-        [Required]
-        public String Specialty { get; set; }
+        public string Department { get; set; }
 
         [Required]
-        public String Degree { get; set; }
+        public string Specialty { get; set; }
 
         [Required]
+        public string Degree { get; set; }
+
+        [Required]
+        [Column(TypeName = "date")]
         public DateTime From { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? To { get; set; }
 
         public int ResumeId { get; set; }
