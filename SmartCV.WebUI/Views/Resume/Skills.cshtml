@@ -6,15 +6,15 @@
 
 <form method="post">
     <div class="widget box">
-        <div class="widget-header"> <h2><i class="icon-reorder"></i> Навыки</h2> </div>
-        <div class="widget-content form-horizontal">
+         <h2><i class="icon-reorder"></i> Навыки</h2> 
+        <div class="form-horizontal">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ResumeManagerId)
             <div class="skill_section">
                 @Html.EditorFor(model => model.Skills)
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <div class="col-md-10 col-md-offset-2">
                     <p id="addSkill" aria-label="Добавить навык" class="text-info">
                         <span class="glyphicon glyphicon-plus"></span> Добавить навык
@@ -24,23 +24,22 @@
         </div>
     </div>
     <div class="widget box">
-        <div class="widget-header"> <h2><i class="icon-reorder"></i> Владение языками</h2> </div>
-        <div class="widget-content form-horizontal">
+        <h2><i class="icon-reorder"></i> Владение языками</h2> 
+        <div class="form-horizontal">
             <div class="language_section">
                 @Html.EditorFor(model => model.Languages)
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <div class="col-md-10 col-md-offset-2">
                     <p id="addLanguage" aria-label="Добавить язык" class="text-info">
                         <span class="glyphicon glyphicon-plus"></span> Добавить язык
                     </p>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <div class="col-md-10 col-md-offset-2">
                     @Html.RouteLink("Назад", new { action = "Certificates", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                     @Html.RouteLink("Вывести резюме", new { action = "Manage", controller = "Resume" }, new { @class = "btn btn-default" })
-                    @*<a href="~/Resume/PersonalQualities" class="btn btn-default">Далее</a>*@
                     <input type="submit" class="btn btn-primary" id="sendForm" value="Сохранить" />
                 </div>
             </div>

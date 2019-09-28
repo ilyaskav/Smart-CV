@@ -14,5 +14,7 @@ namespace SmartCV.Service.Interfaces
         bool UpdateSkill(SkillModel model);
 
         void RemoveSkill(int id);
+
+        void RemoveLanguage(int id);
     }
 }

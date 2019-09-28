@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartCV.Service.Models
 {
@@ -12,10 +7,9 @@ namespace SmartCV.Service.Models
         public int? Id { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public String Level { get; set; }
-
+        public string Level { get; set; }
     }
 }

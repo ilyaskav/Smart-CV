@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Mime;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -396,7 +395,7 @@ namespace SmartCV.WebUI.Controllers
             }
 
             ViewBag.ManagerId = managerId;
-            var viewModel = _skillService.Get(managerId);
+            SkillLanguageAddModel viewModel = _skillService.Get(managerId);
             if (viewModel == null) return View();
 
             return View(viewModel);
@@ -433,6 +432,20 @@ namespace SmartCV.WebUI.Controllers
             }
 
             _skillService.RemoveSkill(skillId);
+
+            return RedirectToAction("Skills", new { managerId });
+        }
+
+        [HttpGet]
+        public IActionResult RemoveLanguage(int managerId, int languageId)
+        {
+            // проверяем, владелец ли резюме шлет запрос на его изменение
+            if (!_managerService.IsOwnedBy(long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), managerId))
+            {
+                return Forbid();
+            }
+
+            _skillService.RemoveLanguage(languageId);
 
             return RedirectToAction("Skills", new { managerId });
         }

@@ -1,4 +1,6 @@
-﻿using SmartCV.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartCV.Entity.Classes;
+using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
@@ -25,22 +27,26 @@ namespace SmartCV.Service.Classes
 
         public SkillLanguageAddModel Get(int managerId)
         {
-            var resume = _resumeRepository.Get(managerId);
-            if (resume == null || (resume.Skills.Count == 0 && resume.ResumeLanguages.Count == 0)) return null;
+            var resume = _resumeRepository
+                .Get(r => r.Id == managerId && (r.Skills.Any() || r.ResumeLanguages.Any()))
+                .Include(r => r.Skills)
+                .Include(r => r.ResumeLanguages).ThenInclude(r => r.Language)
+                .FirstOrDefault();
+            if (resume == null) return null;
 
-            SkillLanguageAddModel addModel = new SkillLanguageAddModel
+            var addModel = new SkillLanguageAddModel
             {
                 ResumeManagerId = managerId
             };
 
-            if (resume.Skills.Count > 0)
+            if (resume.Skills.Any())
             {
                 foreach (var skill in resume.Skills)
                 {
                     addModel.Skills.Add(skill.ToModel());
                 }
             }
-            if (resume.ResumeLanguages.Count > 0)
+            if (resume.ResumeLanguages.Any())
             {
                 foreach (var language in resume.ResumeLanguages)
                 {
@@ -54,11 +60,6 @@ namespace SmartCV.Service.Classes
         public void CreateSkill(SkillModel model)
         {
             _skillRepository.Add(model.ToEntity());
-        }
-
-        public void CreateLanguage(LanguageModel model)
-        {
-            _languageRepository.Add(model.ToEntity());
         }
 
         public bool UpdateSkill(SkillModel model)
@@ -85,7 +86,10 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(SkillLanguageAddModel addModel)
         {
-            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
+            var resume = _resumeRepository
+                .Get(r => r.Id == addModel.ResumeManagerId.Value)
+                .Include(r => r.ResumeLanguages)
+                .FirstOrDefault();
             foreach (var skill in addModel.Skills)
             {
                 skill.ResumeId = resume.Id;
@@ -98,9 +102,12 @@ namespace SmartCV.Service.Classes
             {
                 if (!this.UpdateLanguage(language))
                 {
-                    this.CreateLanguage(language);
+                    var resumeLang = new ResumeLanguage { Language = language.ToEntity() };
+                    resume.ResumeLanguages.Add(resumeLang);
                 }
             }
+
+            _resumeRepository.Update(resume);
         }
 
         public void RemoveSkill(int id)
@@ -108,10 +115,24 @@ namespace SmartCV.Service.Classes
             if (_skillRepository.Has(id)) _skillRepository.Remove(id);
         }
 
+        public void RemoveLanguage(int id)
+        {
+            var resume = _resumeRepository.Get(r => r.ResumeLanguages.Any(rl => rl.Language.Id == id))
+                .Include(r => r.ResumeLanguages)
+                .FirstOrDefault();
+            if (resume is null) return;
+
+            var itemToRemove = resume.ResumeLanguages.FirstOrDefault(rl => rl.LanguageId == id);
+            resume.ResumeLanguages.Remove(itemToRemove);
+            
+            _resumeRepository.Update(resume);
+        }
+
         public void Dispose()
         {
             _skillRepository.Dispose();
             _languageRepository.Dispose();
+            _resumeRepository.Dispose();
         }
     }
 }

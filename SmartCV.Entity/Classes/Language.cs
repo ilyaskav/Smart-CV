@@ -12,14 +12,13 @@ namespace SmartCV.Entity.Classes
         public int Id { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public String Level { get; set; }
+        public string Level { get; set; }
 
         #region navigation
 
-        //[ForeignKey("ResumeId")]
         public virtual ICollection<ResumeLanguage> Resumes { get; set; }
 
         #endregion
