@@ -1,9 +1,11 @@
-﻿using SmartCV.Entity.Classes;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartCV.Entity.Classes;
 using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartCV.Service.Classes
 {
@@ -51,10 +53,13 @@ namespace SmartCV.Service.Classes
 
         public CertificateAddModel Get(int managerId)
         {
-            var resume = _resumeRepository.Get(managerId);
-            if (resume == null || resume.CertificatesAndTrainings.Count == 0) return null;
+            var resume = _resumeRepository
+                .Get(r => r.Id == managerId && r.CertificatesAndTrainings.Any())
+                .Include(r => r.CertificatesAndTrainings)
+                .FirstOrDefault();
+            if (resume == null) return null;
 
-            CertificateAddModel addModel = new CertificateAddModel
+            var addModel = new CertificateAddModel
             {
                 ResumeManagerId = managerId
             };

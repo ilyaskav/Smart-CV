@@ -3,18 +3,18 @@
     Layout = null;
 }
 
-<div class="certificate">
-    @Html.HiddenFor(model=>model.Id)
-    <div class="form-group">
-        <label class="col-md-2 control-label">Название*</label>
+<div class="certificate gray-bottom-line">
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label">Название*</label>
         <div class="col-md-9">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-md-2 control-label">Город</label>
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label">Город</label>
         <div class="col-md-9">
             @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
@@ -26,12 +26,11 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-md-2 control-label">Дата окончания*</label>
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label">Дата окончания*</label>
         <div class="col-md-9">
             @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datePicker-month", id = "datePicker", data_provide = "datepicker" } })
             @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            @*<input id="datePicker-month" data-provide="datepicker" class="form-control" name="date" />*@
         </div>
     </div>
 </div>
