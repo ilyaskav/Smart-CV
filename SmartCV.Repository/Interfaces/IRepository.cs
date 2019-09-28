@@ -27,5 +27,7 @@ namespace SmartCV.Repository.Interfaces
         bool Has(int id);
 
         bool Has(Expression<Func<TEntity, bool>> predicate);
+
+        void Upsert(TEntity entity);
     }
 }

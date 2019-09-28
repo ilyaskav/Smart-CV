@@ -4,7 +4,6 @@ using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SmartCV.Service.Classes
@@ -16,16 +15,14 @@ namespace SmartCV.Service.Classes
         private readonly IContactRepository _contactRepository = null;
         private readonly IContactTitleRepository _contactTitleRepository = null;
         private readonly IResumeRepository _resumeRepository = null;
-        private readonly IPersonalDataRepository _personalDataRepository = null;
 
         #endregion
 
-        public ContactService(IContactRepository contRepo, IContactTitleRepository contTitleRepo, IResumeRepository resumeRepo, IPersonalDataRepository personalDataRepo)
+        public ContactService(IContactRepository contRepo, IContactTitleRepository contTitleRepo, IResumeRepository resumeRepo)
         {
             _contactRepository = contRepo;
             _contactTitleRepository = contTitleRepo;
             _resumeRepository = resumeRepo;
-            _personalDataRepository = personalDataRepo;
         }
 
         public ContactAddModel Get(int managerId)

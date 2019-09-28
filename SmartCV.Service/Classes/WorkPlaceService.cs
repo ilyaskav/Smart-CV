@@ -15,17 +15,15 @@ namespace SmartCV.Service.Classes
         private readonly IWorkPlaceRepository _workPlaceRepository = null;
         private readonly IDutyRepository _dutyRepository = null;
         private readonly IProjectRepository _projectRepository = null;
-        private readonly IPersonalDataRepository _personalDataRepository = null;
         private readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IPersonalDataRepository personalDataRepo, IResumeRepository resumeRepo)
+        public WorkPlaceService(IWorkPlaceRepository workRepo, IDutyRepository dutyRepo, IProjectRepository projRepo, IResumeRepository resumeRepo)
         {
             _workPlaceRepository = workRepo;
             _dutyRepository = dutyRepo;
             _projectRepository = projRepo;
-            _personalDataRepository = personalDataRepo;
             _resumeRepository = resumeRepo;
         }
 
@@ -34,16 +32,19 @@ namespace SmartCV.Service.Classes
             _workPlaceRepository.Dispose();
             _dutyRepository.Dispose();
             _projectRepository.Dispose();
-            _personalDataRepository.Dispose();
             _resumeRepository.Dispose();
         }
 
         public WorkPlaceAddModel Get(int managerId)
         {
-            var resume = _resumeRepository.Get(r => r.Id == managerId).Include(r => r.WorkExp).FirstOrDefault();
+            var resume = _resumeRepository
+                .Get(r => r.Id == managerId)
+                .Include(r => r.WorkExp)
+                    .ThenInclude(r => r.Duties)
+                .FirstOrDefault();
             if (resume == null || !resume.WorkExp.Any()) return null;
 
-            WorkPlaceAddModel addModel = new WorkPlaceAddModel
+            var addModel = new WorkPlaceAddModel
             {
                 ResumeManagerId = managerId
             };
@@ -55,9 +56,8 @@ namespace SmartCV.Service.Classes
             return addModel;
         }
 
-        public void CreateWorkplace(Models.WorkPlaceModel model)
+        public void CreateWorkplace(WorkPlaceModel model)
         {
-            // создаем новую работу
             _workPlaceRepository.Add(model.ToEntity());
         }
 
@@ -81,15 +81,16 @@ namespace SmartCV.Service.Classes
             {
                 WorkPlace entity = model.ToEntity();
 
-                _workPlaceRepository.Update(entity);
                 foreach (var duty in entity.Duties)
                 {
-                    _dutyRepository.Update(duty);
+                    _dutyRepository.Upsert(duty);
                 }
                 foreach (var proj in entity.Projects)
                 {
                     _projectRepository.Update(proj);
                 }
+                _workPlaceRepository.Update(entity);
+
                 return true;
             }
             return false;
@@ -104,6 +105,5 @@ namespace SmartCV.Service.Classes
         {
             if (_workPlaceRepository.Has(id)) _workPlaceRepository.Remove(id);
         }
-
     }
 }

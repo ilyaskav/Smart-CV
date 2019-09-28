@@ -3,7 +3,6 @@ using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SmartCV.Service.Classes
@@ -13,22 +12,19 @@ namespace SmartCV.Service.Classes
         #region Declarations
 
         readonly IInstitutionRepository _institutionRepository = null;
-        readonly IPersonalDataRepository _personalDataRepository = null;
         readonly IResumeRepository _resumeRepository = null;
 
         #endregion
 
-        public InstitutionService(IInstitutionRepository instRepo, IPersonalDataRepository personalDataRepo, IResumeRepository resumeRepo)
+        public InstitutionService(IInstitutionRepository instRepo, IResumeRepository resumeRepo)
         {
             _institutionRepository = instRepo;
-            _personalDataRepository = personalDataRepo;
             _resumeRepository = resumeRepo;
         }
 
         public void Dispose()
         {
             _institutionRepository.Dispose();
-            _personalDataRepository.Dispose();
             _resumeRepository.Dispose();
         }
 

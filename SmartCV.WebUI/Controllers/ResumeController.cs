@@ -329,7 +329,7 @@ namespace SmartCV.WebUI.Controllers
 
             ViewBag.ManagerId = managerId;
             var viewModel = _workPlaceService.Get(managerId);
-            if (viewModel == null) return View();
+            if (viewModel == null) return View(new WorkPlaceAddModel { ResumeManagerId = managerId });
 
             return View(viewModel);
         }

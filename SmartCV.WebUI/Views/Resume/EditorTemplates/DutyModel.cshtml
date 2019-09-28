@@ -3,10 +3,10 @@
 @{
     Layout = null;
 }
-    <div class="duty">
+<div class="duty row">
         @if (Convert.ToInt32(@Html.Index().ToString()) == 0)
         {
-            <div class="col-md-9">
+            <div class="col-md-12">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.WorkPlaceId)
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -15,17 +15,17 @@
         }
         else
         {
-                <div class="col-md-8 col-md-offset-2">
-                    @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.WorkPlaceId)
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.WorkPlaceId)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="col-md-1 delete-line">
-                    <p class="text-danger remove-duty">
-                        <span class="glyphicon glyphicon-remove"></span> Удалить
-                    </p>
+            <div class="col-md-2 delete-line">
+                <p class="text-danger remove-duty">
+                    <span class="glyphicon glyphicon-remove"></span> Удалить
+                </p>
             </div>
         }
-    </div>
+</div>

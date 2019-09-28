@@ -5,18 +5,17 @@
 }
 
 <div class="widget box">
-    <div class="widget-header"> <h2><i class="icon-reorder"></i> Опыт работы</h2> </div>
-    <div class="widget-content">
+    <h2><i class="icon-reorder"></i> Опыт работы</h2>
 
-        <form class="form-horizontal" method="POST">
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model=>model.ResumeManagerId)
-            <div class="row">
-                @Html.EditorFor(model=>model.WorkPlaces)
-            </div>
-            <div class="row">
-                <div class="form-group">
+    <div class="row">
+        <div class="col">
+            <form class="form-horizontal" method="POST">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ResumeManagerId)
+                @Html.EditorFor(model => model.WorkPlaces)
+
+                <div class="form-group row">
                     <div class="col-md-10 col-md-offset-2">
                         <p id="addWorkPlace" aria-label="Добавить место работы" class="text-info">
                             <span class="glyphicon glyphicon-plus"></span> Добавить место работы
@@ -24,16 +23,15 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="col-md-10 col-md-offset-2">
                         @Html.RouteLink("Назад", new { action = "Education", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                         @Html.RouteLink("Далее", new { action = "Certificates", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
                         <button class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

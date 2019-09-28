@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using SmartCV.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace SmartCV.Repository
 {
@@ -93,6 +94,21 @@ namespace SmartCV.Repository
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
             return true;
+        }
+
+        public void Upsert(TEntity entity)
+        {
+            _context.ChangeTracker.TrackGraph(entity, e =>
+            {
+                if (e.Entry.IsKeySet)
+                {
+                    e.Entry.State = EntityState.Modified;
+                }
+                else
+                {
+                    e.Entry.State = EntityState.Added;
+                }
+            });
         }
 
         public virtual void Dispose()
