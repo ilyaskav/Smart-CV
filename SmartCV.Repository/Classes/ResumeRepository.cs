@@ -9,7 +9,7 @@ namespace SmartCV.Repository.Classes
 {
     public class ResumeRepository : BaseRepository<Resume>, IResumeRepository
     {
-        private ApplicationDbContext _context = null;
+        private readonly ApplicationDbContext _context = null;
 
         public ResumeRepository(ApplicationDbContext context)
             : base(context)
@@ -21,11 +21,13 @@ namespace SmartCV.Repository.Classes
         public void Clone(int managerId)
         {
             var clone = _context.Resumes
-                .Include("Institutions")
+                .Include("PersonalData")
+                .Include("Education")
                 .Include("WorkExp.Duties")
                 .Include("WorkExp.Projects")
                 .Include("Skills")
-                .Include("Languages")
+                .Include("ResumeLanguages")
+                .Include("ResumeLanguages.Language")
                 .Include("PersonalQualities")
                 .Include("CertificatesAndTrainings")
                 .Include("Contacts")
@@ -36,6 +38,13 @@ namespace SmartCV.Repository.Classes
             clone.PersonalData.Id = 0;
             clone.CreatedAt = DateTime.Now;
             clone.Guid = Guid.NewGuid();
+
+            foreach (var resumeLanguages in clone.ResumeLanguages)
+            {
+                resumeLanguages.Id = 0;
+                resumeLanguages.LanguageId = 0;
+                resumeLanguages.Language.Id = 0;
+            }
 
             foreach (var institution in clone.Education)
             {

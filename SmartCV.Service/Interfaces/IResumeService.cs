@@ -1,22 +1,25 @@
 ﻿using SmartCV.Service.Models;
 using System;
+using System.Collections.Generic;
 
 namespace SmartCV.Service.Interfaces
 {
-    public interface IResumeService : IDisposable
+    public interface IResumeService: IDisposable
     {
-        void CreateResume(PersonalDataModel model);
+        ResumeManagerPrintModel Get(int managerId);
 
-        void UpdateResume(PersonalDataModel model);
+        ResumeManagerPrintModel Get(Guid identifier);
 
-        PersonalDataModel GetResume(int id);
+        int CreateEmptyResume(ResumeModel model);
 
-        PersonalDataModel GetPersonalDataByResumeId(int id);
+        void CopyResume(int managerId);
+
+        ICollection<ManagerViewModel> GetAllResumes(long userId);
+
+        bool IsOwnedBy(long userId, int managerId);
+
+        bool IsOwnedBy(long userId, Guid identifier);
 
         void DeleteResume(int id);
-
-        void CreateMSWordDocument(Guid id);
-
-        void CreatePDF(Guid id);
     }
 }

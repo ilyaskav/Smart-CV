@@ -16,8 +16,8 @@ namespace SmartCV.WebUI.Controllers
     {
         #region Declarations
 
-        private readonly IResumeService _resumeService = null;
-        private readonly IResumeManagerService _managerService = null;
+        private readonly IPersonalDataService _resumeService = null;
+        private readonly IResumeService _managerService = null;
         private readonly IContactService _contactService = null;
         private readonly IInstitutionService _institutionService = null;
         private readonly IProfessionService _professionService = null;
@@ -28,7 +28,7 @@ namespace SmartCV.WebUI.Controllers
 
         #endregion
 
-        public ResumeController(IResumeService resumeService, IResumeManagerService managerService, IContactService contactService,
+        public ResumeController(IPersonalDataService resumeService, IResumeService managerService, IContactService contactService,
                                 IInstitutionService instService, IProfessionService profService, IWorkPlaceService workService,
                                 ICertificateService certService, ISkillService skillService, IHostingEnvironment hostingEnvironment)
         {
@@ -50,7 +50,6 @@ namespace SmartCV.WebUI.Controllers
         }
 
         [HttpGet]
-        [Route("{identifier}")]
         public IActionResult GetWordDoc(Guid identifier)
         {
             if (identifier == null || identifier.Equals(Guid.Empty))
@@ -65,9 +64,8 @@ namespace SmartCV.WebUI.Controllers
             }
 
             _resumeService.CreateMSWordDocument(identifier);
-            var manager = _managerService.Get(identifier);
-            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment.WebRootPath, "doc", manager.Link));
-            return File(fileBytes, MediaTypeNames.Application.Octet, manager.Link);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_hostingEnvironment.WebRootPath, "doc", identifier + ".docx"));
+            return File(fileBytes, MediaTypeNames.Application.Octet, identifier + ".docx");
         }
 
         [HttpGet]
@@ -200,6 +198,7 @@ namespace SmartCV.WebUI.Controllers
                 return Forbid();
             }
 
+            ViewBag.ManagerId = managerId;
             addModel.ResumeManagerId = managerId;
             _contactService.UpdateContact(addModel);
 

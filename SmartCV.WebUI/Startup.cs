@@ -57,8 +57,8 @@ namespace SmartCV.WebUI
             #region регистрация сервисов
 
             // TODO
+            containerBuilder.RegisterType<PersonalDataService>().As<IPersonalDataService>();
             containerBuilder.RegisterType<ResumeService>().As<IResumeService>();
-            containerBuilder.RegisterType<ResumeManagerService>().As<IResumeManagerService>();
             containerBuilder.RegisterType<ProfessionService>().As<IProfessionService>();
             containerBuilder.RegisterType<ContactService>().As<IContactService>();
             containerBuilder.RegisterType<InstitutionService>().As<IInstitutionService>();

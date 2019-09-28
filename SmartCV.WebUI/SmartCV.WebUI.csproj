@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="wwwroot\doc\" />
     <Folder Include="wwwroot\word-templates\" />
   </ItemGroup>
 
