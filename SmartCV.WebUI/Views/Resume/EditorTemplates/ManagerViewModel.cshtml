@@ -15,12 +15,10 @@
         @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
         @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
 
-        <a href="@string.Format("/Resume/Remove/{0}", Model.Id)">
+        <a href="@string.Format("/Resume/Remove?resumeId={0}", Model.Id)">
             <span class="glyphicon glyphicon-remove"></span>
             Удалить
         </a>
-
-        @*@Html.RouteLink("Удалить", new { action = "RemoveResume", managerId = Model.Id })*@
     </td>
     <td>
         @{

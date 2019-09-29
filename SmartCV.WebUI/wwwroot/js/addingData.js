@@ -17,14 +17,6 @@ var getManagerIdFromURI = function () {
     return managerId;
 };
 
-// разделение секций
-var separate = function (selector) {
-    var element = $(selector);
-    if (element == undefined || element.length === 0) return;
-
-    element.after('<hr/>');
-}
-
 // КОНЕЦ
 
 $(function () {

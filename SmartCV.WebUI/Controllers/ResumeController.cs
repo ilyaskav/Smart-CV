@@ -287,15 +287,15 @@ namespace SmartCV.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Remove(int managerId)
+        public IActionResult Remove(int resumeId)
         {
             // проверяем, владелец ли резюме шлет запрос на его изменение
-            if (!_managerService.IsOwnedBy(long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), managerId))
+            if (!_managerService.IsOwnedBy(long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), resumeId))
             {
                 return Forbid();
             }
 
-            _managerService.DeleteResume(managerId);
+            _managerService.DeleteResume(resumeId);
 
             return RedirectToAction("Manage");
         }
