@@ -22,9 +22,9 @@ namespace SmartCV.Repository.Classes
         {
             var clone = _context.Resumes
                 .Include("PersonalData")
-                .Include("Education")
-                .Include("WorkExp.Duties")
-                .Include("WorkExp.Projects")
+                .Include("Institutions")
+                .Include("WorkPlaces.Duties")
+                .Include("WorkPlaces.Projects")
                 .Include("Skills")
                 .Include("ResumeLanguages")
                 .Include("ResumeLanguages.Language")
@@ -46,11 +46,11 @@ namespace SmartCV.Repository.Classes
                 resumeLanguages.Language.Id = 0;
             }
 
-            foreach (var institution in clone.Education)
+            foreach (var institution in clone.Institutions)
             {
                 institution.Id = 0;
             }
-            foreach (var workExp in clone.WorkExp)
+            foreach (var workExp in clone.WorkPlaces)
             {
                 workExp.Id = 0;
                 foreach (var duty in workExp.Duties)

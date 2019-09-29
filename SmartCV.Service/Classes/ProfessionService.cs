@@ -12,13 +12,12 @@ namespace SmartCV.Service.Classes
         #region declarations
 
         readonly IProfessionRepository _professionRepository = null;
-        readonly IResumeRepository _resumeRepository = null;
+
         #endregion
 
-        public ProfessionService(IProfessionRepository profRepo, IResumeRepository resumeRepo)
+        public ProfessionService(IProfessionRepository profRepo)
         {
             _professionRepository = profRepo;
-            _resumeRepository = resumeRepo;
         }
 
         public ICollection<ProfessionModel> GetAll()

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Service.Models
 {
@@ -18,7 +14,7 @@ namespace SmartCV.Service.Models
 
         [Required]
         [DisplayName("Контакт")]
-        public String Data { get; set; }
+        public string Data { get; set; }
 
         public int? ResumeId { get; set; }
 

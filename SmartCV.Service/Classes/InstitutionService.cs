@@ -30,10 +30,10 @@ namespace SmartCV.Service.Classes
 
         public InstitutionAddModel Get(int managerId)
         {
-            var resume = _resumeRepository.Get(r => r.Id == managerId && r.PersonalData != null).Include(r => r.Education).FirstOrDefault();
+            var resume = _resumeRepository.Get(r => r.Id == managerId && r.PersonalData != null).Include(r => r.Institutions).FirstOrDefault();
             if (resume == null) return null;
 
-            var institutions = resume.Education;
+            var institutions = resume.Institutions;
             var addModel = new InstitutionAddModel() { ResumeManagerId = managerId };
 
             foreach (var inst in institutions)

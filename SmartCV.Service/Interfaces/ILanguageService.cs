@@ -3,7 +3,7 @@ using System;
 
 namespace SmartCV.Service.Interfaces
 {
-    public interface ILanguageService:IDisposable
+    public interface ILanguageService : IDisposable
     {
         void AddLanguage(LanguageModel model);
         void UpdateLanguage(LanguageModel model);

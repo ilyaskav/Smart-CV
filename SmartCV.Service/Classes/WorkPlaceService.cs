@@ -37,18 +37,18 @@ namespace SmartCV.Service.Classes
 
         public WorkPlaceAddModel Get(int managerId)
         {
-            var resume = _resumeRepository
+            Resume resume = _resumeRepository
                 .Get(r => r.Id == managerId)
-                .Include(r => r.WorkExp)
+                .Include(r => r.WorkPlaces)
                     .ThenInclude(r => r.Duties)
                 .FirstOrDefault();
-            if (resume == null || !resume.WorkExp.Any()) return null;
+            if (resume == null || !resume.WorkPlaces.Any()) return null;
 
             var addModel = new WorkPlaceAddModel
             {
                 ResumeManagerId = managerId
             };
-            foreach (var work in resume.WorkExp)
+            foreach (var work in resume.WorkPlaces)
             {
                 addModel.WorkPlaces.Add(work.ToModel());
             }

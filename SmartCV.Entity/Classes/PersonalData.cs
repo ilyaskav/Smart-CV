@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,21 +12,21 @@ namespace SmartCV.Entity.Classes
         public int Id { get; set; }
 
         [Required]
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 
         //[Required]
-        public String CurrentLocation { get; set; }
+        public string CurrentLocation { get; set; }
 
         // path to img
-        public String Photo { get; set; }
+        public string Photo { get; set; }
 
         [Required]
-        public String Goal { get; set; }
+        public string Goal { get; set; }
 
 
         #region navigation

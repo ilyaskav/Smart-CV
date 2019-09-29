@@ -25,6 +25,7 @@ namespace SmartCV.Entity.Classes
         [Required]
         public Guid Guid { get; set; }
 
+
         #region navigation
 
         [ForeignKey("UserId")]
@@ -35,9 +36,9 @@ namespace SmartCV.Entity.Classes
         [ForeignKey("ProfessionId")]
         public virtual Profession Profession { get; set; }
 
-        public virtual ICollection<Institution> Education { get; set; }
+        public virtual ICollection<Institution> Institutions { get; set; }
 
-        public virtual ICollection<WorkPlace> WorkExp { get; set; }
+        public virtual ICollection<WorkPlace> WorkPlaces { get; set; }
 
         public virtual ICollection<Skill> Skills { get; set; }
 

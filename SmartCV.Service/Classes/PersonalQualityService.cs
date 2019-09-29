@@ -2,7 +2,6 @@
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
-using System.Collections.Generic;
 
 namespace SmartCV.Service.Classes
 {

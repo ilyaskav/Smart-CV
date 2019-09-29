@@ -11,11 +11,11 @@ namespace SmartCV.Entity.Classes
         public int Id { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         public DateTime Date { get; set; }
 
-        public String Location { get; set; }
+        public string Location { get; set; }
 
         public int ResumeId { get; set; }
 

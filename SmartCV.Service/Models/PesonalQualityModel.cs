@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartCV.Service.Models
+﻿namespace SmartCV.Service.Models
 {
     public class PesonalQualityModel
     {

@@ -2,27 +2,23 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Entity.Classes
 {
-    // место работы
     public class WorkPlace : IEntity
     {
         [Key]
         public int Id { get; set; }
         
-        public String City { get; set; }
+        public string City { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public String Position { get; set; }
+        public string Position { get; set; }
 
         [Required]
         public DateTime From { get; set; }

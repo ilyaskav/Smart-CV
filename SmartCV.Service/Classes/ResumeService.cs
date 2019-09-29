@@ -85,6 +85,7 @@ namespace SmartCV.Service.Classes
         public void Dispose()
         {
             _resumeRepository.Dispose();
+            _personalDataRepository.Dispose();
         }
 
 

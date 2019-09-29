@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Entity.Classes
 {
@@ -14,21 +9,21 @@ namespace SmartCV.Entity.Classes
         public int Id { get; set; }
 
         [Required]
-        public String Title { get; set; }
+        public string Title { get; set; }
 
         //[Required]
-        public String Duration { get; set; }
+        public string Duration { get; set; }
 
         [Required]
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public String Role { get; set; }
+        public string Role { get; set; }
 
         [Required]
-        public String TechStack { get; set; }
+        public string TechStack { get; set; }
 
-        public String About { get; set; }
+        public string About { get; set; }
 
         public int WorkPlaceId { get; set; }
 

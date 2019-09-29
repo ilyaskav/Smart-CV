@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Service.Models
 {
@@ -10,17 +6,17 @@ namespace SmartCV.Service.Models
     {
         public int? Id { get; set; }
 
-        public String Title { get; set; }
+        public string Title { get; set; }
 
-        public String Duration { get; set; }
+        public string Duration { get; set; }
 
-        public String Description { get; set; }
+        public string Description { get; set; }
 
-        public String Role { get; set; }
+        public string Role { get; set; }
 
-        public String TechStack { get; set; }
+        public string TechStack { get; set; }
 
-        public String About { get; set; }
+        public string About { get; set; }
 
         public int WorkPlaceId { get; set; }
 

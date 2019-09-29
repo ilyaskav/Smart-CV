@@ -4,7 +4,6 @@ using SmartCV.Repository.Interfaces;
 using SmartCV.Service.Converters;
 using SmartCV.Service.Interfaces;
 using SmartCV.Service.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SmartCV.Service.Classes
@@ -73,7 +72,7 @@ namespace SmartCV.Service.Classes
 
         public void CreateOrUpdate(CertificateAddModel addModel)
         {
-            var resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
+            Resume resume = _resumeRepository.Get(addModel.ResumeManagerId.Value);
             foreach (var certificate in addModel.Certificates)
             {
                 certificate.ResumeId = resume.Id;

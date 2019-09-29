@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCV.Service.Models
 {
@@ -14,7 +10,7 @@ namespace SmartCV.Service.Models
         public int? ResumeId { get; set; }
 
         [Required]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
     }
 }

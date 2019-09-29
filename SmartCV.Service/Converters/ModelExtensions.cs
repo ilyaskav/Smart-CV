@@ -18,7 +18,7 @@ namespace SmartCV.Service.Converters
 
             return new PersonalData()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -56,10 +56,10 @@ namespace SmartCV.Service.Converters
             }
             return new Resume()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 CreatedAt = model.CreatedAt,
                 ProfessionId = model.ProfessionId,
-                UserId = model.UserId.HasValue ? model.UserId.Value : 0,
+                UserId = model.UserId ?? 0,
                 Guid = Guid.NewGuid()
             };
         }
@@ -116,14 +116,14 @@ namespace SmartCV.Service.Converters
             // создаем новую работу
             var entity = new WorkPlace()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 City = model.City,
                 Name = model.Name,
                 Description = model.Description,
                 Position = model.Position,
                 From = model.From,
                 To = model.To,
-                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+                ResumeId = model.ResumeId ?? 0
             };
 
             // добавляем в нее обязанности
@@ -176,9 +176,9 @@ namespace SmartCV.Service.Converters
         {
             return new Duty()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Name = model.Name,
-                WorkPlaceId = model.WorkPlaceId.HasValue ? model.WorkPlaceId.Value : 0
+                WorkPlaceId = model.WorkPlaceId ?? 0
             };
         }
 
@@ -230,7 +230,7 @@ namespace SmartCV.Service.Converters
             }
             return new Institution()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Name = model.Name,
                 City = model.City,
                 Department = model.Department,
@@ -238,7 +238,7 @@ namespace SmartCV.Service.Converters
                 Degree = model.Degree,
                 From = model.From,
                 To = model.To,
-                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+                ResumeId = model.ResumeId ?? 0
             };
         }
 
@@ -271,7 +271,7 @@ namespace SmartCV.Service.Converters
             }
             return new Language()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Name = model.Name,
                 Level = model.Level
             };
@@ -299,9 +299,9 @@ namespace SmartCV.Service.Converters
             }
             return new Skill()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Name = model.Name,
-                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+                ResumeId = model.ResumeId ?? 0
             };
         }
 
@@ -342,11 +342,11 @@ namespace SmartCV.Service.Converters
             }
             return new Certificate()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Name = model.Name,
                 Date = model.Date,
                 Location = model.Location,
-                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+                ResumeId = model.ResumeId ?? 0
             };
         }
 
@@ -389,7 +389,7 @@ namespace SmartCV.Service.Converters
 
             return new ContactTitle()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
+                Id = model.Id ?? 0,
                 Title = model.Title
             };
         }
@@ -419,10 +419,10 @@ namespace SmartCV.Service.Converters
 
             return new Contact()
             {
-                Id = model.Id.HasValue ? model.Id.Value : 0,
-                ContactTitleId = model.ContactTitle.Id.HasValue ? model.ContactTitle.Id.Value : 0,
+                Id = model.Id ?? 0,
+                ContactTitleId = model.ContactTitle.Id ?? 0,
                 Data = model.Data,
-                ResumeId = model.ResumeId.HasValue ? model.ResumeId.Value : 0
+                ResumeId = model.ResumeId ?? 0
             };
         }
 

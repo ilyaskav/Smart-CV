@@ -4,8 +4,6 @@
 }
 
 <div class="jumbotron">
-    @*@using (Html.BeginForm("CreateEmptyResume", "Resume", FormMethod.Post, new { @class = "form-horizontal"  }))
-        {*@
     <form method="post" class="form-horizontal" action="@Url.Action("CreateEmptyResume", "Resume")">
         @Html.AntiForgeryToken()
 
@@ -17,15 +15,8 @@
         </p>
         <div class="form-group">
             <label for="ProfessionId">Специализация </label>
-            @*<select class="form-control" name="selectSpecialization">
-                    <option value="0">не выбрано</option>
-                    <option value="0">IT</option>
-                    <option value="0">спорт</option>
-                    <option value="0">менеджмент</option>
-                </select>*@
             @Html.DropDownList("ProfessionId", null, htmlAttributes: new { @class = "form-control" })
         </div>
         <p><input type="submit" class="btn btn-primary btn-lg" value="Create resume" /></p>
     </form>
-    @*}*@
 </div>

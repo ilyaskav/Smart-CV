@@ -79,8 +79,8 @@ namespace SmartCV.Service.Classes
                 .Include(r => r.PersonalData)
                 .Include(r => r.Contacts)
                     .ThenInclude(c => c.ContactTitle)
-                .Include(r => r.Education)
-                .Include(r => r.WorkExp)
+                .Include(r => r.Institutions)
+                .Include(r => r.WorkPlaces)
                     .ThenInclude(w => w.Duties)
                 .Include(r => r.ResumeLanguages)
                     .ThenInclude(rl => rl.Language)
@@ -94,7 +94,7 @@ namespace SmartCV.Service.Classes
             string outFilePath = Path.Combine(projPath, "doc") + "\\" + identifier.ToString() + ".docx";
             byte[] templateBytes = File.ReadAllBytes(Path.Combine(projPath, "word-templates", "template4.dotx"));
 
-            using (MemoryStream templateStream = new MemoryStream())
+            using (var templateStream = new MemoryStream())
             {
                 templateStream.Write(templateBytes, 0, (int)templateBytes.Length);
 
@@ -135,13 +135,13 @@ namespace SmartCV.Service.Classes
                     }
 
                     // ОБРАЗОВАНИЕ
-                    if (myResume.Education.Count > 0)
+                    if (myResume.Institutions.Count > 0)
                     {
                         SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Education").Single();
                         Table theTable = contentControl.Descendants<Table>().Single();
                         TableRow defaultRow = theTable.Elements<TableRow>().Last();
 
-                        foreach (var institution in myResume.Education)
+                        foreach (var institution in myResume.Institutions)
                         {
                             TableRow rowCopy = (TableRow)defaultRow.CloneNode(true);
 
@@ -173,13 +173,13 @@ namespace SmartCV.Service.Classes
                     else mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Education").Single().Remove();
 
                     // ОПЫТ РАБОТЫ
-                    if (myResume.WorkExp.Count > 0)
+                    if (myResume.WorkPlaces.Count > 0)
                     {
                         SdtBlock contentControl = mainPart.Document.Body.Descendants<SdtBlock>().Where(r => r.SdtProperties.GetFirstChild<Tag>().Val == "Section_Experience").Single();
                         Table theTable = contentControl.Descendants<Table>().Single();
                         TableRow defaultRow = theTable.Elements<TableRow>().Last();
 
-                        foreach (var workPlace in myResume.WorkExp)
+                        foreach (var workPlace in myResume.WorkPlaces)
                         {
                             TableRow rowCopy = (TableRow)defaultRow.CloneNode(true);
 
