@@ -1,0 +1,41 @@
+﻿@model SmartCV.Service.Models.CertificateAddModel
+@{
+    ViewBag.Title = "Certificates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="widget box">
+    <h2><i class="icon-reorder"></i> Сертификаты и тренинги</h2>
+
+    <div class="row">
+        <div class="col">
+            <form class="form-horizontal" method="POST">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ResumeManagerId)
+                @Html.EditorFor(model => model.Certificates)
+                    <div class="form-group row">
+                        <div class="col-md-10 col-md-offset-2">
+                            <p id="addCertificate" aria-label="Добавить сертификат" class="text-info">
+                                <span class="glyphicon glyphicon-plus"></span> Добавить сертификат
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-10 col-md-offset-2">
+                            @Html.RouteLink("Назад", new { action = "WorkExperience", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                            @Html.RouteLink("Далее", new { action = "Skills", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-default" })
+                            <button class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/dist/jqueryval-bundle.js"></script>
+    <script src="~/dist/bootstrap-datepicker-bundle.js"></script>
+    <script src="~/js/addingData.js"></script>
+    <script src="~/js/Views/Certificates.js"></script>
+}

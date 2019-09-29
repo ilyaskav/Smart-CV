@@ -1,0 +1,78 @@
+﻿@model SmartCV.Service.Models.PersonalDataModel
+
+@{
+    ViewBag.Title = "Общие данные";
+}
+
+<div class="widget box">
+    <h2><i class="icon-reorder"></i> Общие данные</h2>
+
+    <div class="row">
+        <div class="col">
+            <form method="post" class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="firstName">Имя*</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstName" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="lastName">Фамилия*</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", id="lastName" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="dateOfBirth">Дата рождения</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "dateOfBirth", data_provide = "datepicker" } })
+                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="city">Город</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CurrentLocation, new { htmlAttributes = new { @class = "form-control", id="city", data_toggle = "tooltip", data_placement = "bottom", title = "Место вашего настоящего проживания" } })
+                        @Html.ValidationMessageFor(model => model.CurrentLocation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="goal">Цель*</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control", id="goal", data_toggle = "tooltip", data_placement = "bottom", title = "Напр. Получение должности Junior .NET Developer" } })
+                        @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="photo">Фото</label>
+                    <div class="col-md-10">
+                        <input type="file" class="form-control" name="Photo" id="photo">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-10 col-md-offset-2">
+                        <input type="submit" class="btn btn-light" value="Сохранить" />
+                        @Html.RouteLink("Далее", new { action = "Contacts", controller = "Resume", managerId = ViewBag.ManagerId }, new { @class = "btn btn-primary" })
+                        <span class="text-success disappearance">@ViewBag.Success</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/dist/jqueryval-bundle.js"></script>
+    <script src="~/dist/bootstrap-datepicker-bundle.js"></script>
+    <script src="~/js/addingData.js"></script>
+    <script src="~/js/Views/PersonalData.js"></script>
+}

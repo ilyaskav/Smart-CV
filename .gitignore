@@ -1,7 +1,8 @@
 /packages/
-/WebUI/Properties/PublishProfiles
-/WebUI/Content/doc
-/WebUI/App_Data
+/SmartCV.WebUI/wwwroot/doc/
+/SmartCV.WebUI/Properties/PublishProfiles
+/SmartCV.WebUI/Content/doc
+/SmartCV.WebUI/App_Data
 
 /.vs
 *.suo

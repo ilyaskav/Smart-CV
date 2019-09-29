@@ -1,0 +1,33 @@
+﻿@using SmartCV.WebUI.Converters
+@model SmartCV.Service.Models.ManagerViewModel
+@{
+    Layout = null;
+}
+
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.Profession, new { @class = "text-bold" })
+    </td>
+    <td>
+        @Model.CreatedAt.ToString("dd.MM.yyyy")
+    </td>
+    <td>
+        @Html.RouteLink("Копировать", new { action = "Copy", managerId = Model.Id })
+        @Html.RouteLink("Редактировать", new { action = "PersonalData", managerId = Model.Id })
+
+        <a href="@string.Format("/Resume/Remove?resumeId={0}", Model.Id)">
+            <span class="glyphicon glyphicon-remove"></span>
+            Удалить
+        </a>
+    </td>
+    <td>
+        @{
+            object linkAttributes = new { @class = "btn btn-light" };
+            if (!Model.HasLink) { linkAttributes = new { @class = "btn btn-light", @disabled = "" }; }
+        }
+
+        @Html.HtmlLink(string.Format("/Resume/GetWordDoc/?identifier={0}", Model.Guid), "Word", linkAttributes)
+        @Html.HtmlLink(string.Format("/Resume/GetPDF/?identifier={0}", Model.Guid), "PDF", linkAttributes)
+
+    </td>
+</tr>

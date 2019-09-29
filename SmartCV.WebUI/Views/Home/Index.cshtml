@@ -1,0 +1,22 @@
+﻿@model SmartCV.Service.Models.ResumeModel
+@{
+    ViewData["Title"] = "Resume generator";
+}
+
+<div class="jumbotron">
+    <form method="post" class="form-horizontal" action="@Url.Action("CreateEmptyResume", "Resume")">
+        @Html.AntiForgeryToken()
+
+        <h2>Smart resume generator</h2>
+        <p class="lead">
+            Создайте резюме всего за несколько минут - просто выбирите нужную специализацию и заполните предоставленные поля,
+            все остальное сделаем мы. Экспортируйте резюме в удобном формате, храните, редактируйте, отправляете его работадателю прямо с
+            сайта и многое другое.
+        </p>
+        <div class="form-group">
+            <label for="ProfessionId">Специализация </label>
+            @Html.DropDownList("ProfessionId", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <p><input type="submit" class="btn btn-primary btn-lg" value="Create resume" /></p>
+    </form>
+</div>
